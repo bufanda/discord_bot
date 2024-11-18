@@ -344,6 +344,41 @@ class ScumLogDataManager:
 
         return ret_val
 
+    def get_player_online_status(self, player_name = None) -> list:
+        """get player data from database"""
+        ret_val = []
+        cursor = self.db.cursor()
+        if player_name:
+            cursor.execute(f"SELECT * FROM player WHERE username = '{player_name}'")
+        else:
+            cursor.execute("SELECT * FROM player WHERE loggedin=1")
+        player_data = cursor.fetchall()
+
+        if len(player_data) == 0:
+            ret_val = []
+        elif len(player_data) > 1:
+            self.logging.info("Found more than one Player with that name.")
+            for p in player_data:
+                ret_val.append({
+                               "name": p[3],
+                               "status": p[4],
+                               "login_timestamp" : p[8],
+                               "logout_timestamp" : p[9],
+                               "lifetime": p[10],
+                               "drone": p[11]
+                               })
+        else:
+            self.logging.info("One Player found.")
+            ret_val.append({"name": player_data[0][3],
+                "status": player_data[0][4],
+                "login_timestamp" : player_data[0][8],
+                "logout_timestamp" : player_data[0][9],
+                "lifetime": player_data[0][10],
+                "drone": player_data[0][11]
+                })
+
+        return ret_val
+
     def get_active_bunkers(self, bunker: str = None) -> list:
         """Get all or for one specific bunker the active state"""
         retval = []

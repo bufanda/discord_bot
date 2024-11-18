@@ -842,7 +842,7 @@ async def player_online(ctx, player: str = None):
                     state = "online"
                 message += _("{player} is currently {status}").format(player=player, status=state)
     else:
-        player_status = db.get_player_status()
+        player_status = db.get_player_online_status()
         if len(player_status) > 0:
             message = _("Follwoing Players are online:\n")
             for p in player_status:
