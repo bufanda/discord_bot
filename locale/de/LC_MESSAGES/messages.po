@@ -175,11 +175,11 @@ msgstr "{name} spielt hier schon {lifetime} auf diesem Server!\n"
 
 #: main.py:775
 msgid "Bunker {bunker} is not active."
-msgstr "Bunker ist derzeit nicht aktiv!"
+msgstr "Bunker {bunker} ist derzeit nicht aktiv!"
 
 #: main.py:781 main.py:795
 msgid "Bunker {bunker} is active.\n"
-msgstr "Bunker ist derzeit aktiv!\n"
+msgstr "Bunker {bunker} ist derzeit aktiv!\n"
 
 #: main.py:788
 msgid "Bunker {bunker} does not exist."
