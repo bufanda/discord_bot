@@ -166,8 +166,8 @@ async def _reply_author(context, msg) -> None:
 
 def _check_guild_roles(guild_roles, role) -> bool:
     retval = False
-    for role in guild_roles:
-        if role.name == role:
+    for guild_role in guild_roles:
+        if guild_role.name == role:
             retval = True
     return retval
 
@@ -402,8 +402,12 @@ async def load_guild_members(db: ScumLogDataManager):
                     if _check_guild_roles(member.roles, config.user_role) \
                             and not _check_user_bot_role(member.name, "user"):
                         bot_role = "user"
+                    elif not _check_guild_roles(member.roles, config.user_role) \
+                            and current_members[member.name]["bot_role"] == "user":
+                        bot_role = "deny"
 
-                    if ",".join(roles) != current_members[member.name]["guild_role"]:
+                    if ",".join(roles) != current_members[member.name]["guild_role"] \
+                            or bot_role != current_members[member.name]["bot_role"]:
                         logging.info(f"Update existing discord member: {member}")
                         current_members.update({
                             member.name: {
