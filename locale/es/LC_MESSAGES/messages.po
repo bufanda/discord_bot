@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scum_bot 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-18 11:39+0100\n"
+"POT-Creation-Date: 2024-11-18 14:28+0100\n"
 "PO-Revision-Date: 2024-11-14 11:09+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -78,195 +78,195 @@ msgstr "no fue descubierto anteriormente."
 msgid "{name} invoked "
 msgstr "{name} invocado "
 
-#: main.py:492
+#: main.py:496
 msgid "Current configuration"
 msgstr "Configuración actual"
 
-#: main.py:498
+#: main.py:502
 msgid "Members stored in DB."
 msgstr "Miembros almacenados en la BD."
 
-#: main.py:506
+#: main.py:510
 msgid "Current Environment"
 msgstr "Entorno actual"
 
-#: main.py:512
+#: main.py:516
 msgid "Guild members:"
 msgstr "Miembros de la guilda:"
 
-#: main.py:525
+#: main.py:529
 msgid "You don't have permission to invoke this command."
 msgstr "No tienes permiso para ejecutar este comando."
 
-#: main.py:530 main.py:540
+#: main.py:534 main.py:544
 msgid "Current members in database:\n"
 msgstr "Miembros actuales en la base de datos:\n"
 
-#: main.py:538
+#: main.py:542
 msgid "No members stored in Database"
 msgstr "No hay miembros almacenados en la base de datos"
 
-#: main.py:553 main.py:564
+#: main.py:557 main.py:568
 msgid "Member {name} given bot role {role}"
 msgstr "El miembro {name} ha sido asignado al rol {role}"
 
-#: main.py:557
+#: main.py:561
 msgid "Member {name} does not exist on Server."
 msgstr "El miembro {name} no existe en el servidor."
 
-#: main.py:559
+#: main.py:563
 msgid "Member {name} not in database. Can't create member via DM."
 msgstr ""
 "El miembro {name} no está en la base de datos. No se puede crear el "
 "miembro a través de DM."
 
-#: main.py:562
+#: main.py:566
 msgid "Member {name} already has bot role {role}"
 msgstr "El miembro {name} ya tiene el rol de bot {role}"
 
-#: main.py:569
+#: main.py:573
 msgid "Too many arguments for command 'member'"
 msgstr "Demasiados argumentos para el comando 'member'"
 
-#: main.py:574
+#: main.py:578
 msgid "No members in database!"
 msgstr "¡No hay miembros en la base de datos!"
 
-#: main.py:606
+#: main.py:610
 msgid "Command not supported!"
 msgstr "¡Comando no soportado!"
 
-#: main.py:624
+#: main.py:628
 msgid "No entries in audit!"
 msgstr "¡No hay entradas en la auditoría!"
 
-#: main.py:638 main.py:645
+#: main.py:642 main.py:649
 msgid "You have no permission to execute this command!"
 msgstr "¡No tienes permiso para ejecutar este comando!"
 
-#: main.py:659 main.py:668 main.py:677 main.py:686 main.py:695
+#: main.py:663 main.py:672 main.py:681 main.py:690 main.py:699
 msgid "Missing arguments."
 msgstr "Faltan argumentos."
 
-#: main.py:718 main.py:725
+#: main.py:722 main.py:729
 msgid "You do not have permission to execute this command."
 msgstr "No tienes permiso para ejecutar este comando."
 
-#: main.py:735 main.py:766 main.py:814 main.py:864
+#: main.py:739 main.py:770 main.py:818 main.py:868
 msgid "You do not have permission to invoke this command."
 msgstr "No tienes permiso para invocar este comando."
 
-#: main.py:744
+#: main.py:748
 msgid "Player {player} lives on server for {lifetime}."
 msgstr "El jugador {player} vive en el servidor durante {lifetime}."
 
-#: main.py:746
+#: main.py:750
 msgid "Player {player} has no life on this server."
 msgstr "El jugador {player} no tiene vida en este servidor."
 
-#: main.py:750
+#: main.py:754
 msgid "Following players have a liftime on this server:\n"
 msgstr "Los siguientes jugadores tienen una duración de vida en este servidor:\n"
 
-#: main.py:753
+#: main.py:757
 msgid "{name} lives for {lifetime} on this server.\n"
 msgstr "{name} vive durante {lifetime} en este servidor.\n"
 
-#: main.py:775
+#: main.py:779
 msgid "Bunker {bunker} is not active."
 msgstr "El búnker {bunker} no está activo."
 
-#: main.py:781 main.py:795
+#: main.py:785 main.py:799
 msgid "Bunker {bunker} is active.\n"
 msgstr "El búnker {bunker} está activo.\n"
 
-#: main.py:788
+#: main.py:792
 msgid "Bunker {bunker} does not exist."
 msgstr "El búnker {bunker} no existe."
 
-#: main.py:793
+#: main.py:797
 msgid "Following Bunkers are active.\n"
 msgstr "Los siguientes búnkers están activos.\n"
 
-#: main.py:802
+#: main.py:806
 msgid "No active bunkers found."
 msgstr "No se encontraron búnkers activos."
 
-#: main.py:824 main.py:873
+#: main.py:828 main.py:877
 msgid "Error: Player {player} does not exists in Database"
 msgstr "Error: El jugador {player} no existe en la base de datos"
 
-#: main.py:827 main.py:876
+#: main.py:831 main.py:880
 msgid "Multiple players with Name {player} found.\n"
 msgstr "Se encontraron múltiples jugadores con el nombre {player}.\n"
 
-#: main.py:833 main.py:839
+#: main.py:837 main.py:843
 msgid "{player} is currently {status}"
 msgstr "{player} está actualmente {status}"
 
-#: main.py:843
+#: main.py:847
 msgid "Follwoing Players are online:\n"
 msgstr "Los siguientes jugadores están en línea:\n"
 
-#: main.py:848
+#: main.py:852
 msgid "{name} is online since {login}\n"
 msgstr "{name} está en línea desde {login}\n"
 
-#: main.py:850
+#: main.py:854
 msgid "No players are online at the moment."
 msgstr "No hay jugadores en línea en este momento."
 
-#: main.py:884 main.py:894
+#: main.py:888 main.py:898
 msgid "now"
 msgstr "ahora"
 
-#: main.py:885 main.py:896
+#: main.py:889 main.py:900
 msgid "Player: {player} is currently {state} and was last seen {lastseen}."
 msgstr ""
 "Jugador: {player} está actualmente {state} y fue visto por última vez "
 "{lastseen}."
 
-#: main.py:906
+#: main.py:910
 msgid "Hi, {author}. My Name is {user}.\n"
 msgstr "Hola, {author}. Mi nombre es {user}.\n"
 
-#: main.py:907
+#: main.py:911
 msgid "You can call me with following commands:\n"
 msgstr "Puedes llamarme con los siguientes comandos:\n"
 
-#: main.py:911
+#: main.py:915
 msgid "!online <player name> - I will tell you if the"
 msgstr "!online <nombre del jugador> - Te diré si el"
 
-#: main.py:912
+#: main.py:916
 msgid "player with <name> is online on the SCUM server\n"
 msgstr "jugador con <nombre> está en línea en el servidor SCUM\n"
 
-#: main.py:916
+#: main.py:920
 msgid "!lastseen <player name> - I will tell you when I have seen <playername>"
 msgstr ""
 "!lastseen <nombre del jugador> - Te diré cuándo he visto a <nombre del "
 "jugador>"
 
-#: main.py:917
+#: main.py:921
 msgid "on the SCUM Server\n"
 msgstr "en el servidor SCUM\n"
 
-#: main.py:921
+#: main.py:925
 msgid "!bunkers <bunker name> - I will tell you if the <bunker name> is active.\n"
 msgstr ""
 "!bunkers <nombre del bunker> - Te diré si el <nombre del bunker> está "
 "activo.\n"
 
-#: main.py:922
+#: main.py:926
 msgid "But the <bunker name> is optional. Without I unveil the secret and give"
 msgstr "Pero el <nombre del bunker> es opcional. Sin él, revelo el secreto y doy"
 
-#: main.py:923
+#: main.py:927
 msgid " you all active bunkers."
 msgstr " todos los bunkers activos."
 
-#: main.py:927
+#: main.py:931
 msgid ""
 "I will also report bunker openening, kills and players joining to and "
 "disconnecting "
@@ -274,15 +274,15 @@ msgstr ""
 "También informaré sobre la apertura de bunkers, asesinatos y jugadores "
 "que se conectan y desconectan"
 
-#: main.py:928
+#: main.py:932
 msgid "from the SCUM Server."
 msgstr "del servidor SCUM."
 
-#: main.py:946
+#: main.py:950
 msgid "You do not have the correct role for this command."
 msgstr "No tienes el rol correcto para este comando."
 
-#: main.py:948
+#: main.py:952
 msgid "'{error}' is a required argument."
 msgstr "'{error}' es un argumento requerido."
 
