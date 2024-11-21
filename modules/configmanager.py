@@ -34,6 +34,7 @@ class ConfigManager():
 
     config: dict
 
+    version="1.0.10"
 
     _DEFAULT_CONFIG = {
         "reply": "same_channel",
