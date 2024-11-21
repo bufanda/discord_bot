@@ -15,6 +15,7 @@ preliminary readme
         -> publish_bunkers: 0 = disable, 1 = enable. When enabled will report bunker activations to SCUM_LOG_FEED_CHANNEL
         -> publish_kills: 0 = disable, 1 = enable. When enabled will report kills to SCUM_LOG_FEED_CHANNEL
         -> publish_admin_log: 0 = disable, 1 = enable. When enabled Admin action will be published in SCUM_LOG_FEED_CHANNEL
+        -> publish_chat: 0 = disabel, 1 = enable. When enabled chat messages will be posted in configured channels
       - BOT_ADMIN_USER can contact the bot in DM to execute config command
     * !audit age <age> - Audit Admin log
        -> <age> can be in days or month (e.g. !audit 14d, !audit 3m)
@@ -28,7 +29,15 @@ preliminary readme
 DISCORD_TOKEN = "<discord-token>"
 DISCORD_GUILD = "<server-name>"
 
-SCUM_LOG_FEED_CHANNEL = "<channel-id>"
+SCUM_LOG_FEED_CHANNEL = "<channel-id>" # Default Channel where bot will post all messages
+
+SCUM_LOG_CHAT_ADMIN_CHANNEL = "<channel-id>" # Channel to post admin chat messages - if not defined default channel will be used
+
+SCUM_LOG_CHAT_TEAM_CHANNEL = "<channel-id>" # Channel to post team chat messages - if not defined default channel will be used
+
+SCUM_LOG_CHAT_GLOBAL_CHANNEL = "<channel-id>" # Channel to post global chat messages - if not defined default channel will be used
+
+SCUM_LOG_CHAT_LOCAL_CHANNEL = "<channel-id>" # Channel to post local chat messages - if not defined default channel will be used
 
 DATABASE_FILE = "/app/db.sqlite3"
 
