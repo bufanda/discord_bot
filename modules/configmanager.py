@@ -20,6 +20,10 @@ class ConfigManager():
     sftp_password: str
     debug_channel: str
     log_feed_channel: str
+    log_chat_global_channel: str
+    log_chat_admin_channel: str
+    log_chat_team_channel: str
+    log_chat_local_channel: str
     log_directory: str
     database_file: str
     log_check_interval: str
@@ -41,7 +45,8 @@ class ConfigManager():
         "publish_login": False,
         "publish_bunkers": False,
         "publish_kills": False,
-        "publish_admin_log": False
+        "publish_admin_log": False,
+        "publish_chat": False
     }
 
     BOT_ROLES = [
@@ -85,6 +90,10 @@ class ConfigManager():
 
         self.debug_channel = os.getenv("DEBUG_CHANNEL")
         self.log_feed_channel = os.getenv("SCUM_LOG_FEED_CHANNEL")
+        self.log_chat_global_channel = os.getenv("SCUM_LOG_CHAT_GLOBAL_CHANNEL")
+        self.log_chat_admin_channel = os.getenv("SCUM_LOG_CHAT_ADMIN_CHANNEL")
+        self.log_chat_team_channel = os.getenv("SCUM_LOG_CHAT_TEAM_CHANNEL")
+        self.log_chat_local_channel = os.getenv("SCUM_LOG_CHAT_LOCAL_CHANNEL")
         self.log_directory = os.getenv("LOG_DIRECTORY")
         self.database_file = os.getenv("DATABASE_FILE")
         self.log_check_interval = os.getenv("LOG_CHECK_INTERVAL")
@@ -136,6 +145,18 @@ class ConfigManager():
 
         if not self.language:
             self.language = "en"
+
+        if self.log_chat_global_channel is None:
+            self.log_chat_global_channel = self.log_feed_channel
+
+        if self.log_chat_admin_channel is None:
+            self.log_chat_admin_channel = self.log_feed_channel
+
+        if self.log_chat_team_channel is None:
+            self.log_chat_team_channel = self.log_feed_channel
+
+        if self.log_chat_local_channel is None:
+            self.log_chat_local_channel = self.log_feed_channel
 
         self._load_config(self.database_file)
 

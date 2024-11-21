@@ -25,7 +25,7 @@ from dotenv import load_dotenv
 # sys.path.append('./')
 from modules.datamanager import ScumLogDataManager
 from modules.logparser import LoginParser, KillParser, BunkerParser, FamepointParser, \
-    AdminParser
+    AdminParser, ChatParser
 from modules.sftploader import ScumSFTPLogParser
 from modules.output import Output
 from modules.configmanager import ConfigManager
@@ -347,6 +347,32 @@ async def handle_admin_log(msgs, file, dbconnection):
                         msg_str += f"{msg['type']}: {msg['action']}\n"
                         await channel.send(msg_str)
 
+async def handle_chat(msgs, file, db: ScumLogDataManager):
+    """handle chat messages"""
+    parser = ChatParser()
+    for m in msgs[file]:
+        if not isinstance(m,set):
+            for mm in str.split(m,"\n"):
+                msg = parser.parse(mm)
+                if msg and db.check_message_send(msg["hash"]):
+                    logging.debug(f"Chat: {msg['name']} - {msg['channel']}: {msg['message']}")
+                    db.store_message_send(msg["hash"])
+                    channel = client.get_channel(int(config.log_feed_channel))
+                    if msg['channel'].lower() == "global":
+                        channel = client.get_channel(int(config.log_chat_global_channel))
+                    elif msg['channel'].lower() == "admin":
+                        channel = client.get_channel(int(config.log_chat_admin_channel))
+                    elif msg['channel'].lower() == "team":
+                        channel = client.get_channel(int(config.log_chat_team_channel))
+                    elif msg['channel'].lower() == "local":
+                        channel = client.get_channel(int(config.log_chat_local_channel))
+                    if config.config["publish_chat"]:
+                        msg_str = f"{msg['time']} - "
+                        msg_str += (f"{msg['name']} - {msg['channel']}: ")
+                        msg_str += f"{msg['message']}\n"
+                        await channel.send(msg_str)
+
+
 async def load_guild_members(db: ScumLogDataManager):
     """load guild members and add new members to database"""
     current_members = db.get_guild_member()
@@ -461,6 +487,8 @@ async def log_parser_loop():
                 await handle_fame(msgs, file_key, db)
             elif "admin" in file_key:
                 await handle_admin_log(msgs, file_key, db)
+            elif "chat" in file_key:
+                await handle_chat(msgs, file_key, db)
 
     if datetime.now().minute % 10 == 0:
         await load_guild_members(db)
