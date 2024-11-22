@@ -267,7 +267,7 @@ class FamepointParser(Parser):
             })
 
         return retval
-    
+
 class AdminParser(Parser):
     """parse the admin log"""
 

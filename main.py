@@ -206,20 +206,20 @@ def _get_guild_member_roles(member_name: str) -> list:
     return roles
 
 def _check_chat_allowed(channel: str) -> bool:
-    retVal = False
+    retval = False
     if channel.lower() == "global" and config.config['publish_chat_global']:
-        retVal = True
+        retval = True
     elif channel.lower() == "local" and config.config['publish_chat_local']:
-        retVal = True
+        retval = True
     elif channel.lower() == "admin" and config.config['publish_chat_admin']:
-        retVal = True
+        retval = True
     elif channel.lower() == "squad" and config.config['publish_chat_team']:
-        retVal = True
+        retval = True
 
-    return retVal
+    return retval
 
 def _convert_german_time(string):
-        return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").strftime("%Y.%m.%d-%H:%M:%S")
+    return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").strftime("%Y.%m.%d-%H:%M:%S")
 
 async def send_debug_message(message):
     """Function will send debug messages"""

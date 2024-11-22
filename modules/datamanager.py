@@ -533,7 +533,7 @@ class ScumLogDataManager:
             else:
                 if item[1] == "True":
                     retval.update({item[0]: True})
-                else: 
+                else:
                     retval.update({item[0]: False})
         return retval
 
