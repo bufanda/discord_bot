@@ -212,7 +212,7 @@ def _check_chat_allowed(channel: str) -> bool:
         retVal = True
     elif channel.lower() == "admin" and config.config['publish_chat_admin']:
         retVal = True
-    elif channel.lower() == "team" and config.config['publish_chat_team']:
+    elif channel.lower() == "squad" and config.config['publish_chat_team']:
         retVal = True
 
     return retVal
@@ -375,7 +375,7 @@ async def handle_chat(msgs, file, db: ScumLogDataManager):
                         channel = client.get_channel(int(config.log_chat_global_channel))
                     elif msg['channel'].lower() == "admin":
                         channel = client.get_channel(int(config.log_chat_admin_channel))
-                    elif msg['channel'].lower() == "team":
+                    elif msg['channel'].lower() == "squad":
                         channel = client.get_channel(int(config.log_chat_team_channel))
                     elif msg['channel'].lower() == "local":
                         channel = client.get_channel(int(config.log_chat_local_channel))
@@ -385,7 +385,6 @@ async def handle_chat(msgs, file, db: ScumLogDataManager):
                         msg_str += f"{msg['message']}\n"
                         if _check_chat_allowed(msg['channel']):
                             await channel.send(msg_str)
-
 
 async def load_guild_members(db: ScumLogDataManager):
     """load guild members and add new members to database"""
