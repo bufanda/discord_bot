@@ -218,6 +218,9 @@ def _check_chat_allowed(channel: str) -> bool:
 
     return retVal
 
+def _convert_german_time(string):
+        return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").strftime("%Y.%m.%d-%H:%M:%S")
+
 async def send_debug_message(message):
     """Function will send debug messages"""
     channel = client.get_channel(int(config.debug_channel))
@@ -356,7 +359,7 @@ async def handle_admin_log(msgs, file, dbconnection):
                     dbconnection.update_admin_audit(msg)
                     if config.config["publish_admin_log"]:
                         channel = client.get_channel(int(config.log_feed_channel))
-                        msg_str = f"{msg['time']} - Admin: "
+                        msg_str = f"{_convert_german_time(msg['time'])} - Admin: "
                         msg_str += _("{name} invoked ").format(name=msg['name'])
                         msg_str += f"{msg['type']}: {msg['action']}\n"
                         await channel.send(msg_str)
@@ -381,7 +384,7 @@ async def handle_chat(msgs, file, db: ScumLogDataManager):
                     elif msg['channel'].lower() == "local":
                         channel = client.get_channel(int(config.log_chat_local_channel))
                     if config.config["publish_chat"]:
-                        msg_str = f"{msg['time']} - "
+                        msg_str = f"{_convert_german_time(msg['time'])} - "
                         msg_str += (f"{msg['name']} - {msg['channel']}: ")
                         msg_str += f"{msg['message']}\n"
                         if _check_chat_allowed(msg['channel']):
