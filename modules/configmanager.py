@@ -46,7 +46,11 @@ class ConfigManager():
         "publish_bunkers": False,
         "publish_kills": False,
         "publish_admin_log": False,
-        "publish_chat": False
+        "publish_chat": False,
+        "publish_chat_global": True,
+        "publish_chat_team": True,
+        "publish_chat_admin": True,
+        "publish_chat_local": True
     }
 
     BOT_ROLES = [
@@ -176,6 +180,16 @@ class ConfigManager():
             _config.update({"publish_kills": self._DEFAULT_CONFIG['publish_kills']})
         if "publish_admin_log" not in _config:
             _config.update({"publish_admin_log": self._DEFAULT_CONFIG['publish_admin_log']})
+        if "publish_chat" not in _config:
+            _config.update({"publish_chat": self._DEFAULT_CONFIG['publish_chat']})
+        if "publish_chat_global" not in _config:
+            _config.update({"publish_chat_global": self._DEFAULT_CONFIG['publish_chat_global']})
+        if "publish_chat_local" not in _config:
+            _config.update({"publish_chat_local": self._DEFAULT_CONFIG['publish_chat_local']})
+        if "publish_chat_team" not in _config:
+            _config.update({"publish_chat_team": self._DEFAULT_CONFIG['publish_chat_team']})
+        if "publish_chat_admin" not in _config:
+            _config.update({"publish_chat_admin": self._DEFAULT_CONFIG['publish_chat_admin']})
 
         self.config = _config
         if init:

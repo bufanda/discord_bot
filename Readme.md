@@ -16,6 +16,10 @@ preliminary readme
         -> publish_kills: 0 = disable, 1 = enable. When enabled will report kills to SCUM_LOG_FEED_CHANNEL
         -> publish_admin_log: 0 = disable, 1 = enable. When enabled Admin action will be published in SCUM_LOG_FEED_CHANNEL
         -> publish_chat: 0 = disabel, 1 = enable. When enabled chat messages will be posted in configured channels
+        -> publish_chat_globa: default enabled - but if <publish_chat = disabled> it's disabled too.
+        -> publish_chat_team: default enabled - but if <publish_chat = disabled> it's disabled too.
+        -> publish_chat_admin: default enabled - but if <publish_chat = disabled> it's disabled too.
+        -> publish_chat_local: default enabled - but if <publish_chat = disabled> it's disabled too.
       - BOT_ADMIN_USER can contact the bot in DM to execute config command
     * !audit age <age> - Audit Admin log
        -> <age> can be in days or month (e.g. !audit 14d, !audit 3m)

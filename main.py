@@ -204,6 +204,19 @@ def _get_guild_member_roles(member_name: str) -> list:
 
     return roles
 
+def _check_chat_allowed(channel: str) -> bool:
+    retVal = False
+    if channel.lower() == "global" and config.config['publish_chat_global']:
+        retVal = True
+    elif channel.lower() == "local" and config.config['publish_chat_local']:
+        retVal = True
+    elif channel.lower() == "admin" and config.config['publish_chat_admin']:
+        retVal = True
+    elif channel.lower() == "team" and config.config['publish_chat_team']:
+        retVal = True
+
+    return retVal
+
 async def send_debug_message(message):
     """Function will send debug messages"""
     channel = client.get_channel(int(config.debug_channel))
@@ -370,7 +383,8 @@ async def handle_chat(msgs, file, db: ScumLogDataManager):
                         msg_str = f"{msg['time']} - "
                         msg_str += (f"{msg['name']} - {msg['channel']}: ")
                         msg_str += f"{msg['message']}\n"
-                        await channel.send(msg_str)
+                        if _check_chat_allowed(msg['channel']):
+                            await channel.send(msg_str)
 
 
 async def load_guild_members(db: ScumLogDataManager):
