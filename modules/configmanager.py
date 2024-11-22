@@ -36,9 +36,12 @@ class ConfigManager():
     user_role: str
     language: str
 
+    vcs_ref: str
+    vcs_tag: str
+
     config: dict
 
-    version="1.0.11"
+    version="1.0.11.1"
 
     _DEFAULT_CONFIG = {
         "reply": "same_channel",
@@ -104,6 +107,9 @@ class ConfigManager():
         self.help_command = os.getenv("BOT_HELP_COMMAND")
         self.experimental = os.getenv("EXPERIMENTAL_ENABLE")
 
+        self.vcs_ref = os.getenv("VCS_REF")
+        self.vcs_tag = os.getenv("VCS_TAG")
+
         self.language = os.getenv("BOT_LANGUAGE")
 
         if os.getenv("BOT_USER_ADMIN_ROLE") is not None:
@@ -161,6 +167,9 @@ class ConfigManager():
 
         if self.log_chat_local_channel is None:
             self.log_chat_local_channel = self.log_feed_channel
+
+        if not self.vcs_tag or self.version != self.vcs_tag:
+            self.version = self.version + "+" + self.vcs_ref[:8]
 
         self._load_config(self.database_file)
 
