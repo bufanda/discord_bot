@@ -16,6 +16,16 @@ RUN msgfmt messages.po
 
 FROM python:3.12-alpine
 
+ARG VCS_REF=""
+ARG VCS_TAG="latest"
+
+LABEL de.bufanda.vendor="Thorsten Liepert"
+LABEL version="${VCS_TAG}"
+LABEL revision="${VCS_REF}"
+LABEL description="A Discord Bot for Scum Server Owner."
+
+ENV VCS_VERSION=${VCS_TAG}
+
 RUN apk add --update --no-cache gettext && \
     mkdir -p /app/locale
 

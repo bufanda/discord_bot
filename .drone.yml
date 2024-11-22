@@ -30,6 +30,9 @@ steps:
         - debug
       autotag: no
       insecure: yes
+      build_args:
+        - VCS_REF=${DRONE_COMMIT}
+        - VCS_TAG=${DRONE_TAG}
     when:
       event:
         - push
@@ -40,6 +43,9 @@ steps:
       registry: registry.nbg.bufanda.de
       autotag: yes
       insecure: yes
+      build_args:
+        - VCS_REF=$DRONE_COMMIT
+        - VCS_TAG=$DRONE_TAG
       tags:
         - ${DRONE_TAG}
         - latest
@@ -55,6 +61,9 @@ steps:
       insecure: yes
       tags:
         - latest
+      build_args:
+        - VCS_REF=${DRONE_COMMIT}
+        - VCS_TAG=${DRONE_TAG}
     when:
       event:
         - promote

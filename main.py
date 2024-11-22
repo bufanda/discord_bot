@@ -71,6 +71,7 @@ async def on_ready():
         if config.guild in (guild.name, str(guild.id)):
             # print("found")
             break
+    logging.info(f"Starting Bot Version {config.version}")
 
     if guild is not None:
         logging.info(
