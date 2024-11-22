@@ -691,7 +691,7 @@ async def command_audit(ctx, *args):
             await ctx.reply(_("You have no permission to execute this command!"))
 
 async def handle_command_config(ctx, args):
-    """ ** """
+    """ handle command config """
     db = ScumLogDataManager(config.database_file)
     if len(args) <= 0:
         msg = "Current config:\n"
@@ -744,6 +744,52 @@ async def handle_command_config(ctx, args):
                 config.config.update({"publish_admin_log": True})
             else:
                 config.config.update({"publish_admin_log": False})
+
+    if args[0] == "publish_chat":
+        if len(args) < 2:
+            await _reply(ctx, _("Missing arguments."))
+        else:
+            if args[1].lower() == "true" or args[1] == "1":
+                config.config.update({"publish_chat": True})
+            else:
+                config.config.update({"publish_chat": False})
+
+    if args[0] == "publish_chat_global":
+        if len(args) < 2:
+            await _reply(ctx, _("Missing arguments."))
+        else:
+            if args[1].lower() == "true" or args[1] == "1":
+                config.config.update({"publish_chat_global": True})
+            else:
+                config.config.update({"publish_chat_global": False})
+
+    if args[0] == "publish_chat_local":
+        if len(args) < 2:
+            await _reply(ctx, _("Missing arguments."))
+        else:
+            if args[1].lower() == "true" or args[1] == "1":
+                config.config.update({"publish_chat_local": True})
+            else:
+                config.config.update({"publish_chat_local": False})
+
+    if args[0] == "publish_chat_team":
+        if len(args) < 2:
+            await _reply(ctx, _("Missing arguments."))
+        else:
+            if args[1].lower() == "true" or args[1] == "1":
+                config.config.update({"publish_chat_team": True})
+            else:
+                config.config.update({"publish_chat_team": False})
+
+    if args[0] == "publish_chat_admin":
+        if len(args) < 2:
+            await _reply(ctx, _("Missing arguments."))
+        else:
+            if args[1].lower() == "true" or args[1] == "1":
+                config.config.update({"publish_chat_admin": True})
+            else:
+                config.config.update({"publish_chat_admin": False})
+
 
     logging.info(f"Updated config: {args[0]} = {config.config[args[0]]}")
     await _reply_author(ctx, f"Saved config: {args[0]} = {config.config[args[0]]}")
