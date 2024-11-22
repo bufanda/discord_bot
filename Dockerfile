@@ -24,7 +24,8 @@ LABEL version="${VCS_TAG}"
 LABEL revision="${VCS_REF}"
 LABEL description="A Discord Bot for Scum Server Owner."
 
-ENV VCS_VERSION=${VCS_TAG}
+ENV VCS_TAG=${VCS_TAG}
+ENV VCS_REF=${VCS_REF}
 
 RUN apk add --update --no-cache gettext && \
     mkdir -p /app/locale
