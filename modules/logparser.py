@@ -299,7 +299,7 @@ class ChatParser(Parser):
     def __init__(self) -> None:
         # super().__init__()
         # pylint: disable=line-too-long
-        self.log_regex = r"^([0-9.-]*):\s'([0-9]+?):(.+?)\([0-9]+\)'\s'(.+?):\s(.*?)$"
+        self.log_regex = r"^([0-9.-]*):\s'([0-9]+?):(.+?)\([0-9]+\)'\s'(.+?):\s(.*?)'$"
         self.log_pattern = re.compile(self.log_regex)
         # pylint: enable=line-too-long
 
