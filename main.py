@@ -13,7 +13,7 @@ import random
 import traceback
 import gettext
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import discord
@@ -29,6 +29,7 @@ from modules.logparser import LoginParser, KillParser, BunkerParser, FamepointPa
 from modules.sftploader import ScumSFTPLogParser
 from modules.output import Output
 from modules.configmanager import ConfigManager
+from modules.mytime import mytime
 # pylint: enable=wrong-import-position
 
 load_dotenv()
@@ -105,29 +106,6 @@ async def on_ready():
     if not watchdog.is_running():
         logging.info("Starting main loop watchdog.")
         watchdog.start()
-
-def _convert_time(in_sec: int) -> str:
-    days = 0
-    hours = 0
-    minutes = 0
-    seconds = in_sec
-
-    days = int(in_sec / 86400)
-    seconds = in_sec % 86400
-
-    hours = int(seconds / 3600)
-    seconds = seconds % 3600
-
-    minutes = int(seconds / 60)
-    seconds = int(seconds % 60)
-
-    return f"{days:02d}d {hours:02d}:{minutes:02d}:{seconds:02d}"
-
-def _get_date_for_age(in_sec: int) -> datetime:
-    return datetime.today() - timedelta(days=in_sec)
-
-def _get_timestamp(string):
-    return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").timestamp()
 
 async def _reply(context, msg) -> None:
     if len(msg) > MAX_MESSAGE_LENGTH:
@@ -251,7 +229,7 @@ async def handle_login(msgs, file, dbconnection):
                         msg_str += f",{msg['coordinates']['y']},3)"
 
                         if config.config["publish_login"] and \
-                            (datetime.now().timestamp() - _get_timestamp(msg['timestamp']) < 600):
+                            (datetime.now().timestamp() - mytime.get_timestamp(msg['timestamp']) < 600):
                             await channel.send(msg_str)
 
                 if msg and dbconnection.check_message_send(msg["hash"]):
@@ -638,10 +616,10 @@ async def handle_command_audit(ctx, args):
     elif args[0] == "age":
         if "d" in args[1]:
             _days = int(args[1].split("d")[0])
-            age = _get_date_for_age(_days)
+            age = mytime.get_date_for_age(_days)
         elif "m" in args[1]:
             _months = int(args[1].split("m")[0])
-            age = _get_date_for_age(_months * 30)
+            age = mytime.get_date_for_age(_months * 30)
         else:
             age = 0
 
@@ -835,7 +813,7 @@ async def command_lifetime(ctx, player: str = None):
         logging.info(f"Get server lifetime for player {player}")
         player_stat = db.get_player_status(player)
         if len(player_stat) > 0:
-            lifetime = _convert_time(player_stat[0]["lifetime"])
+            lifetime = mytime.convert_time(player_stat[0]["lifetime"])
             msg_str = _("Player {player} lives on server for {lifetime}.").format(player=player, lifetime=lifetime)
         else:
             msg_str = _("Player {player} has no life on this server.").format(player=player)
@@ -844,7 +822,7 @@ async def command_lifetime(ctx, player: str = None):
         player_stat = db.get_player_status()
         msg_str = _("Following players have a liftime on this server:\n")
         for p in player_stat:
-            lifetime = _convert_time(p["lifetime"])
+            lifetime = mytime.convert_time(p["lifetime"])
             msg_str += _("{name} lives for {lifetime} on this server.\n").format(name=p['name'], lifetime=lifetime)
 
     await _reply(ctx, msg_str)
