@@ -78,43 +78,6 @@ class KillParser(Parser):
                 "hash": self._hash_string(string)
             }
 
-        # Event Structure will be like
-        # {
-        #     "Killer": {
-        #         "ServerLocation": {
-        #             "X": -793052.3125,
-        #             "Y": -278619.875,
-        #             "Z": 16720.08984375
-        #         },
-        #         "ClientLocation": {
-        #             "X": -793052.3125,
-        #             "Y": -278619.875,
-        #             "Z": 16720.08984375
-        #         },
-        #         "IsInGameEvent": false,
-        #         "ProfileName": "didiann",
-        #         "UserId": "76561197970306734",
-        #         "HasImmortality": false
-        #     },
-        #     "Victim": {
-        #         "ServerLocation": {
-        #             "X": -797193.5,
-        #             "Y": -278922.4375,
-        #             "Z": 16720.01953125
-        #         },
-        #         "ClientLocation": {
-        #             "X": -797191.5,
-        #             "Y": -278923.71875,
-        #             "Z": 16720.0703125
-        #         },
-        #         "IsInGameEvent": false,
-        #         "ProfileName": "Punisher",
-        #         "UserId": "76561197986649167"
-        #     },
-        #     "Weapon": "Compound_Bow_C [Projectile]",
-        #     "TimeOfDay": "19:58:06"
-        # }
-
         return ret_val
 
 class BunkerParser(Parser):
