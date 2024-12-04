@@ -899,7 +899,7 @@ async def player_online(ctx, player: str = None):
             if len(player_status) > 1:
                 message = _("Multiple players with Name {player} found.\n").format(player=player)
                 for p in player_status:
-                    if p["status"] == 0:
+                    if p["state"] == 0:
                         state = "offline"
                     else:
                         state = "online"
@@ -915,7 +915,7 @@ async def player_online(ctx, player: str = None):
         if len(player_status) > 0:
             message = _("Follwoing Players are online:\n")
             for p in player_status:
-                if p["status"] == 1:
+                if p["state"] == 1:
                     login = datetime.fromtimestamp(p['login_timestamp'],
                                                     local_timezone).strftime('%d.%m.%Y %H:%M:%S')
                     message += _("{name} is online since {login}\n").format(name=p['name'],login=login)
@@ -948,7 +948,7 @@ async def player_lastseen(ctx, player: str):
         if len(player_status) > 1:
             message = _("Multiple players with Name {player} found.\n").format(player=player)
             for p in player_status:
-                if p["status"] == 0:
+                if p["state"] == 0:
                     state = "offline"
                     lastseen = datetime.fromtimestamp(p["logout_timestamp"],
                                                        local_timezone).strftime('%d.%m.%Y %H:%M:%S')
@@ -971,6 +971,64 @@ async def player_lastseen(ctx, player: str):
 
     await _reply(ctx, message)
     db.close()
+
+@client.command(name='offline')
+async def player_offline(ctx, player: str = None):
+    """set player or all players offline in database"""
+    db = ScumLogDataManager(config.database_file)
+    local_timezone = ZoneInfo('Europe/Berlin')
+    message = ""
+
+    if not _check_user_bot_role(ctx.author.name, "admin") and not \
+        _check_guild_roles(_get_guild_member_roles(ctx.author.name), config.user_role):
+        await ctx.reply(_("You do not have permission to invoke this command."))
+        return
+
+    if player is not None and player != "all":
+        player_status = db.get_player_status(player)
+        if len(player_status) == 0:
+            message = _("Error: Player {player} does not exists in Database").format(player=player)
+        else:
+            if len(player_status) > 1:
+                message = _("Multiple players with Name {player} found.\n").format(player=player)
+            for p in player_status:
+                if p["state"] != 0:
+                    p["state"] = 0
+                    p.update({"timestamp": datetime.now().strftime('%Y.%m.%d-%H.%M.%S')})
+                    p.update({"coordinates":{
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }})
+                    lastseen = _("now")
+                    message += _("Player: {player} is set as offline and was last seen {lastseen}.") \
+                               .format(player=player, lastseen=lastseen)
+                    db.update_player(p)
+                else:
+                    lastseen = datetime.fromtimestamp(p["logout_timestamp"],
+                                                   local_timezone).strftime('%Y-%m-%d %H:%M:%S')
+                    message += _("Player: {player} is already offline and was last seen {lastseen}.") \
+                               .format(player=player, lastseen=lastseen)
+    else:
+        player_status = db.get_player_online_status()
+        for p in player_status:
+            if p["state"] != 0:
+                p["state"] = 0
+                p.update({"coordinates":{
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }})
+                p.update({"timestamp": datetime.now().strftime('%Y.%m.%d-%H.%M.%S')})
+                message += _("Player: {player} is set as offline.\n") \
+                           .format(player=p["name"])
+                db.update_player(p)
+
+    if player is None:
+        message = _("Need either player name or 'all'!")
+
+    if len(message) > 0:
+        await _reply_author(ctx, message)
 
 @client.command(name=HELP_COMMAND)
 async def bot_help(ctx):

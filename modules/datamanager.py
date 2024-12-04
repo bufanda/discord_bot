@@ -318,8 +318,9 @@ class ScumLogDataManager:
             self.logging.info("Found more than one Player with that name.")
             for p in player_data:
                 ret_val.append({
+                               "steamID": p[2],
                                "name": p[3],
-                               "status": p[4],
+                               "state": p[4],
                                "login_timestamp" : p[8],
                                "logout_timestamp" : p[9],
                                "lifetime": p[10],
@@ -327,8 +328,9 @@ class ScumLogDataManager:
                                })
         else:
             self.logging.info("One Player found.")
-            ret_val.append({"name": player_data[0][3],
-                "status": player_data[0][4],
+            ret_val.append({"steamID": player_data[0][2],
+                "name": player_data[0][3],
+                "state": player_data[0][4],
                 "login_timestamp" : player_data[0][8],
                 "logout_timestamp" : player_data[0][9],
                 "lifetime": player_data[0][10],
@@ -353,8 +355,9 @@ class ScumLogDataManager:
             self.logging.info("Found more than one Player with that name.")
             for p in player_data:
                 ret_val.append({
+                               "steamID": p[2],
                                "name": p[3],
-                               "status": p[4],
+                               "state": p[4],
                                "login_timestamp" : p[8],
                                "logout_timestamp" : p[9],
                                "lifetime": p[10],
@@ -362,8 +365,9 @@ class ScumLogDataManager:
                                })
         else:
             self.logging.info("One Player found.")
-            ret_val.append({"name": player_data[0][3],
-                "status": player_data[0][4],
+            ret_val.append({"steamID": player_data[0][2],
+                "name": player_data[0][3],
+                "state": player_data[0][4],
                 "login_timestamp" : player_data[0][8],
                 "logout_timestamp" : player_data[0][9],
                 "lifetime": player_data[0][10],
