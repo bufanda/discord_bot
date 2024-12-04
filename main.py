@@ -1029,6 +1029,9 @@ async def player_offline(ctx, player: str = None):
 
     if len(message) > 0:
         await _reply_author(ctx, message)
+    else:
+        message = _("No players were online!")
+        await _reply_author(ctx, message)
 
 @client.command(name=HELP_COMMAND)
 async def bot_help(ctx):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scum_bot 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-04 14:28+0100\n"
+"POT-Creation-Date: 2024-12-04 15:18+0100\n"
 "PO-Revision-Date: 2024-11-14 11:01+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -193,11 +193,11 @@ msgstr "Les bunkers suivants sont actifs.\n"
 msgid "No active bunkers found."
 msgstr "Aucun bunker actif trouvé."
 
-#: main.py:897 main.py:946 main.py:991
+#: main.py:897 main.py:946 main.py:990
 msgid "Error: Player {player} does not exists in Database"
 msgstr "Erreur : Le joueur {player} n'existe pas dans la base de données"
 
-#: main.py:900 main.py:949 main.py:994
+#: main.py:900 main.py:949 main.py:993
 msgid "Multiple players with Name {player} found.\n"
 msgstr "Plusieurs joueurs avec le nom {player} trouvés.\n"
 
@@ -217,7 +217,7 @@ msgstr "{name} est en ligne depuis {login}\n"
 msgid "No players are online at the moment."
 msgstr "Aucun joueur n'est en ligne pour le moment."
 
-#: main.py:957 main.py:967 main.py:1004
+#: main.py:957 main.py:967 main.py:1003
 msgid "now"
 msgstr "maintenant"
 
@@ -227,67 +227,72 @@ msgstr ""
 "Joueur : {player} est actuellement {state} et a été vu pour la dernière "
 "fois {lastseen}."
 
-#: main.py:1005
+#: main.py:1004
 msgid "Player: {player} is set as offline and was last seen {lastseen}."
 msgstr ""
 "Joueur : {player} est actuellement {state} et a été vu pour la dernière "
 "fois {lastseen}."
 
-#: main.py:1011
+#: main.py:1010
 msgid "Player: {player} is already offline and was last seen {lastseen}."
 msgstr ""
 "Joueur : {player} est actuellement {state} et a été vu pour la dernière "
 "fois {lastseen}."
 
-#: main.py:1025
+#: main.py:1023
 msgid "Player: {player} is set as offline.\n"
 msgstr "Le joueur {player} vit sur le serveur pendant {lifetime}."
 
-#: main.py:1030
+#: main.py:1028
 msgid "Need either player name or 'all'!"
 msgstr ""
 
-#: main.py:1039
+#: main.py:1033
+#, fuzzy
+msgid "No players were online!"
+msgstr "Les joueurs suivants sont en ligne:\n"
+
+#: main.py:1040
 msgid "Hi, {author}. My Name is {user}.\n"
 msgstr "Bonjour, {author}. Mon nom est {user}.\n"
 
-#: main.py:1040
+#: main.py:1041
 msgid "You can call me with following commands:\n"
 msgstr "Vous pouvez m'appeler avec les commandes suivantes:\n"
 
-#: main.py:1044
+#: main.py:1045
 msgid "!online <player name> - I will tell you if the"
 msgstr "!online <nom du joueur> - Je vous dirai si le"
 
-#: main.py:1045
+#: main.py:1046
 msgid "player with <name> is online on the SCUM server\n"
 msgstr "joueur avec <nom> est en ligne sur le serveur SCUM\n"
 
-#: main.py:1049
+#: main.py:1050
 msgid "!lastseen <player name> - I will tell you when I have seen <playername>"
 msgstr "!lastseen <nom du joueur> - Je vous dirai quand j'ai vu <nom du joueur>"
 
-#: main.py:1050
+#: main.py:1051
 msgid "on the SCUM Server\n"
 msgstr "sur le serveur SCUM\n"
 
-#: main.py:1054
+#: main.py:1055
 msgid "!bunkers <bunker name> - I will tell you if the <bunker name> is active.\n"
 msgstr ""
 "!bunkers <nom du bunker> - Je vous dirai si le <nom du bunker> est actif."
 "\n"
 
-#: main.py:1055
+#: main.py:1056
 msgid "But the <bunker name> is optional. Without I unveil the secret and give"
 msgstr ""
 "Mais le <nom du bunker> est facultatif. Sans cela, je dévoile le secret "
 "et donne"
 
-#: main.py:1056
+#: main.py:1057
 msgid " you all active bunkers."
 msgstr " tous les bunkers actifs."
 
-#: main.py:1060
+#: main.py:1061
 msgid ""
 "I will also report bunker openening, kills and players joining to and "
 "disconnecting "
@@ -295,15 +300,15 @@ msgstr ""
 "Je signalerai également les ouvertures de bunkers, les meurtres et les "
 "joueurs se connectant et se déconnectant"
 
-#: main.py:1061
+#: main.py:1062
 msgid "from the SCUM Server."
 msgstr "du serveur SCUM."
 
-#: main.py:1079
+#: main.py:1080
 msgid "You do not have the correct role for this command."
 msgstr "Vous n'avez pas le bon rôle pour cette commande."
 
-#: main.py:1081
+#: main.py:1082
 msgid "'{error}' is a required argument."
 msgstr "'{error}' est un argument requis."
 

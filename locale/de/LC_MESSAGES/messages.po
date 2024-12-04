@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scum_bot 1.0\n"
 "Report-Msgid-Bugs-To: thorsten@liepert.dev\n"
-"POT-Creation-Date: 2024-12-04 14:28+0100\n"
+"POT-Creation-Date: 2024-12-04 15:18+0100\n"
 "PO-Revision-Date: 2024-11-12 16:45+0100\n"
 "Last-Translator: Thorsten Liepert thorsten@liepert.dev\n"
 "Language: de\n"
@@ -194,11 +194,11 @@ msgstr "Folgende Bunker sind aktiv:\n"
 msgid "No active bunkers found."
 msgstr "Keine aktiven Bunker gefunden!"
 
-#: main.py:897 main.py:946 main.py:991
+#: main.py:897 main.py:946 main.py:990
 msgid "Error: Player {player} does not exists in Database"
 msgstr "Fehler: Ein Spieler mit dem Namen {player} existiert nicht in der DB!"
 
-#: main.py:900 main.py:949 main.py:994
+#: main.py:900 main.py:949 main.py:993
 msgid "Multiple players with Name {player} found.\n"
 msgstr "Ich habe mehrere Spieler mit dem Namen {player} gefunden!\n"
 
@@ -218,7 +218,7 @@ msgstr "{name} ist online seit {login}!\n"
 msgid "No players are online at the moment."
 msgstr "Derzeit sind keine Spieler online!"
 
-#: main.py:957 main.py:967 main.py:1004
+#: main.py:957 main.py:967 main.py:1003
 msgid "now"
 msgstr "jetzt"
 
@@ -226,63 +226,69 @@ msgstr "jetzt"
 msgid "Player: {player} is currently {state} and was last seen {lastseen}."
 msgstr "Spieler {player} ist derzeit {state} und wurde zuletzt gesehen {lastseen}!"
 
-#: main.py:1005
+#: main.py:1004
 msgid "Player: {player} is set as offline and was last seen {lastseen}."
-msgstr "Spieler {player} ist als offline gespeichert und wurde zuletzt gesehen {lastseen}!"
+msgstr ""
+"Spieler {player} ist als offline gespeichert und wurde zuletzt gesehen "
+"{lastseen}!"
 
-#: main.py:1011
+#: main.py:1010
 msgid "Player: {player} is already offline and was last seen {lastseen}."
 msgstr "Spieler {player} ist bereits offline und wurde zuletzt gesehen {lastseen}!"
 
-#: main.py:1025
+#: main.py:1023
 msgid "Player: {player} is set as offline.\n"
 msgstr "Spieler {player} wurde als offline gespeichert!\n"
 
-#: main.py:1030
+#: main.py:1028
 msgid "Need either player name or 'all'!"
 msgstr "Bitte Spielernamen oder 'all' angeben!"
 
-#: main.py:1039
+#: main.py:1033
+msgid "No players were online!"
+msgstr "Es sind keine Spieler online!"
+
+#: main.py:1040
 msgid "Hi, {author}. My Name is {user}.\n"
 msgstr "Servusla {author}! Mein Name ist {user}!\n"
 
-#: main.py:1040
+#: main.py:1041
 msgid "You can call me with following commands:\n"
 msgstr "Ich verfüge über folgenden Befehlssatz:\n"
 
-#: main.py:1044
+#: main.py:1045
 msgid "!online <player name> - I will tell you if the"
 msgstr "!online <spieler name> - Ich verrate Dir ob "
 
-#: main.py:1045
+#: main.py:1046
 msgid "player with <name> is online on the SCUM server\n"
 msgstr ""
 "Spieler mit dem Namen <spieler name> gerade online auf unserem SCUM-"
 "Server ist\n"
 
-#: main.py:1049
+#: main.py:1050
 msgid "!lastseen <player name> - I will tell you when I have seen <playername>"
 msgstr "!lastseen <spieler name> - Wann ich Spieler <spieler name> das letzte Mal "
 
-#: main.py:1050
+#: main.py:1051
 msgid "on the SCUM Server\n"
 msgstr "auf dem SCUM Server gesehen habe\n"
 
-#: main.py:1054
+#: main.py:1055
 msgid "!bunkers <bunker name> - I will tell you if the <bunker name> is active.\n"
 msgstr "!bunkers <bunker name> - Ist Bunker <bunker name> aktiv\n"
 
-#: main.py:1055
+#: main.py:1056
 msgid "But the <bunker name> is optional. Without I unveil the secret and give"
 msgstr ""
 "Argument <bunker name> ist optional. Wenn Du den Namen weglässt, schaue "
 "ich in meine Glaskugel und verrate"
 
-#: main.py:1056
+#: main.py:1057
 msgid " you all active bunkers."
 msgstr " Dir alle aktiven Bunker."
 
-#: main.py:1060
+#: main.py:1061
 msgid ""
 "I will also report bunker openening, kills and players joining to and "
 "disconnecting "
@@ -290,15 +296,15 @@ msgstr ""
 "Ausserdem reporte ich Bunker Aktivierungen, Kills und Player An- und "
 "Abmeldungen "
 
-#: main.py:1061
+#: main.py:1062
 msgid "from the SCUM Server."
 msgstr "von unserem SCUM-Server."
 
-#: main.py:1079
+#: main.py:1080
 msgid "You do not have the correct role for this command."
 msgstr "Du hast hierfür nicht die richtige Rolle für diesen Befehl!"
 
-#: main.py:1081
+#: main.py:1082
 msgid "'{error}' is a required argument."
 msgstr "'{error}' ist ein benötigtes Argument!"
 
