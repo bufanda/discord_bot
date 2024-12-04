@@ -27,6 +27,8 @@ preliminary readme
        -> Can be used via DM by user BOT_SUPER_ADMIN_USER
     * !debug <cmd> - Debug commands, when enabled no rights restrictions are applied!!!
         - dump_all - Dumps config, member database and environment
+    * !offline <name> or all - set's a player in offline state in bot database. If `all` is used all 
+      players will be set to offline state
 
 ## configure env-file
 ```
