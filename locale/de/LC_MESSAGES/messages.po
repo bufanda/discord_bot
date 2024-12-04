@@ -227,17 +227,14 @@ msgid "Player: {player} is currently {state} and was last seen {lastseen}."
 msgstr "Spieler {player} ist derzeit {state} und wurde zuletzt gesehen {lastseen}!"
 
 #: main.py:1005
-#, fuzzy
 msgid "Player: {player} is set as offline and was last seen {lastseen}."
 msgstr "Spieler {player} ist als offline gespeichert und wurde zuletzt gesehen {lastseen}!"
 
 #: main.py:1011
-#, fuzzy
 msgid "Player: {player} is already offline and was last seen {lastseen}."
 msgstr "Spieler {player} ist bereits offline und wurde zuletzt gesehen {lastseen}!"
 
 #: main.py:1025
-#, fuzzy
 msgid "Player: {player} is set as offline.\n"
 msgstr "Spieler {player} wurde als offline gespeichert!\n"
 

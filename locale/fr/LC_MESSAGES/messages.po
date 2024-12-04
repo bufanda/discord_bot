@@ -228,21 +228,18 @@ msgstr ""
 "fois {lastseen}."
 
 #: main.py:1005
-#, fuzzy
 msgid "Player: {player} is set as offline and was last seen {lastseen}."
 msgstr ""
 "Joueur : {player} est actuellement {state} et a été vu pour la dernière "
 "fois {lastseen}."
 
 #: main.py:1011
-#, fuzzy
 msgid "Player: {player} is already offline and was last seen {lastseen}."
 msgstr ""
 "Joueur : {player} est actuellement {state} et a été vu pour la dernière "
 "fois {lastseen}."
 
 #: main.py:1025
-#, fuzzy
 msgid "Player: {player} is set as offline.\n"
 msgstr "Le joueur {player} vit sur le serveur pendant {lifetime}."
 
