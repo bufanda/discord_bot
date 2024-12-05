@@ -45,6 +45,7 @@ class ConfigManager():
 
     _DEFAULT_CONFIG = {
         "reply": "same_channel",
+        "restart_schedule": "",
         "publish_login": False,
         "publish_bunkers": False,
         "publish_kills": False,
@@ -106,6 +107,7 @@ class ConfigManager():
         self.log_check_interval = os.getenv("LOG_CHECK_INTERVAL")
         self.help_command = os.getenv("BOT_HELP_COMMAND")
         self.experimental = os.getenv("EXPERIMENTAL_ENABLE")
+        self.env_restart_schedule = os.getenv("RESTART_SCHEDULE")
 
         self.vcs_ref = os.getenv("VCS_REF")
         self.vcs_tag = os.getenv("VCS_TAG")
@@ -173,6 +175,19 @@ class ConfigManager():
 
         self._load_config(self.database_file)
 
+    def get_restart_schedule(self) -> list:
+        """Return all scheduled restarts as list"""
+        retval = []
+        if "restart_schedule" in self.config:
+            _schedule = self.config["restart_schedule"].split(",")
+            retval += _schedule
+        if self.env_restart_schedule is not None:
+            _schedule = self.env_restart_schedule.split(",")
+            retval += _schedule
+
+        return retval
+
+    # pylint: disable=too-many-branches
     def _load_config(self, database_file) -> None:
         init = False
         db = ScumLogDataManager(database_file)
@@ -181,6 +196,8 @@ class ConfigManager():
             init = True
         if "reply" not in _config:
             _config.update({"reply": self._DEFAULT_CONFIG['reply']})
+        if "restart_schedule" not in _config:
+            _config.update({"restart_schedule": self._DEFAULT_CONFIG['restart_schedule']})
         if "publish_login" not in _config:
             _config.update({"publish_login": self._DEFAULT_CONFIG['publish_login']})
         if "publish_bunkers" not in _config:
@@ -203,3 +220,4 @@ class ConfigManager():
         self.config = _config
         if init:
             db.save_config(self.config)
+    # pylint: enable=too-many-branches

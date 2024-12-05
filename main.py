@@ -492,6 +492,8 @@ async def log_parser_loop():
         db.discard_old_logfiles(30*86400)
         db.discard_aged_messages(30*86400)
         db.discard_old_admin_audtis(60*86400)
+
+    await _handle_schduled_restart()
     db.close()
     heartbeat = datetime.now()
 
@@ -1084,6 +1086,27 @@ async def on_command_error(ctx, error):
         # All unhandled errors will print their original traceback
         logging.error(f'Ignoring exception in command {ctx.command}:')
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+
+async def _handle_schduled_restart()-> None:
+    db = ScumLogDataManager(config.database_file)
+    now = datetime.now().strftime("%H:%M")
+    schedule = config.get_restart_schedule()
+    for restart in schedule:
+        if restart == now:
+            player_status = db.get_player_online_status()
+            for p in player_status:
+                if p["state"] != 0:
+                    p["state"] = 0
+                    p.update({"coordinates":{
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }})
+                    p.update({"timestamp": datetime.now().strftime('%Y.%m.%d-%H.%M.%S')})
+                    message = f"Player {p["name"]} is forcibly set as offline due to restart"
+                    message += " schedule."
+                    logging.info(message)
+                    db.update_player(p)
 
 ## Start the Program
 config = ConfigManager()
