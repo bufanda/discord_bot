@@ -308,7 +308,6 @@ async def handle_bunkers(msgs, file, dbconnection):
                             msg_str += _("it wasnt't discovered previously.")
                         if config.config["publish_bunkers"]:
                             await channel.send(msg_str)
-                    print(msg)
                     dbconnection.update_bunker_status(msg)
                     dbconnection.store_message_send(msg["hash"])
 

@@ -86,15 +86,15 @@ class BunkerParser(Parser):
 
     bunkerRegex = {
         # 2024.09.10-02.33.17: [LogBunkerLock] D2 Bunker is Active. Activated 00h 00m 00s ago. X=-243813.062 Y=568471.812 Z=72278.109
-        "Active" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s.]+\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
+        "Active" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{1,3})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s.]+\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
         # 2024.09.10-02.33.17: [LogBunkerLock] Z1 Bunker is Locked. Locked 00h 00m 00s ago, next Activation in 25h 47m 38s. X=-564608.062 Y=-724692.062 Z=15077.148
-        "Locked" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s,.]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s.\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
+        "Locked" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{1,3})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s,.]+([0-9]{1,3})h ([0-9]{2})m ([0-9]{2})s.\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
         # 2024.09.10-02.32.59: [LogBunkerLock] B3 Bunker Activated 17h 35m 35s ago
-        "Activated" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s.]+$",
+        "Activated" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{1,3})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s.]+$",
         # 2024.09.10-04.20.55: [LogBunkerLock] D2 Bunker Deactivated
         "Deactivated" : r"^([0-9.-]*):\s\[[A-Za-z\s]+\]\s([A-Z]{1}[0-9]{1})\s[A-Za-z\s]+$",
         # 2024.12.06-10.30.17: [LogBunkerLock] D2 Bunker is Locked. Locked initially, next Activation in 09h 19m 00s. X=-243813.062 Y=568471.812 Z=72278.109
-        "initially": r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.,]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s.\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
+        "initially": r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.,]+([0-9]{1,3})h ([0-9]{2})m ([0-9]{2})s.\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
     }
 
     # def __init__(self) -> None:
@@ -159,7 +159,7 @@ class BunkerParser(Parser):
                     }
                 }
                 )
-            elif "Locked" in string and not "initially" in string:
+            elif "Locked" in string and "initially" not in string:
                 retval.update({
                     "name": result.group(2),
                     "active": False,
@@ -183,8 +183,6 @@ class BunkerParser(Parser):
                 }
                 )
             elif "Locked" in string and "initially" in string:
-                print(string)
-                print(result.groups())
                 retval.update({
                     "name": result.group(2),
                     "active": False,
