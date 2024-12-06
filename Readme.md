@@ -53,7 +53,9 @@ SFTP_USERNAME= # SFTP-User
 SFTP_PASSWORD= # SFTP-Passwort
 LOG_DIRECTORY= # Path to logfiles
 LOG_CHECK_INTERVAL= 60 # Interval in which bot will check server log files (default: 60 seconds)
-
+RESTART_SCHEDULE= # Comma seperated times in HH:MM when server restarts happen
+                  # Users will be set as offline in bot database
+                  
 BOT_HELP_COMMAND= # Command to print bot help (default: buffi)
 
 BOT_USER_ROLE= # user role who can invoke user commands. Set to @everyone for global access
