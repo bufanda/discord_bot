@@ -93,6 +93,8 @@ class BunkerParser(Parser):
         "Activated" : r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s[A-Za-z\s.]+$",
         # 2024.09.10-04.20.55: [LogBunkerLock] D2 Bunker Deactivated
         "Deactivated" : r"^([0-9.-]*):\s\[[A-Za-z\s]+\]\s([A-Z]{1}[0-9]{1})\s[A-Za-z\s]+$",
+        # 2024.12.06-10.30.17: [LogBunkerLock] D2 Bunker is Locked. Locked initially, next Activation in 09h 19m 00s. X=-243813.062 Y=568471.812 Z=72278.109
+        "initially": r"^([0-9.-]*):\s\[[A-Za-z]+\]\s([A-Z]{1}[0-9]{1})[A-Za-z\s.,]+([0-9]{2})h ([0-9]{2})m ([0-9]{2})s.\sX=([0-9.-]*)\sY=([0-9.-]*)\sZ=([0-9.-]*)$",
     }
 
     # def __init__(self) -> None:
@@ -124,10 +126,12 @@ class BunkerParser(Parser):
         }
         if "Active" in string:
             self.log_regex = self.bunkerRegex["Active"]
-        elif "Locked" in string:
+        elif "Locked" in string and not "initially" in string:
             self.log_regex = self.bunkerRegex["Locked"]
         elif "Activated" in string:
             self.log_regex = self.bunkerRegex["Activated"]
+        elif "Locked" in string and not "initially" in string:
+            self.log_regex = self.bunkerRegex["initially"]
         elif "Deactivated" in string:
             self.log_regex = self.bunkerRegex["Deactivated"]
         else:
@@ -155,7 +159,7 @@ class BunkerParser(Parser):
                     }
                 }
                 )
-            elif "Locked" in string:
+            elif "Locked" in string and not "initially" in string:
                 retval.update({
                     "name": result.group(2),
                     "active": False,
@@ -175,6 +179,31 @@ class BunkerParser(Parser):
                         "x": result.group(9),
                         "y": result.group(10),
                         "z": result.group(11),
+                    }
+                }
+                )
+            elif "Locked" in string and "initially" in string:
+                print(string)
+                print(result.groups())
+                retval.update({
+                    "name": result.group(2),
+                    "active": False,
+                    "timestamp": result.group(1),
+                    "hash": self._hash_string(string),
+                    "since": {
+                        "h": 0,
+                        "m": 0,
+                        "s": 0,
+                    },
+                    "next": {
+                        "h": result.group(2),
+                        "m": result.group(3),
+                        "s": result.group(4),
+                    },
+                    "coordinates": {
+                        "x": result.group(5),
+                        "y": result.group(6),
+                        "z": result.group(7),
                     }
                 }
                 )
