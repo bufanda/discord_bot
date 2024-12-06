@@ -285,6 +285,7 @@ async def handle_bunkers(msgs, file, dbconnection):
                     bunker_data = dbconnection.get_active_bunkers(msg['name'])
                     if len(bunker_data) == 0:
                         bunker_data.append({"active": 0})
+                        bunker_data[0].update({"coordinates":{}})
 
                     if msg["active"] and bunker_data[0]['active'] == 0:
                         msg_str = _("Bunker {name} was activated. ").format(name=msg['name'])
@@ -295,7 +296,7 @@ async def handle_bunkers(msgs, file, dbconnection):
                             msg_str += "(https://scum-map.com/en/map/place/"
                             msg_str += f"{msg['coordinates']['x']}"
                             msg_str += f",{msg['coordinates']['y']},3)"
-                        elif 'coordinates' in bunker_data[0]:
+                        elif len(bunker_data[0]['coordinates']) != 0:
                             msg_str += f"Coordinates @ [X={bunker_data[0]['coordinates']['x']} "
                             msg_str += f"Y={bunker_data[0]['coordinates']['y']} "
                             msg_str += f"Z={bunker_data[0]['coordinates']['z']}]"
@@ -307,6 +308,7 @@ async def handle_bunkers(msgs, file, dbconnection):
                             msg_str += _("it wasnt't discovered previously.")
                         if config.config["publish_bunkers"]:
                             await channel.send(msg_str)
+                    print(msg)
                     dbconnection.update_bunker_status(msg)
                     dbconnection.store_message_send(msg["hash"])
 
