@@ -32,6 +32,7 @@ RUN apk add --update --no-cache gettext && \
 
 COPY requirements.txt main.py /app/
 COPY modules/ /app/modules
+COPY command/ /app/command
 COPY --from=build /app/locale/ /app/locale
 
 WORKDIR /app

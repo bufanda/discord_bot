@@ -30,6 +30,7 @@ from modules.sftploader import ScumSFTPLogParser
 from modules.output import Output
 from modules.configmanager import ConfigManager
 from modules.mytime import mytime
+from command.online import Online
 # pylint: enable=wrong-import-position
 
 load_dotenv()
@@ -883,50 +884,17 @@ async def command_bunkers(ctx, bunker: str = None):
 @client.command(name='online')
 async def player_online(ctx, player: str = None):
     """Command to check if player is online"""
-    message = ""
     # pylint: disable=line-too-long
     if not _check_user_bot_role(ctx.author.name, "user") and not \
         _check_guild_roles(_get_guild_member_roles(ctx.author.name), config.user_role):
         await ctx.reply(_("You do not have permission to invoke this command."))
         return
 
-    local_timezone = ZoneInfo('Europe/Berlin')
-    logging.info(f"Get status for player {player}")
-    db = ScumLogDataManager(config.database_file)
-    if player:
-        player_status = db.get_player_status(player)
-
-        if len(player_status) == 0:
-            message = _("Error: Player {player} does not exists in Database").format(player=player)
-        else:
-            if len(player_status) > 1:
-                message = _("Multiple players with Name {player} found.\n").format(player=player)
-                for p in player_status:
-                    if p["state"] == 0:
-                        state = "offline"
-                    else:
-                        state = "online"
-                    message += _("{player} is currently {status}").format(player=player, status=state)
-            else:
-                if player_status[0]["status"] == 0:
-                    state = "offline"
-                else:
-                    state = "online"
-                message += _("{player} is currently {status}").format(player=player, status=state)
-    else:
-        player_status = db.get_player_online_status()
-        if len(player_status) > 0:
-            message = _("Follwoing Players are online:\n")
-            for p in player_status:
-                if p["state"] == 1:
-                    login = datetime.fromtimestamp(p['login_timestamp'],
-                                                    local_timezone).strftime('%d.%m.%Y %H:%M:%S')
-                    message += _("{name} is online since {login}\n").format(name=p['name'],login=login)
-        else:
-            message = _("No players are online at the moment.")
+    cmd_handler = Online()
+    message = cmd_handler.handle_command(player)
 
     await _reply(ctx, message)
-    db.close()
+
     # pylint: enable=line-too-long
 
 # pylint: disable=line-too-long
