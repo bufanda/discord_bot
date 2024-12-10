@@ -81,11 +81,6 @@ async def on_ready():
             f'{guild.name}(id: {guild.id})\n'
             'Starting log parser.'
         )
-        # logging.info(
-        #    _('{user} is connected to the following guild:\n').format(user=client.user) +
-        #    _('{name}(id: {id})\n').format(name=guild.name, id=guild.id) +
-        #    _('Starting log parser.')
-        # )
     #call database manager to initialize db
     db = ScumLogDataManager(config.database_file)
 
