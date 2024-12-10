@@ -175,6 +175,9 @@ class ConfigManager():
 
         self._load_config(self.database_file)
 
+    def reload_config(self) -> None:
+        self._load_config(self.database_file)
+
     def get_restart_schedule(self) -> list:
         """Return all scheduled restarts as list"""
         retval = []
