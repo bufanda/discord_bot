@@ -527,6 +527,8 @@ class ScumLogDataManager:
         for item in reply:
             if item[0] == "reply":
                 retval.update({item[0]: item[1]})
+            elif item[0] == "restart_schedule":
+                retval.update({item[0]: item[1]})
             else:
                 if item[1] == "True":
                     retval.update({item[0]: True})
