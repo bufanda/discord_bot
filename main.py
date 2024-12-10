@@ -337,7 +337,8 @@ async def handle_admin_log(msgs, file, dbconnection):
                     logging.debug(f"Admin: {msg['name']}: {msg['type']} - {msg['action']}")
                     dbconnection.store_message_send(msg["hash"])
                     dbconnection.update_admin_audit(msg)
-                    if config.config["publish_admin_log"]:
+                    player_state = dbconnection.get_player_status(msg['name'])
+                    if config.config["publish_admin_log"] and player_state[0]['drone'] == 0:
                         channel = client.get_channel(int(config.log_feed_channel))
                         msg_str = f"{_convert_german_time(msg['time'])} - Admin: "
                         msg_str += _("{name} invoked ").format(name=msg['name'])
