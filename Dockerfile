@@ -38,8 +38,8 @@ COPY --from=build /app/locale/ /app/locale
 
 WORKDIR /app
 
-RUN python -m pip install --no-cache-dir -r requirements.txt 
-RUN adduser -H -u 12000 -S -s /bin/false scumbot
+RUN python -m pip install --no-cache-dir -r requirements.txt && \
+    adduser -H -u 12000 -S -s /bin/false scumbot
 
 ENV PYTHONPATH=/app
 ENTRYPOINT [ "/entrypoint.sh" ]
