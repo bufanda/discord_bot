@@ -27,17 +27,20 @@ LABEL description="A Discord Bot for Scum Server Owner."
 ENV VCS_TAG=${VCS_TAG}
 ENV VCS_REF=${VCS_REF}
 
-RUN apk add --update --no-cache gettext && \
+RUN apk add --update --no-cache gettext runuser && \
     mkdir -p /app/locale
 
 COPY requirements.txt main.py /app/
 COPY modules/ /app/modules
 COPY command/ /app/command
+COPY docker/entrypoint.sh /entrypoint.sh
 COPY --from=build /app/locale/ /app/locale
 
 WORKDIR /app
 
 RUN python -m pip install --no-cache-dir -r requirements.txt 
+RUN adduser -H -u 12000 -S -s /bin/false scumbot
 
 ENV PYTHONPATH=/app
+ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["python", "-u", "./main.py"]
