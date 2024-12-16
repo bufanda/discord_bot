@@ -227,6 +227,12 @@ async def handle_login(msgs, file, dbconnection):
                         if config.config["publish_login"] and \
                             (datetime.now().timestamp() - mytime.get_timestamp(msg['timestamp']) < 600):
                             await channel.send(msg_str)
+                    if msg['drone'] or player_data[0]['drone']:
+                    # pylint: disable=line-too-long
+                        if msg['state'] == "in":
+                            log_msg = _("Player: {name}, logged in as drone ").format(name=msg['username'])
+                        else:
+                            log_msg = _("Player: {name}, logged out as drone ").format(name=msg['username'])
 
                 if msg and dbconnection.check_message_send(msg["hash"]):
                     if not msg['drone'] and player_data[0]['drone']:
@@ -322,7 +328,6 @@ async def handle_fame(msgs, file, dbconnection):
 
 async def handle_admin_log(msgs, file, dbconnection):
     """handle admin log events"""
-    # channel = client.get_channel(int(config.log_feed_channel))
     fp = AdminParser()
     for m in msgs[file]:
         if not isinstance(m,set):
@@ -333,6 +338,9 @@ async def handle_admin_log(msgs, file, dbconnection):
                     dbconnection.store_message_send(msg["hash"])
                     dbconnection.update_admin_audit(msg)
                     player_state = dbconnection.get_player_status(msg['name'])
+                    log_msg = f"Player {msg['name']} used admin command {msg['type']}: {msg['action']}."
+                    log_msg += f" Player was drone? {str(msg['drone'])}"
+                    logging.debug(log_msg)
                     if config.config["publish_admin_log"] and player_state[0]['drone'] == 0:
                         channel = client.get_channel(int(config.log_feed_channel))
                         msg_str = f"{_convert_german_time(msg['time'])} - Admin: "
