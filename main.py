@@ -323,7 +323,7 @@ async def handle_fame(msgs, file, dbconnection):
             for mm in str.split(m,"\n"):
                 msg = fp.parse(mm)
                 if msg and dbconnection.check_message_send(msg["hash"]):
-                    logging.debug(f"Player: {msg['name']} has {msg['points']} Points.")
+                    logging.info(f"Player: {msg['name']} has {msg['points']} Points.")
                     dbconnection.update_fame_points(msg)
                     dbconnection.store_message_send(msg["hash"])
 
@@ -335,14 +335,14 @@ async def handle_admin_log(msgs, file, dbconnection):
             for mm in str.split(m,"\n"):
                 msg = fp.parse(mm)
                 if msg and dbconnection.check_message_send(msg["hash"]):
-                    logging.debug(f"Admin: {msg['name']}: {msg['type']} - {msg['action']}")
+                    logging.info(f"Admin: {msg['name']}: {msg['type']} - {msg['action']}")
                     dbconnection.store_message_send(msg["hash"])
                     dbconnection.update_admin_audit(msg)
                     player_state = dbconnection.get_player_status(msg['name'])
                     log_msg = f"Player {msg['name']} used admin command {msg['type']}: {msg['action']}."
                     log_msg += f" Player was drone? {str(bool(player_state[0]['drone']))} "
                     log_msg += f"({str(player_state[0]['drone'])})"
-                    logging.debug(log_msg)
+                    logging.info(log_msg)
                     if config.config["publish_admin_log"] and player_state[0]['drone'] == 0:
                         channel = client.get_channel(int(config.log_feed_channel))
                         msg_str = f"{_convert_german_time(msg['time'])} - Admin: "
@@ -358,7 +358,7 @@ async def handle_chat(msgs, file, db: ScumLogDataManager):
             for mm in str.split(m,"\n"):
                 msg = parser.parse(mm)
                 if msg and db.check_message_send(msg["hash"]):
-                    logging.debug(f"Chat: {msg['name']} - {msg['channel']}: {msg['message']}")
+                    logging.info(f"Chat: {msg['name']} - {msg['channel']}: {msg['message']}")
                     db.store_message_send(msg["hash"])
                     channel = client.get_channel(int(config.log_feed_channel))
                     if msg['channel'].lower() == "global":
