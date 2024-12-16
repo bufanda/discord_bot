@@ -241,7 +241,7 @@ async def handle_login(msgs, file, dbconnection):
                     dbconnection.update_player(msg)
                     # pylint: enable=line-too-long
                     logging.DEBUG(log_msg)
-                    
+
 async def handle_kills(msgs, file, dbconnection):
     """function to construct and send kill messages"""
     channel = client.get_channel(int(config.log_feed_channel))
@@ -340,7 +340,8 @@ async def handle_admin_log(msgs, file, dbconnection):
                     dbconnection.update_admin_audit(msg)
                     player_state = dbconnection.get_player_status(msg['name'])
                     log_msg = f"Player {msg['name']} used admin command {msg['type']}: {msg['action']}."
-                    log_msg += f" Player was drone? {str(player_state[0]['drone'])}"
+                    log_msg += f" Player was drone? {str(bool(player_state[0]['drone']))} "
+                    log_msg += f"({str(player_state[0]['drone'])})"
                     logging.debug(log_msg)
                     if config.config["publish_admin_log"] and player_state[0]['drone'] == 0:
                         channel = client.get_channel(int(config.log_feed_channel))
