@@ -240,7 +240,8 @@ async def handle_login(msgs, file, dbconnection):
                     dbconnection.store_message_send(msg["hash"])
                     dbconnection.update_player(msg)
                     # pylint: enable=line-too-long
-
+                    logging.DEBUG(log_msg)
+                    
 async def handle_kills(msgs, file, dbconnection):
     """function to construct and send kill messages"""
     channel = client.get_channel(int(config.log_feed_channel))
