@@ -347,7 +347,8 @@ async def handle_admin_log(msgs, file, dbconnection):
                     log_msg += f" Player was drone? {str(bool(player_state[0]['drone']))} "
                     log_msg += f"({str(player_state[0]['drone'])})"
                     logging.info(log_msg)
-                    if config.config["publish_admin_log"] and player_state[0]['drone'] == 0:
+                    if config.config["publish_admin_log"] and player_state[0]['drone'] == 0 \
+                        and player_state[0]['state'] != 0:
                         channel = client.get_channel(int(config.log_feed_channel))
                         msg_str = f"{_convert_german_time(msg['time'])} - Admin: "
                         msg_str += _("{name} invoked ").format(name=msg['name'])
