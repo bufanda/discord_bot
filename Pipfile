@@ -4,15 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-"py-cord" = "*"
-"python-dotenv" = "*"
-"paramiko" = "*"
-"chardet" = "*"
-"tzlocal" = "*"
+py-cord = "*"
+python-dotenv = "*"
+paramiko = "*"
+chardet = "*"
+tzlocal = "*"
+setuptools = "*"
+babel = "*"
 
 [dev-packages]
-"Babel" = "*"
-"setuptools" = "*"
+babel = "*"
+setuptools = "*"
 
 [requires]
 python_version = "3.12"
