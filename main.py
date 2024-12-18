@@ -344,7 +344,8 @@ async def handle_admin_log(msgs, file, dbconnection):
                     dbconnection.store_message_send(msg["hash"])
                     dbconnection.update_admin_audit(msg)
                     player_state = dbconnection.get_player_status(msg['name'])
-                    log_msg = f"Player {msg['name']} used admin command {msg['type']}: {msg['action']}."
+                    log_msg = f"Player {msg['name']} used admin command {msg['type']}:"
+                    log_msg += f"{msg['action']}."
                     log_msg += f" Player was drone? {str(bool(player_state[0]['drone']))} "
                     log_msg += f"({str(player_state[0]['drone'])})"
                     logging.info(log_msg)
@@ -625,7 +626,7 @@ async def handle_command_audit(ctx, args):
     if len(args) == 0:
         audit = db.get_admin_audit()
         for a in audit:
-            msg_str += f"{datetime.fromtimestamp(a['timestamp'], 
+            msg_str += f"{datetime.fromtimestamp(a['timestamp'],
                         local_timezone).strftime('%Y-%m-%d %H:%M:%S')}:"
             msg_str += f"{a['username']} invoked "
             msg_str += f"{a['type']}: {a['action']}\n"
@@ -823,22 +824,6 @@ async def command_lifetime(ctx, player: str = None):
         await ctx.reply(_("You do not have permission to invoke this command."))
         return
 
-    # db = ScumLogDataManager(config.database_file)
-    # if player:
-    #     logging.info(f"Get server lifetime for player {player}")
-    #     player_stat = db.get_player_status(player)
-    #     if len(player_stat) > 0:
-    #         lifetime = mytime.convert_time(player_stat[0]["lifetime"])
-    #         msg_str = _("Player {player} lives on server for {lifetime}.").format(player=player, lifetime=lifetime)
-    #     else:
-    #         msg_str = _("Player {player} has no life on this server.").format(player=player)
-    # else:
-    #     logging.info("Getting all players that visited the server")
-    #     player_stat = db.get_player_status()
-    #     msg_str = _("Following players have a liftime on this server:\n")
-    #     for p in player_stat:
-    #         lifetime = mytime.convert_time(p["lifetime"])
-    #         msg_str += _("{name} lives for {lifetime} on this server.\n").format(name=p['name'], lifetime=lifetime)
     lifetime = Lifetime()
     msg_str = lifetime.handle_command(player)
     await _reply(ctx, msg_str)
