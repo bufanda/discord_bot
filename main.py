@@ -31,6 +31,7 @@ from modules.output import Output
 from modules.configmanager import ConfigManager
 from modules.mytime import mytime
 from command.online import Online
+from command.lifetime import Lifetime
 # pylint: enable=wrong-import-position
 
 load_dotenv()
@@ -624,8 +625,8 @@ async def handle_command_audit(ctx, args):
     if len(args) == 0:
         audit = db.get_admin_audit()
         for a in audit:
-            msg_str += f"{datetime.fromtimestamp(a['timestamp'],
-                        local_timezone).strftime('%Y-%m-%d %H:%M:%S')}: "
+            msg_str += f"{datetime.fromtimestamp(a['timestamp'], 
+                        local_timezone).strftime('%Y-%m-%d %H:%M:%S')}:"
             msg_str += f"{a['username']} invoked "
             msg_str += f"{a['type']}: {a['action']}\n"
     elif args[0] == "age":
@@ -816,32 +817,31 @@ async def command_config(ctx, *args):
 @client.command(name="lifetime")
 async def command_lifetime(ctx, player: str = None):
     """Command to check server liftime of players"""
-    msg_str = None
     # pylint: disable=line-too-long
     if not _check_user_bot_role(ctx.author.name, "user") and not \
         _check_guild_roles(_get_guild_member_roles(ctx.author.name), config.user_role):
         await ctx.reply(_("You do not have permission to invoke this command."))
         return
 
-    db = ScumLogDataManager(config.database_file)
-    if player:
-        logging.info(f"Get server lifetime for player {player}")
-        player_stat = db.get_player_status(player)
-        if len(player_stat) > 0:
-            lifetime = mytime.convert_time(player_stat[0]["lifetime"])
-            msg_str = _("Player {player} lives on server for {lifetime}.").format(player=player, lifetime=lifetime)
-        else:
-            msg_str = _("Player {player} has no life on this server.").format(player=player)
-    else:
-        logging.info("Getting all players that visited the server")
-        player_stat = db.get_player_status()
-        msg_str = _("Following players have a liftime on this server:\n")
-        for p in player_stat:
-            lifetime = mytime.convert_time(p["lifetime"])
-            msg_str += _("{name} lives for {lifetime} on this server.\n").format(name=p['name'], lifetime=lifetime)
-
+    # db = ScumLogDataManager(config.database_file)
+    # if player:
+    #     logging.info(f"Get server lifetime for player {player}")
+    #     player_stat = db.get_player_status(player)
+    #     if len(player_stat) > 0:
+    #         lifetime = mytime.convert_time(player_stat[0]["lifetime"])
+    #         msg_str = _("Player {player} lives on server for {lifetime}.").format(player=player, lifetime=lifetime)
+    #     else:
+    #         msg_str = _("Player {player} has no life on this server.").format(player=player)
+    # else:
+    #     logging.info("Getting all players that visited the server")
+    #     player_stat = db.get_player_status()
+    #     msg_str = _("Following players have a liftime on this server:\n")
+    #     for p in player_stat:
+    #         lifetime = mytime.convert_time(p["lifetime"])
+    #         msg_str += _("{name} lives for {lifetime} on this server.\n").format(name=p['name'], lifetime=lifetime)
+    lifetime = Lifetime()
+    msg_str = lifetime.handle_command(player)
     await _reply(ctx, msg_str)
-    db.close()
     # pylint: enable=line-too-long
 
 @client.command(name='bunkers')
