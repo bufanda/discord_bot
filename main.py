@@ -71,7 +71,6 @@ async def on_ready():
     guild = None
     for guild in client.guilds:
         if config.guild in (guild.name, str(guild.id)):
-            # print("found")
             break
     logging.info(f"Starting Bot Version {config.version}")
 
@@ -107,12 +106,17 @@ async def _reply(context, msg) -> None:
     if len(msg) > MAX_MESSAGE_LENGTH:
         chunks = []
         chunk = ""
-        for line in msg.split("\n"):
+        lines = msg.split("\n")
+        for linenumber,line in enumerate(lines):
             if len(chunk) + len(line) < MAX_MESSAGE_LENGTH:
                 chunk += f"{line}\n"
             else:
                 chunks.append(chunk)
                 chunk = f"{line}\n"
+            if linenumber == len(lines) - 1:
+                # Append the last chunk when nothing more is to process
+                chunks.append(chunk)
+
         for _chunk in chunks:
             if config.config["reply"] == "same_channel":
                 await context.reply(_chunk)
