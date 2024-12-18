@@ -27,12 +27,10 @@ msgid "Player: {name}, logged out "
 msgstr "Jugador: {name}, desconectado "
 
 #: main.py:237
-#, fuzzy
 msgid "Player: {name}, logged in as drone "
 msgstr "Jugador: {name}, conectado "
 
 #: main.py:239
-#, fuzzy
 msgid "Player: {name}, logged out as drone "
 msgstr "Jugador: {name}, desconectado "
 
@@ -242,7 +240,6 @@ msgid "Need either player name or 'all'!"
 msgstr ""
 
 #: main.py:1015
-#, fuzzy
 msgid "No players were online!"
 msgstr "Los siguientes jugadores están en línea:\n"
 

@@ -47,7 +47,11 @@ class Online(Command):
                     .format(player=player, status=state)
         else:
             player_status = db.get_player_online_status()
-            if len(player_status) > 0:
+            none_drone = 0
+            for p in player_status:
+                if p["state"] == 1 and p["drone"] == 0:
+                    none_drone+=1
+            if len(player_status) > 0 and none_drone > 0:
                 message = self._("Follwoing Players are online:\n")
                 for p in player_status:
                     if p["state"] == 1 and p["drone"] == 0:
