@@ -925,7 +925,7 @@ async def player_lastseen(ctx, player: str):
                 message += _("Player: {player} is currently {state} and was last seen {lastseen}.") \
                            .format(player=player, state=state, lastseen=lastseen)
         else:
-            if player_status[0]["status"] == 0:
+            if player_status[0]["state"] == 0:
                 state = "offline"
                 lastseen = datetime.fromtimestamp(player_status[0]["logout_timestamp"],
                                                    local_timezone).strftime('%Y-%m-%d %H:%M:%S')
