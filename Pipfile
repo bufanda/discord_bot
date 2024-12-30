@@ -11,6 +11,7 @@ chardet = "*"
 tzlocal = "*"
 setuptools = "*"
 babel = "*"
+python-gitlab = "*"
 
 [dev-packages]
 babel = "*"

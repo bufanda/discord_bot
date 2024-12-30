@@ -3,3 +3,4 @@ python-dotenv
 paramiko
 chardet
 tzlocal
+python-gitlab
