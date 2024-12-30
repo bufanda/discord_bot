@@ -25,7 +25,8 @@ class ScumGitConnector():
     def __del__(self):
         self.clean_up()
 
-    def get_file(self):
+    def get_file(self, filename) -> tempfile.NamedTemporaryFile:
+        self.repository_file = filename
         with requests.get(self.repository_url, stream=True) as r:
             with open(self.temporary_file, 'wb') as f:
                 shutil.copyfileobj(r.raw, f)
@@ -45,21 +46,29 @@ class GitLabConnector(ScumGitConnector):
     def set_project(self, project: str):
         self.project_name = project
 
-    def get_file(self):
+    def get_file(self, filename) -> tempfile.NamedTemporaryFile:
+        self.repository_file = filename
         try:
             gl = gitlab.Gitlab(self.repository_url, http_password=self.repository_password, \
                                http_username=self.repository_username)
-            pl = gl.projects.list(search=self.project_name)
+            pl = gl.projects.list() # gl.projects.list(search=self.project_name)
+            print(pl)
+            print(gl.api_url)
+            print(gl.namespaces.list())
+            print(gl.groups.list())
+            project = None
             for p in pl:
                 if p.name == self.project_name:
                     project = p
                     break
-            with open(self.temporary_file, 'wb') as f:
-                project.files.raw(file_path=self.repository_file, ref=self.branch_name, streamed=True, action=f.write)
+            if project is not None:
+                project.files.raw(file_path=self.repository_file, ref=self.branch_name, streamed=True, action=self.temporary_file.write)
         except Exception as e:
             print("Error:", e)
+        finally:
+            return self.temporary_file
 
     def __init__(self, url: str, username: str, password: str, branch: str, project: str):
-        super.__init__(url, username, password)
+        super().__init__(url, username, password)
         self.set_branch(branch)
         self.set_project(project)

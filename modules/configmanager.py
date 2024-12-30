@@ -43,6 +43,8 @@ class ConfigManager():
 
     version="1.1.3"
 
+    git: dict
+
     _DEFAULT_CONFIG = {
         "reply": "same_channel",
         "restart_schedule": "",
@@ -125,6 +127,16 @@ class ConfigManager():
         self.super_admin_role = os.getenv("BOT_SUPER_ADMIN_ROLE")
         self.super_admin_user = os.getenv("BOT_SUPER_ADMIN_USER")
         self.user_role = os.getenv("BOT_USER_ROLE")
+
+        self.git = dict()
+        self.git.update({"url": os.getenv("SCUM_CONFIG_GIT_HOST")})
+        self.git.update({"password": os.getenv("SCUM_CONFIG_GIT_PASSWORD")})
+        self.git.update({"username": os.getenv("SCUM_CONFIG_GIT_USERNAME")})
+        self.git.update({"project": os.getenv("SCUM_CONFIG_GIT_PROJECT")})
+        self.git.update({"branch": os.getenv("SCUM_CONFIG_GIT_BRANCH")})
+        self.git.update({"file": os.getenv("SCUM_CONFIG_GIT_FILE")})
+
+        print(self.git)
 
         if self.experimental:
             if self.experimental == "1":

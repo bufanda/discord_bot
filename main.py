@@ -30,6 +30,7 @@ from modules.sftpconnector import ScumSFTPConnector
 from modules.output import Output
 from modules.configmanager import ConfigManager
 from modules.mytime import mytime
+from command.scumconfig import ServerConfig
 from command.online import Online
 from command.lifetime import Lifetime
 # pylint: enable=wrong-import-position
@@ -999,6 +1000,12 @@ async def player_offline(ctx, player: str = None):
     else:
         message = _("No players were online!")
         await _reply_author(ctx, message)
+
+@client.command(name="copy_server_config")
+async def copy_server_config(ctx):
+    # command = ServerConfig()
+    # command.get_config_file()
+    pass
 
 @client.command(name=HELP_COMMAND)
 async def bot_help(ctx):
