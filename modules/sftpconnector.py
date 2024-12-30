@@ -17,7 +17,7 @@ import paramiko.ssh_exception
 from modules.output import Output
 from modules.datamanager import ScumLogDataManager
 
-class ScumSFTPLogParser:
+class ScumSFTPConnector:
     """Class representing a log parser"""
     sftp_server = ""
     sftp_user = ""

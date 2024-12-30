@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 from modules.datamanager import ScumLogDataManager
 from modules.logparser import LoginParser, KillParser, BunkerParser, FamepointParser, \
     AdminParser, ChatParser
-from modules.sftploader import ScumSFTPLogParser
+from modules.sftpconnector import ScumSFTPConnector
 from modules.output import Output
 from modules.configmanager import ConfigManager
 from modules.mytime import mytime
@@ -85,7 +85,7 @@ async def on_ready():
     db = ScumLogDataManager(config.database_file)
 
     # Open SFTP connection to the game server
-    lp = ScumSFTPLogParser(server=config.sftp_server, port=config.sftp_port,
+    lp = ScumSFTPConnector(server=config.sftp_server, port=config.sftp_port,
                            passwd=config.sftp_password, user=config.sftp_user,
                            logdirectoy=config.log_directory, database=config.database_file,
                            debug_callback=None)
