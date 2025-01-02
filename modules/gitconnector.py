@@ -14,7 +14,7 @@ class ScumGitConnector():
     repository_password: str
     repository_username: str
     repository_file: str
-    temporary_file: str
+    temporary_file: tempfile._TemporaryFileWrapper
 
     def __init__(self, url: str, username: str, password: str, branch: str = None, project: str = None):
         self.repository_password = password
@@ -39,6 +39,7 @@ class ScumGitConnector():
 class GitLabConnector(ScumGitConnector):
     branch_name: str
     project_name: str
+    private_token: str
 
     def set_branch(self, branch: str):
         self.branch_name = branch
@@ -46,29 +47,28 @@ class GitLabConnector(ScumGitConnector):
     def set_project(self, project: str):
         self.project_name = project
 
-    def get_file(self, filename) -> tempfile.NamedTemporaryFile:
+    def get_file(self, filename):
         self.repository_file = filename
         try:
-            gl = gitlab.Gitlab(self.repository_url, http_password=self.repository_password, \
-                               http_username=self.repository_username)
-            pl = gl.projects.list() # gl.projects.list(search=self.project_name)
-            print(pl)
-            print(gl.api_url)
-            print(gl.namespaces.list())
-            print(gl.groups.list())
+            gl = gitlab.Gitlab(self.repository_url, private_token=self.private_token)
+
+            pl = gl.projects.list(search=self.project_name)
+
             project = None
             for p in pl:
                 if p.name == self.project_name:
                     project = p
                     break
             if project is not None:
-                project.files.raw(file_path=self.repository_file, ref=self.branch_name, streamed=True, action=self.temporary_file.write)
+                file_list = project.repository_tree()
+                file_content = project.files.get(file_path=self.repository_file, ref=self.branch_name)
         except Exception as e:
             print("Error:", e)
         finally:
-            return self.temporary_file
+            return file_content.decode().decode('UTF-8')
 
-    def __init__(self, url: str, username: str, password: str, branch: str, project: str):
+    def __init__(self, url: str, private_token: str, branch: str, project: str, username: str = None, password: str = None):
         super().__init__(url, username, password)
+        self.private_token = private_token
         self.set_branch(branch)
         self.set_project(project)

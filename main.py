@@ -1003,9 +1003,9 @@ async def player_offline(ctx, player: str = None):
 
 @client.command(name="copy_server_config")
 async def copy_server_config(ctx):
-    # command = ServerConfig()
-    # command.get_config_file()
-    pass
+    command = ServerConfig()
+    command.get_config_file()
+    # pass
 
 @client.command(name=HELP_COMMAND)
 async def bot_help(ctx):

@@ -132,11 +132,10 @@ class ConfigManager():
         self.git.update({"url": os.getenv("SCUM_CONFIG_GIT_HOST")})
         self.git.update({"password": os.getenv("SCUM_CONFIG_GIT_PASSWORD")})
         self.git.update({"username": os.getenv("SCUM_CONFIG_GIT_USERNAME")})
+        self.git.update({"private_token": os.getenv("SCUM_CONFIG_GIT_TOKEN")})
         self.git.update({"project": os.getenv("SCUM_CONFIG_GIT_PROJECT")})
         self.git.update({"branch": os.getenv("SCUM_CONFIG_GIT_BRANCH")})
         self.git.update({"file": os.getenv("SCUM_CONFIG_GIT_FILE")})
-
-        print(self.git)
 
         if self.experimental:
             if self.experimental == "1":

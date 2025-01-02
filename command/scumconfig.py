@@ -29,8 +29,7 @@ class ServerConfig(Command):
 
     def get_config_file(self):
         self.git_connection = GitLabConnector(self.config.git["url"],
-                                              self.config.git["username"],
-                                              self.config.git["password"],
+                                              self.config.git["private_token"],
                                               self.config.git["branch"],
                                               self.config.git["project"])
         
