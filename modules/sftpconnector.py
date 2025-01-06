@@ -197,7 +197,7 @@ class ScumSFTPConnector:
         for _hash in self.log_file_hashes:
             self.log_hashes.add(_hash)
 
-    def update_log_hashes(self, _hash: dict):
+    def update_log_hashes(self, _hash: dict) -> None:
         """update has file of already read files"""
         db = ScumLogDataManager(self._database)
         self.log_file_hashes.update({_hash["hash"]: _hash["name"]})
@@ -209,6 +209,10 @@ class ScumSFTPConnector:
         """parse log"""
         await self._retrieve_files()
         return await self._retrive_file_content()
+
+    def put_file(self, content: str, destination: str = None) -> bool:
+        with self.connect_sftp_p.open(destination, "wb") as remotefile:
+             remotefile.write(content)
 
     def _debug_to_stdout(self, msg):
         self.logging.debug(msg)

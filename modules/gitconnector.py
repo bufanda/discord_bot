@@ -49,6 +49,7 @@ class GitLabConnector(ScumGitConnector):
 
     def get_file(self, filename):
         self.repository_file = filename
+        file_content = None
         try:
             gl = gitlab.Gitlab(self.repository_url, private_token=self.private_token)
 
@@ -65,7 +66,10 @@ class GitLabConnector(ScumGitConnector):
         except Exception as e:
             print("Error:", e)
         finally:
-            return file_content.decode().decode('UTF-8')
+            if not file_content:
+                return None
+            else:
+                return file_content.decode().decode('UTF-8')
 
     def __init__(self, url: str, private_token: str, branch: str, project: str, username: str = None, password: str = None):
         super().__init__(url, username, password)

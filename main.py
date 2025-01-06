@@ -1002,9 +1002,20 @@ async def player_offline(ctx, player: str = None):
         await _reply_author(ctx, message)
 
 @client.command(name="copy_server_config")
-async def copy_server_config(ctx):
+async def copy_server_config(ctx, filename: str = None):
+
+    if not _check_user_bot_role(ctx.author.name, "admin") and not \
+        _check_guild_roles(_get_guild_member_roles(ctx.author.name), config.user_role):
+        await ctx.reply(_("You do not have permission to invoke this command."))
+        return
+
     command = ServerConfig()
-    command.get_config_file()
+    content = command.get_config_file(filename)
+    if content != None:
+        command.copy_file_to_server(content)
+        await _reply(ctx, _("File copied to Scum server!"))
+    else:
+        await _reply(ctx, _("Error while copying file from git to Scum server!"))
     # pass
 
 @client.command(name=HELP_COMMAND)
