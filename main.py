@@ -315,7 +315,8 @@ async def handle_bunkers(msgs, file, dbconnection):
                         else:
                             msg_str += _("Bunker coordinates unkown, ")
                             msg_str += _("it wasnt't discovered previously.")
-                        if config.config["publish_bunkers"]:
+                        age = datetime.now().timestamp() - mytime.get_timestamp(msg['timestamp'])
+                        if config.config["publish_bunkers"] and age < 600:
                             await channel.send(msg_str)
                     dbconnection.update_bunker_status(msg)
                     dbconnection.store_message_send(msg["hash"])
