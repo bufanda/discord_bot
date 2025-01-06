@@ -41,7 +41,7 @@ class ConfigManager():
 
     config: dict
 
-    version="1.1.3"
+    version="1.2.0"
 
     git: dict
 
