@@ -4,3 +4,4 @@ paramiko
 chardet
 tzlocal
 python-gitlab
+selenium
