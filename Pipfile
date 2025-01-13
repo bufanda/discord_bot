@@ -12,6 +12,7 @@ tzlocal = "*"
 setuptools = "*"
 babel = "*"
 python-gitlab = "*"
+selenium = "*"
 
 [dev-packages]
 babel = "*"
