@@ -40,7 +40,9 @@ COPY --from=build /app/locale/ /app/locale
 WORKDIR /app
 
 RUN python -m pip install --no-cache-dir -r requirements.txt && \
-    adduser -H -u 12000 -S -s /bin/false scumbot
+    adduser -H -u 12000 -S -s /bin/false scumbot && \
+    mkdir -p /home/scumbot/.cache/selenium && \
+    chown -R 12000 /home/scumbot/.cache/selenium
 
 ENV PYTHONPATH=/app
 ENTRYPOINT [ "/entrypoint.sh" ]

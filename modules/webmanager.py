@@ -22,7 +22,22 @@ def webmanager_test() -> None:
     driver.close()
 
 def webmanager_test2(bot_username: str, bot_password: str) -> None:
-    driver = webdriver.Chrome()
+    chromeOptions = webdriver.ChromeOptions()
+    chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+    chromeOptions.add_argument("--no-sandbox")
+    chromeOptions.add_argument("--headless")
+    chromeOptions.add_argument("--disable-setuid-sandbox")
+
+    chromeOptions.add_argument("--remote-debugging-port=9222")  # this
+
+    chromeOptions.add_argument("--disable-dev-shm-using")
+    chromeOptions.add_argument("--disable-extensions")
+    chromeOptions.add_argument("--disable-gpu")
+    chromeOptions.add_argument("--start-maximized")
+    chromeOptions.add_argument("--disable-infobars")
+    chromeOptions.add_argument(r"--user-data-dir=.\cookies\\test")
+
+    driver = webdriver.Chrome(options=chromeOptions)
     driver.get("https://gamepanel.pingperfect.com/Login")
     assert "Pingperfect-Login" in driver.title
     username = driver.find_element(By.NAME, 'UserName')
@@ -33,4 +48,5 @@ def webmanager_test2(bot_username: str, bot_password: str) -> None:
     username.send_keys(bot_password)
     username.send_keys(Keys.RETURN)
     assert f"{bot_username} Home" in driver.page_source
-    driver.close() 
+    print(driver.title)
+    driver.close()
