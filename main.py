@@ -33,6 +33,8 @@ from modules.mytime import mytime
 from command.scumconfig import ServerConfig
 from command.online import Online
 from command.lifetime import Lifetime
+
+import modules.webmanager as web
 # pylint: enable=wrong-import-position
 
 load_dotenv()
@@ -1058,6 +1060,11 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
         for _ in range(number_of_dice)
     ]
     await _reply(ctx, ', '.join(dice))
+
+@client.command(name='webtest')
+async def roll(ctx):
+    """Yeah, rolling a dice"""
+    web.webmanager_test2(config.sftp_user, config.sftp_password)
 
 @client.event
 async def on_command_error(ctx, error):
