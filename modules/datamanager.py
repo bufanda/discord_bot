@@ -134,6 +134,13 @@ class ScumLogDataManager:
         cursor.execute(statement)
         self.db.commit()
 
+    def _discard_values_by_id(self, table: str, id: int):
+        self.logging.info(f"Discarding values from Table {table} with {id}.")
+        statement = f"DELETE FROM {table} where id = {id}"
+        cursor = self.db.cursor()
+        cursor.execute(statement)
+        self.db.commit()
+
     def store_message_send(self, message_hash):
         """store send message in database"""
         cursor = self.db.cursor()
@@ -158,6 +165,19 @@ class ScumLogDataManager:
                     return False
         else:
             return True
+
+    def update_player_lifetime(self, player: str, lifetime: int) -> bool:
+        retval = False
+        statement = f"UPDATE player SET server_lifetime = {lifetime} where username ='{player}'"
+        cursor = self.db.cursor()
+        cursor.execute(statement)
+        self.db.commit()
+        p  = self.get_player_status(player)
+        if p is not None and len(p) > 0:
+            if p[0]["lifetime"] == lifetime:
+               retval = True
+        
+        return retval
 
     def update_player(self, player):
         """update player data in database"""
@@ -467,6 +487,12 @@ class ScumLogDataManager:
             age: int in seconds
         """
         self._discard_old_values("admin_audit", age)
+
+    def delete_player(self, player: str) -> None:
+        """delete geiven player"""
+        p = self.raw(f"select * from player where username = '{player}'")
+        for pp in p:
+            self._discard_values_by_id("player", int(pp[0]))
 
     def raw(self, query: str) -> list[any]:
         """raw sql query"""

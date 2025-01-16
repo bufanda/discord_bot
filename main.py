@@ -33,6 +33,7 @@ from modules.mytime import mytime
 from command.scumconfig import ServerConfig
 from command.online import Online
 from command.lifetime import Lifetime
+from command.players import PlayerMangement
 # pylint: enable=wrong-import-position
 
 load_dotenv()
@@ -527,6 +528,18 @@ async def on_loop_error(error):
             log_parser_loop.start()
         elif log_parser_loop.is_running():
             log_parser_loop.restart()
+
+@client.command(name="pm")
+async def command_pm(ctx, *args):
+    """player management command"""
+    if not _check_user_bot_role(ctx.author.name, 'admin', True):
+        await ctx.reply(_("You don't have permission to invoke this command."))
+        return
+ 
+    cmd = PlayerMangement()
+    message = cmd.handle_command(args)
+
+    await _reply_author(ctx, message)
 
 @client.command(name="debug")
 async def command_debug(ctx, *args):
