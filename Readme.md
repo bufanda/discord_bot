@@ -30,6 +30,11 @@ preliminary readme
     * !offline <name> or all - set's a player in offline state in bot database. If `all` is used all 
       players will be set to offline state
     * !copy_server_config <source_config_file> - Allows to copy a config file from gitlab to Scum Server
+    * !pm <sub-command> <player> <additional args> - Player Management in Database of Bot.
+      Sub-Commands: 
+        -> delete <player> - delete player info from bot database
+        -> lifetime <player> <lifetime> - set lifetime in seconds for player in database (future plan
+        to make it more human usable)
 
 ## configure env-file
 ```bash
