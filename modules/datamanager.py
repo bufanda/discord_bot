@@ -114,7 +114,7 @@ class ScumLogDataManager:
         self.db.commit()
 
     def _update_schema_version(self):
-        self.logging.info("Update Database Schema version.")
+        self.logging.info(f"Update Database Schema version to {SCHEMA_VERSION}.")
         cursor = self.db.cursor()
         check_column = "SELECT COUNT(*) AS CNTREC FROM "
         check_column += "scum_schema WHERE name='schema'"
@@ -335,7 +335,7 @@ class ScumLogDataManager:
         if len(player_data) == 0:
             ret_val = []
         elif len(player_data) > 1:
-            self.logging.info("Found more than one Player with that name.")
+            self.logging.info(f"Found more than one Player with name {player_name}.")
             for p in player_data:
                 ret_val.append({
                                "steamID": p[2],
@@ -347,7 +347,7 @@ class ScumLogDataManager:
                                "drone": p[11]
                                })
         else:
-            self.logging.info("One Player found.")
+            self.logging.info(f"One Player found with name {player_name}.")
             ret_val.append({"steamID": player_data[0][2],
                 "name": player_data[0][3],
                 "state": player_data[0][4],
@@ -372,7 +372,7 @@ class ScumLogDataManager:
         if len(player_data) == 0:
             ret_val = []
         elif len(player_data) > 1:
-            self.logging.info("Found more than one Player with that name.")
+            self.logging.info(f"Found more than one Player with name {player_name}.")
             for p in player_data:
                 ret_val.append({
                                "steamID": p[2],
@@ -384,7 +384,7 @@ class ScumLogDataManager:
                                "drone": p[11]
                                })
         else:
-            self.logging.info("One Player found.")
+            self.logging.info(f"One Player found with name {player_name}.")
             ret_val.append({"steamID": player_data[0][2],
                 "name": player_data[0][3],
                 "state": player_data[0][4],
