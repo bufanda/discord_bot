@@ -34,6 +34,13 @@ class PlayerMangement(Command):
             else:
                 message = self._("Lifetime for player {player} couldn't be updated. Do they exist?")\
                     .format(player=player,)
+        # elif subcommand == "cleanup":
+        #     if (self._cleanup_stale(player, int(kwargs[1]))):
+        #         message = self._("Cleaned up stale players that weren't logged in for {age}")\
+        #             .format(age=kwargs[1])
+        #     else:
+        #         message = self._("No Players to clean up-")\
+        #             .format(age=kwargs[1])
 
         return message
 
