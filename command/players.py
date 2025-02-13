@@ -7,10 +7,21 @@
 from modules.datamanager import ScumLogDataManager
 from command.base import Command
 
-# pylint: disable=too-few-public-methods, too-many-branches
+# pylint: disable=too-few-public-methods, too-many-branches, line-too-long
 class PlayerMangement(Command):
     """Class to handle Online command"""
     db_connection: ScumLogDataManager
+
+    def _convert_lifetime_to_int(self, lifetime: str) -> int:
+        """ return lifetime in seconds form format dd:hh:mm:ss """
+        retval = 0
+        if ":" in lifetime:
+            time = str.split(lifetime,":")
+            retval = time[-1] + (time[-2] * 60) + (time[-3] * 3600)
+            if len(time) == 4:
+                retval = time[0] * 86400
+
+        return retval
 
     def __init__(self):
         super().__init__()
@@ -23,25 +34,23 @@ class PlayerMangement(Command):
         message = ""
         self.logging.info(f"manage Player {player} with sub-command {subcommand}")
         if subcommand == "delete":
-            if (self._remove_player(player)):
+            if self._remove_player(player):
                 message = self._("Player {player} was removed successfully from database.").format(player=player)
             else:
                 message = self._("Player {player} couldn't be removed from database. Do they exist?").format(player=player)
         elif subcommand == "lifetime":
-            if (self._update_player_lifetime(player, int(kwargs[2]))):
+            lifetime = kwargs[2]
+            if "d" not in lifetime and "s" not in lifetime and "m" not in lifetime  and ":" not in lifetime:
+                lifetime= int(lifetime)
+            else:
+                lifetime = self._convert_lifetime_to_int(lifetime)
+
+            if self._update_player_lifetime(player, lifetime):
                 message = self._("Lifetime for player {player} was set to {lifetime}")\
                     .format(player=player, lifetime=kwargs[2])
             else:
                 message = self._("Lifetime for player {player} couldn't be updated. Do they exist?")\
                     .format(player=player,)
-        # elif subcommand == "cleanup":
-        #     if (self._cleanup_stale(player, int(kwargs[1]))):
-        #         message = self._("Cleaned up stale players that weren't logged in for {age}")\
-        #             .format(age=kwargs[1])
-        #     else:
-        #         message = self._("No Players to clean up-")\
-        #             .format(age=kwargs[1])
-
         return message
 
     def _remove_player(self, player: str) -> bool:
@@ -61,4 +70,5 @@ class PlayerMangement(Command):
             return False
 
     def close(self):
+        """ clean up """
         self.db_connection.close()

@@ -29,5 +29,5 @@
     * !pm <sub-command> <player> <additional args> - Player Management in Database of Bot.
       Sub-Commands:
         -> delete <player> - delete player info from bot database
-        -> lifetime <player> <lifetime> - set lifetime in seconds for player in database (future plan
-        to make it more human usable)
+        -> lifetime <player> <lifetime> - set lifetime in seconds for player in database or
+          in `dd:hh:mm:ss` format
