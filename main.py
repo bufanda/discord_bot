@@ -535,7 +535,7 @@ async def command_pm(ctx, *args):
     if not _check_user_bot_role(ctx.author.name, 'admin', True):
         await ctx.reply(_("You don't have permission to invoke this command."))
         return
- 
+
     cmd = PlayerMangement()
     message = cmd.handle_command(args)
 

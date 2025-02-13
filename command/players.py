@@ -17,11 +17,11 @@ class PlayerMangement(Command):
         retval = 0
         if ":" in lifetime:
             time = str.split(lifetime,":")
-            retval = time[-1] + (time[-2] * 60) + (time[-3] * 3600)
+            retval = int(time[-1]) + (int(time[-2]) * 60) + (int(time[-3]) * 3600)
             if len(time) == 4:
-                retval = time[0] * 86400
+                retval += int(time[0]) * 86400
 
-        return retval
+        return int(retval)
 
     def __init__(self):
         super().__init__()
@@ -40,17 +40,19 @@ class PlayerMangement(Command):
                 message = self._("Player {player} couldn't be removed from database. Do they exist?").format(player=player)
         elif subcommand == "lifetime":
             lifetime = kwargs[2]
-            if "d" not in lifetime and "s" not in lifetime and "m" not in lifetime  and ":" not in lifetime:
-                lifetime= int(lifetime)
+            if "'" in lifetime:
+                lifetime = str.strip(lifetime,"'")
+            if "d" not in lifetime and "s" not in lifetime and "m" not in lifetime and ":" not in lifetime:
+                lifetime = int(lifetime)
             else:
                 lifetime = self._convert_lifetime_to_int(lifetime)
 
             if self._update_player_lifetime(player, lifetime):
                 message = self._("Lifetime for player {player} was set to {lifetime}")\
-                    .format(player=player, lifetime=kwargs[2])
+                    .format(player=player, lifetime=str.strip(kwargs[2],"'"))
             else:
                 message = self._("Lifetime for player {player} couldn't be updated. Do they exist?")\
-                    .format(player=player,)
+                    .format(player=player)
         return message
 
     def _remove_player(self, player: str) -> bool:
