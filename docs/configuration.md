@@ -15,6 +15,8 @@ SCUM_LOG_CHAT_GLOBAL_CHANNEL = "<channel-id>" # Channel to post global chat mess
 
 SCUM_LOG_CHAT_LOCAL_CHANNEL = "<channel-id>" # Channel to post local chat messages - if not defined default channel will be used
 
+SCUM_LOG_BOT_ADMIN_CHANNEL = "<chanel-id>" # Channel to post invocations of bot commands - if not defined default channel will be used
+
 DATABASE_FILE = "/app/db.sqlite3"
 
 SFTP_HOST = # SFTP-Host

@@ -16,6 +16,7 @@
         -> publish_chat_team: default enabled - but if <publish_chat = disabled> it's disabled too.
         -> publish_chat_admin: default enabled - but if <publish_chat = disabled> it's disabled too.
         -> publish_chat_local: default enabled - but if <publish_chat = disabled> it's disabled too.
+        -> publish_bot_usage: default enabled - Will log to <SCUM_LOG_BOT_ADMIN_CHANNEL>
       - BOT_ADMIN_USER can contact the bot in DM to execute config command
     * !audit age <age> - Audit Admin log
        -> <age> can be in days or month (e.g. !audit 14d, !audit 3m)

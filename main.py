@@ -202,10 +202,29 @@ def _check_chat_allowed(channel: str) -> bool:
 def _convert_german_time(string):
     return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").strftime("%Y.%m.%d-%H:%M:%S")
 
-async def send_debug_message(message):
+async def _log_bot_usage(username: str, command: str, args: list) -> None:
+    if len(args) == 0:
+        message = f"User {username} used command {command} to interact with bot."
+    else:
+        arguments = ""
+        for arg in args:
+            arguments += f"{arg} "
+        message = f"User {username} used command {command} with arguments '{arguments}' to interact with bot."
+
+    logging.info(message)
+
+    if config.config['publish_bot_usage']:
+        await _send_usage_message(message)
+
+async def _send_debug_message(message):
     """Function will send debug messages"""
     channel = client.get_channel(int(config.debug_channel))
     await channel.send(message)
+
+async def _send_usage_message(mesg: str) -> None:
+    if config.config['publish_bot_usage']:
+        channel = client.get_channel(int(config.log_bot_admin_channel))
+        await channel.send(mesg)
 
 async def handle_login(msgs, file, dbconnection):
     """parse messages from login log files"""
@@ -540,6 +559,7 @@ async def command_pm(ctx, *args):
     message = cmd.handle_command(args)
 
     await _reply_author(ctx, message)
+    await _send_usage_message(cmd.log_usage(ctx.author.name, "player manager", args))
 
 @client.command(name="debug")
 async def command_debug(ctx, *args):
@@ -573,6 +593,7 @@ async def command_debug(ctx, *args):
             if config.guild in (guild.name, guild.id):
                 await _reply_author(ctx, str(client.guild.members))
         await _reply_author(ctx, msg_str)
+        await _log_bot_usage(ctx.author.name, "debug", args)
 
 @client.command(name="member")
 async def command_member(ctx, *args):
@@ -631,6 +652,7 @@ async def command_member(ctx, *args):
         await _reply_author(ctx, msg_str)
     else:
         await _reply_author(ctx, _("No members in database!"))
+    await _log_bot_usage(ctx.author.name, "member", args)
     # pylint: enable=consider-using-dict-items, line-too-long
 
 async def handle_command_audit(ctx, args):
@@ -702,6 +724,7 @@ async def command_audit(ctx, *args):
             await handle_command_audit(ctx, args)
         else:
             await ctx.reply(_("You have no permission to execute this command!"))
+    await _log_bot_usage(ctx.author.name, "audit", args)
 
 async def handle_command_config(ctx, args):
     """ handle command config """
@@ -802,7 +825,14 @@ async def handle_command_config(ctx, args):
                 config.config.update({"publish_chat_admin": True})
             else:
                 config.config.update({"publish_chat_admin": False})
-
+    if args[0] == "publish_bot_usage":
+        if len(args) < 2:
+            await _reply(ctx, _("Missing arguments."))
+        else:
+            if args[1].lower() == "true" or args[1] == "1":
+                config.config.update({"publish_bot_usage": True})
+            else:
+                config.config.update({"publish_bot_usage": False})
 
     logging.info(f"Updated config: {args[0]} = {config.config[args[0]]}")
     await _reply_author(ctx, f"Saved config: {args[0]} = {config.config[args[0]]}")
@@ -828,7 +858,7 @@ async def command_config(ctx, *args):
             await handle_command_config(ctx, args)
         else:
             await ctx.reply(_("You do not have permission to execute this command."))
-
+    await _log_bot_usage(ctx.author.name, "config", args)
 
 @client.command(name="lifetime")
 async def command_lifetime(ctx, player: str = None):
@@ -842,6 +872,7 @@ async def command_lifetime(ctx, player: str = None):
     lifetime = Lifetime()
     msg_str = lifetime.handle_command(player)
     await _reply(ctx, msg_str)
+    await _send_usage_message(lifetime.log_usage(ctx.author.name, "lifetime", player))
     # pylint: enable=line-too-long
 
 @client.command(name='bunkers')
@@ -890,6 +921,7 @@ async def command_bunkers(ctx, bunker: str = None):
             msg_str = _("No active bunkers found.")
 
     await _reply(ctx, msg_str)
+    await _log_bot_usage(ctx.author.name, "bunkers", bunker)
     db.close()
 
 @client.command(name='online')
@@ -905,6 +937,7 @@ async def player_online(ctx, player: str = None):
     message = cmd_handler.handle_command(player)
 
     await _reply(ctx, message)
+    await _send_usage_message(cmd_handler.log_usage(ctx.author.name, "online", player))
 
     # pylint: enable=line-too-long
 
@@ -952,6 +985,7 @@ async def player_lastseen(ctx, player: str):
                       .format(player=player, state=state, lastseen=lastseen)
 
     await _reply(ctx, message)
+    await _log_bot_usage(ctx.author.name, "lastseen", player)
     db.close()
 
 @client.command(name='offline')
@@ -1014,6 +1048,7 @@ async def player_offline(ctx, player: str = None):
     else:
         message = _("No players were online!")
         await _reply_author(ctx, message)
+    await _log_bot_usage(ctx.author.name, "offline", player)
 
 @client.command(name="copy_server_config")
 async def copy_server_config(ctx, filename: str = None):
@@ -1030,7 +1065,7 @@ async def copy_server_config(ctx, filename: str = None):
         await _reply(ctx, _("File copied to Scum server!"))
     else:
         await _reply(ctx, _("Error while copying file from git to Scum server!"))
-    # pass
+    await _send_usage_message(command.log_usage(ctx.author.name, "copy_server_config", filename))
 
 @client.command(name=HELP_COMMAND)
 async def bot_help(ctx):

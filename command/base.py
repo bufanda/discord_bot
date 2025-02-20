@@ -18,7 +18,6 @@ class Command:
     translate: gettext.NullTranslations
     _ = None
 
-
     def __init__(self):
         self.config = ConfigManager()
         self.logging = Output()
@@ -27,6 +26,20 @@ class Command:
                                 fallback=True, languages=[self.config.language])
         self.translate.install()
         self._ = self.translate.gettext
+
+    def log_usage(self, username: str, command: str, args: list) -> str:
+        if len(args) == 0:
+            message = f"User {username} used command {command} to interact with bot."
+        else:
+            arguments = ""    
+            for arg in args:    
+                arguments += f"{arg} "
+            message = f"User {username} used command {command} with arguments {arguments} to interact with bot."
+
+        self.logging.info(message)
+
+        return message
+
 
 #    def handle_command(self) -> None:
 #        """Virtual Function"""
