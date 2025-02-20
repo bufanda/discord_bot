@@ -28,7 +28,7 @@ class Command:
         self._ = self.translate.gettext
 
     def log_usage(self, username: str, command: str, args: list) -> str:
-        if len(args) == 0:
+        if args is None:
             message = f"User {username} used command {command} to interact with bot."
         else:
             arguments = ""    

@@ -203,7 +203,7 @@ def _convert_german_time(string):
     return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").strftime("%Y.%m.%d-%H:%M:%S")
 
 async def _log_bot_usage(username: str, command: str, args: list) -> None:
-    if len(args) == 0:
+    if args is None:
         message = f"User {username} used command {command} to interact with bot."
     else:
         arguments = ""
@@ -872,7 +872,7 @@ async def command_lifetime(ctx, player: str = None):
     lifetime = Lifetime()
     msg_str = lifetime.handle_command(player)
     await _reply(ctx, msg_str)
-    await _send_usage_message(lifetime.log_usage(ctx.author.name, "lifetime", player))
+    await _send_usage_message(lifetime.log_usage(ctx.author.name, "lifetime", [player]))
     # pylint: enable=line-too-long
 
 @client.command(name='bunkers')
@@ -921,7 +921,7 @@ async def command_bunkers(ctx, bunker: str = None):
             msg_str = _("No active bunkers found.")
 
     await _reply(ctx, msg_str)
-    await _log_bot_usage(ctx.author.name, "bunkers", bunker)
+    await _log_bot_usage(ctx.author.name, "bunkers", [bunker])
     db.close()
 
 @client.command(name='online')
@@ -937,7 +937,7 @@ async def player_online(ctx, player: str = None):
     message = cmd_handler.handle_command(player)
 
     await _reply(ctx, message)
-    await _send_usage_message(cmd_handler.log_usage(ctx.author.name, "online", player))
+    await _send_usage_message(cmd_handler.log_usage(ctx.author.name, "online", [player]))
 
     # pylint: enable=line-too-long
 
@@ -985,7 +985,7 @@ async def player_lastseen(ctx, player: str):
                       .format(player=player, state=state, lastseen=lastseen)
 
     await _reply(ctx, message)
-    await _log_bot_usage(ctx.author.name, "lastseen", player)
+    await _log_bot_usage(ctx.author.name, "lastseen", [player])
     db.close()
 
 @client.command(name='offline')
@@ -1048,7 +1048,7 @@ async def player_offline(ctx, player: str = None):
     else:
         message = _("No players were online!")
         await _reply_author(ctx, message)
-    await _log_bot_usage(ctx.author.name, "offline", player)
+    await _log_bot_usage(ctx.author.name, "offline", [player])
 
 @client.command(name="copy_server_config")
 async def copy_server_config(ctx, filename: str = None):
@@ -1065,7 +1065,7 @@ async def copy_server_config(ctx, filename: str = None):
         await _reply(ctx, _("File copied to Scum server!"))
     else:
         await _reply(ctx, _("Error while copying file from git to Scum server!"))
-    await _send_usage_message(command.log_usage(ctx.author.name, "copy_server_config", filename))
+    await _send_usage_message(command.log_usage(ctx.author.name, "copy_server_config", [filename]))
 
 @client.command(name=HELP_COMMAND)
 async def bot_help(ctx):
