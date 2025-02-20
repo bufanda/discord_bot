@@ -22,7 +22,7 @@ class Online(Command):
         self.logging.info(f"Get status for player {player}")
         db = ScumLogDataManager(self.config.database_file)
         if player:
-            player_status = db.get_player_status(player)
+            print(player_status)
 
             if len(player_status) == 0:
                 message = self._("Error: Player {player} does not exists in Database") \
@@ -39,7 +39,7 @@ class Online(Command):
                         message += self._("{player} is currently {status}") \
                             .format(player=player, status=state)
                 else:
-                    if player_status[0]["status"] == 1 and player_status[0]["drone"] == 0:
+                    if player_status[0]["state"] == 1 and player_status[0]["drone"] == 0:
                         state = "online"
                     else:
                         state = "offline"
