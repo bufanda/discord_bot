@@ -211,6 +211,7 @@ class ScumLogDataManager:
                 loggedin_timestamp = mytime.get_timestamp(player['timestamp'])
                 cursor.execute(f"UPDATE player SET  \
                                timestamp = {mytime.get_timestamp(player['timestamp'])}, \
+                               username = {player['username']}, \
                                loggedin = {state}, \
                                coordinates_x = {player['coordinates']['x']}, \
                                coordinates_y = {player['coordinates']['y']}, \
@@ -232,6 +233,7 @@ class ScumLogDataManager:
                     server_lifetime_all = player_data[0][10]
                 cursor.execute(f"UPDATE player SET  \
                                timestamp = {mytime.get_timestamp(player['timestamp'])}, \
+                               username = {player['username']}, \
                                loggedin = {state}, \
                                coordinates_x = {player['coordinates']['x']}, \
                                coordinates_y = {player['coordinates']['y']}, \
@@ -635,6 +637,7 @@ class ScumLogDataManager:
         else:
             query = "UPDATE guild_members SET"
             query += f" roles='{guild_role}', bot_role='{bot_role}'"
+            query += f", name='{name}'"
             query += f" WHERE id=='{_id}'"
 
         self.raw(query)
