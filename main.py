@@ -1037,7 +1037,7 @@ async def player_offline(ctx, player: str = None):
                 }})
                 p.update({"timestamp": datetime.now().strftime('%Y.%m.%d-%H.%M.%S')})
                 message += _("Player: {player} is set as offline.\n") \
-                           .format(player=p["name"])
+                           .format(player=p["username"])
                 db.update_player(p)
 
     if player is None:
@@ -1135,7 +1135,7 @@ async def _handle_schduled_restart()-> None:
                         "z": 0
                     }})
                     p.update({"timestamp": datetime.now().strftime('%Y.%m.%d-%H.%M.%S')})
-                    message = f"Player {p["name"]} is forcibly set as offline due to restart"
+                    message = f"Player {p["username"]} is forcibly set as offline due to restart"
                     message += " schedule."
                     logging.info(message)
                     db.update_player(p)

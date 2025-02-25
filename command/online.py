@@ -58,7 +58,7 @@ class Online(Command):
                         login = datetime.fromtimestamp(p['login_timestamp'],
                                         local_timezone).strftime('%d.%m.%Y %H:%M:%S')
                         message += self._("{name} is online since {login}\n") \
-                            .format(name=p['name'],login=login)
+                            .format(name=p['username'],login=login)
             else:
                 message = self._("No players are online at the moment.")
         db.close()

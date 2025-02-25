@@ -231,6 +231,7 @@ class ScumLogDataManager:
                     server_lifetime_all = server_lifetime + player_data[0][10]
                 else:
                     server_lifetime_all = player_data[0][10]
+                print(player)
                 cursor.execute(f"UPDATE player SET  \
                                timestamp = {mytime.get_timestamp(player['timestamp'])}, \
                                username = '{player['username']}', \
@@ -378,7 +379,7 @@ class ScumLogDataManager:
             for p in player_data:
                 ret_val.append({
                                "steamID": p[2],
-                               "name": p[3],
+                               "username": p[3],
                                "state": p[4],
                                "login_timestamp" : p[8],
                                "logout_timestamp" : p[9],
