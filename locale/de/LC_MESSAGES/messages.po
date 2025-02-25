@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scum_bot 1.0\n"
 "Report-Msgid-Bugs-To: thorsten@liepert.dev\n"
-"POT-Creation-Date: 2025-01-23 15:19+0100\n"
+"POT-Creation-Date: 2025-02-25 11:26+0100\n"
 "PO-Revision-Date: 2024-11-12 16:45+0100\n"
 "Last-Translator: Thorsten Liepert thorsten@liepert.dev\n"
 "Language: de\n"
@@ -19,260 +19,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: main.py:225
+#: main.py:244
 msgid "Player: {name}, logged in "
 msgstr "Spieler {name} hat sich eingeloggt! "
 
-#: main.py:227
+#: main.py:246
 msgid "Player: {name}, logged out "
 msgstr "Spieler {name} hat sich ausgeloggt! "
 
-#: main.py:240
+#: main.py:259
 msgid "Player: {name}, logged in as drone "
 msgstr "Spieler {name} hat sich eingeloggt! "
 
-#: main.py:242
+#: main.py:261
 msgid "Player: {name}, logged out as drone "
 msgstr "Spieler {name} hat sich ausgeloggt! "
 
-#: main.py:256
+#: main.py:275
 msgid "bad boy"
 msgstr "böser Bube"
 
-#: main.py:257
+#: main.py:276
 msgid "savage"
 msgstr "Untier"
 
-#: main.py:258
+#: main.py:277
 msgid "bandit"
 msgstr "Bandit"
 
-#: main.py:259
+#: main.py:278
 msgid "hero"
 msgstr "Held"
 
-#: main.py:260
+#: main.py:279
 msgid "murderer"
 msgstr "Mörder"
 
-#: main.py:275
+#: main.py:294
 msgid "Player {killer} "
 msgstr "Spieler {killer} "
 
-#: main.py:276
+#: main.py:295
 msgid "was a {playerinsult} "
 msgstr "war ein {playerinsult} "
 
-#: main.py:277
+#: main.py:296
 msgid "and killed {victim} "
 msgstr "und tötete {victim} "
 
-#: main.py:278
+#: main.py:297
 msgid "with a {weapon}."
 msgstr "mit {weapon}!"
 
-#: main.py:301
+#: main.py:320
 msgid "Bunker {name} was activated. "
 msgstr "Bunker {name} öffnete seine Pforten! "
 
-#: main.py:317
+#: main.py:336
 msgid "Bunker coordinates unkown, "
 msgstr "Bunker-Koordinaten sind nicht bekannt, "
 
-#: main.py:318
+#: main.py:337
 msgid "it wasnt't discovered previously."
 msgstr "wurde bisher noch nicht entdeckt."
 
-#: main.py:359
+#: main.py:378
 msgid "{name} invoked "
 msgstr "{name} startete "
 
-#: main.py:536 main.py:584
+#: main.py:555 main.py:605
 msgid "You don't have permission to invoke this command."
 msgstr "Du hast nicht die Rechte, dieses Kommando aufzurufen!"
 
-#: main.py:551
+#: main.py:571
 msgid "Current configuration"
 msgstr "Aktuelle Konfiguration"
 
-#: main.py:557
+#: main.py:577
 msgid "Members stored in DB."
 msgstr "Mitglieder in DB gespeichert!"
 
-#: main.py:565
+#: main.py:585
 msgid "Current Environment"
 msgstr "Derzeitige Umgebung"
 
-#: main.py:571
+#: main.py:591
 msgid "Guild members:"
 msgstr "Discord-Mitglieder"
 
-#: main.py:589 main.py:599
+#: main.py:610 main.py:620
 msgid "Current members in database:\n"
 msgstr "Derzeitig in der DB gespeicherte(n) Spieler:\n"
 
-#: main.py:597
+#: main.py:618
 msgid "No members stored in Database"
 msgstr "Keine Spieler in der DB gespeichert!"
 
-#: main.py:612 main.py:623
+#: main.py:633 main.py:644
 msgid "Member {name} given bot role {role}"
 msgstr "Mitglied {name} wurde folgende Bot-Rolle {role} gegeben!"
 
-#: main.py:616
+#: main.py:637
 msgid "Member {name} does not exist on Server."
 msgstr "Es existiert kein Spieler mit dem Namen {name} auf diesem Server!"
 
-#: main.py:618
+#: main.py:639
 msgid "Member {name} not in database. Can't create member via DM."
 msgstr ""
 "Spieler {name} nicht in der DB enthalten. Kann nicht via DM angelegt "
 "werden!"
 
-#: main.py:621
+#: main.py:642
 msgid "Member {name} already has bot role {role}"
 msgstr "Kumpel, Mitglied {name} hat Bot-Rolle {role} bereits!"
 
-#: main.py:628
+#: main.py:649
 msgid "Too many arguments for command 'member'"
 msgstr "Alter!! Das sind viel zu viele Eingaben für den Member-Befehl!"
 
-#: main.py:633
+#: main.py:654
 msgid "No members in database!"
 msgstr "Keine Einträge in der DB!"
 
-#: main.py:665
+#: main.py:687
 msgid "Command not supported!"
 msgstr "Dieses Kommando wird nicht unterstützt!"
 
-#: main.py:683
+#: main.py:705
 msgid "No entries in audit!"
 msgstr "Keine Einträge im Audit-Log!"
 
-#: main.py:697 main.py:704
+#: main.py:719 main.py:726
 msgid "You have no permission to execute this command!"
 msgstr "Du hast nicht das Recht, dieses Kommando auszuführen!"
 
-#: main.py:718 main.py:727 main.py:736 main.py:745 main.py:754 main.py:763
-#: main.py:772 main.py:781 main.py:790 main.py:799
+#: main.py:741 main.py:750 main.py:759 main.py:768 main.py:777 main.py:786
+#: main.py:795 main.py:804 main.py:813 main.py:822 main.py:830
 msgid "Missing arguments."
 msgstr "Hier fehlt mindestens ein Argument!"
 
-#: main.py:823 main.py:830
+#: main.py:853 main.py:860
 msgid "You do not have permission to execute this command."
 msgstr "Du hast nicht das Recht, dieses Kommando auszuführen!"
 
-#: main.py:839 main.py:854 main.py:901 main.py:919 main.py:966 main.py:1023
+#: main.py:869 main.py:885 main.py:933 main.py:952 main.py:1000 main.py:1058
 msgid "You do not have permission to invoke this command."
 msgstr "Du hast nicht das Recht, dieses Kommando aufzurufen!"
 
-#: main.py:863
+#: main.py:894
 msgid "Bunker {bunker} is not active."
 msgstr "Bunker {bunker} ist derzeit nicht aktiv!"
 
-#: main.py:869 main.py:883
+#: main.py:900 main.py:914
 msgid "Bunker {bunker} is active.\n"
 msgstr "Bunker {bunker} ist derzeit aktiv!\n"
 
-#: main.py:876
+#: main.py:907
 msgid "Bunker {bunker} does not exist."
 msgstr "Bunker {bunker} existiert nicht!"
 
-#: main.py:881
+#: main.py:912
 msgid "Following Bunkers are active.\n"
 msgstr "Folgende Bunker sind aktiv:\n"
 
-#: main.py:890
+#: main.py:921
 msgid "No active bunkers found."
 msgstr "Keine aktiven Bunker gefunden!"
 
-#: command/online.py:28 main.py:928 main.py:972
+#: command/online.py:28 main.py:961 main.py:1006
 msgid "Error: Player {player} does not exists in Database"
 msgstr "Fehler: Ein Spieler mit dem Namen {player} existiert nicht in der DB!"
 
-#: command/online.py:32 main.py:931 main.py:975
+#: command/online.py:32 main.py:964 main.py:1009
 msgid "Multiple players with Name {player} found.\n"
 msgstr "Ich habe mehrere Spieler mit dem Namen {player} gefunden!\n"
 
-#: main.py:939 main.py:949 main.py:985
+#: main.py:972 main.py:982 main.py:1019
 msgid "now"
 msgstr "jetzt"
 
-#: main.py:940 main.py:951
+#: main.py:973 main.py:984
 msgid "Player: {player} is currently {state} and was last seen {lastseen}."
 msgstr "Spieler {player} ist derzeit {state} und wurde zuletzt gesehen {lastseen}!"
 
-#: main.py:986
+#: main.py:1020
 msgid "Player: {player} is set as offline and was last seen {lastseen}."
 msgstr ""
 "Spieler {player} ist als offline gespeichert und wurde zuletzt gesehen "
 "{lastseen}!"
 
-#: main.py:992
+#: main.py:1026
 msgid "Player: {player} is already offline and was last seen {lastseen}."
 msgstr "Spieler {player} ist bereits offline und wurde zuletzt gesehen {lastseen}!"
 
-#: main.py:1005
+#: main.py:1039
 msgid "Player: {player} is set as offline.\n"
 msgstr "Spieler {player} wurde als offline gespeichert!\n"
 
-#: main.py:1010
+#: main.py:1044
 msgid "Need either player name or 'all'!"
 msgstr "Bitte Spielernamen oder 'all' angeben!"
 
-#: main.py:1015
+#: main.py:1049
 msgid "No players were online!"
 msgstr "Es sind keine Spieler online!"
 
-#: main.py:1030
+#: main.py:1065
 msgid "File copied to Scum server!"
 msgstr "Konfiguration wurde auf dden Scum-Sever kopieert."
 
-#: main.py:1032
+#: main.py:1067
 msgid "Error while copying file from git to Scum server!"
 msgstr "Es ist ein Fehler aufgetreten beim kopieren der Konfiguration."
 
-#: main.py:1039
+#: main.py:1074
 msgid "Hi, {author}. My Name is {user}.\n"
 msgstr "Servusla {author}! Mein Name ist {user}!\n"
 
-#: main.py:1040
+#: main.py:1075
 msgid "You can call me with following commands:\n"
 msgstr "Ich verfüge über folgenden Befehlssatz:\n"
 
-#: main.py:1044
+#: main.py:1079
 msgid "!online <player name> - I will tell you if the"
 msgstr "!online <spieler name> - Ich verrate Dir ob "
 
-#: main.py:1045
+#: main.py:1080
 msgid "player with <name> is online on the SCUM server\n"
 msgstr ""
 "Spieler mit dem Namen <spieler name> gerade online auf unserem SCUM-"
 "Server ist\n"
 
-#: main.py:1049
+#: main.py:1084
 msgid "!lastseen <player name> - I will tell you when I have seen <playername>"
 msgstr "!lastseen <spieler name> - Wann ich Spieler <spieler name> das letzte Mal "
 
-#: main.py:1050
+#: main.py:1085
 msgid "on the SCUM Server\n"
 msgstr "auf dem SCUM Server gesehen habe\n"
 
-#: main.py:1054
+#: main.py:1089
 msgid "!bunkers <bunker name> - I will tell you if the <bunker name> is active.\n"
 msgstr "!bunkers <bunker name> - Ist Bunker <bunker name> aktiv\n"
 
-#: main.py:1055
+#: main.py:1090
 msgid "But the <bunker name> is optional. Without I unveil the secret and give"
 msgstr ""
 "Argument <bunker name> ist optional. Wenn Du den Namen weglässt, schaue "
 "ich in meine Glaskugel und verrate"
 
-#: main.py:1056
+#: main.py:1091
 msgid " you all active bunkers."
 msgstr " Dir alle aktiven Bunker."
 
-#: main.py:1060
+#: main.py:1095
 msgid ""
 "I will also report bunker openening, kills and players joining to and "
 "disconnecting "
@@ -280,17 +280,25 @@ msgstr ""
 "Ausserdem reporte ich Bunker Aktivierungen, Kills und Player An- und "
 "Abmeldungen "
 
-#: main.py:1061
+#: main.py:1096
 msgid "from the SCUM Server."
 msgstr "von unserem SCUM-Server."
 
-#: main.py:1079
+#: main.py:1114
 msgid "You do not have the correct role for this command."
 msgstr "Du hast hierfür nicht die richtige Rolle für diesen Befehl!"
 
-#: main.py:1081
+#: main.py:1116
 msgid "'{error}' is a required argument."
 msgstr "'{error}' ist ein benötigtes Argument!"
+
+#: main.py:1142
+msgid "Player {player} is forcibly set as offline due to restart schedule"
+msgstr "Spieler {player} wurde auf Grund eines geplanten Serverneustarts als offline gespeichert!"
+
+#: main.py:1149
+msgid "Scheduled Server restart in 5 Minutes!"
+msgstr "Geplanter Server Neustart in 5 Minuten!"
 
 #: command/lifetime.py:29
 msgid "Player {player} lives on server for {lifetime}."
@@ -324,20 +332,19 @@ msgstr "{name} ist online seit {login}!\n"
 msgid "No players are online at the moment."
 msgstr "Derzeit sind keine Spieler online!"
 
-#: command/players.py:27
+#: command/players.py:38
 msgid "Player {player} was removed successfully from database."
 msgstr ""
 
-#: command/players.py:29
+#: command/players.py:40
 msgid "Player {player} couldn't be removed from database. Do they exist?"
 msgstr ""
 
-#: command/players.py:32
-#, fuzzy
+#: command/players.py:51
 msgid "Lifetime for player {player} was set to {lifetime}"
 msgstr "Spieler {player} treibt hier schon seit {lifetime} sein Unwesen!"
 
-#: command/players.py:35
+#: command/players.py:54
 msgid "Lifetime for player {player} couldn't be updated. Do they exist?"
 msgstr ""
 
