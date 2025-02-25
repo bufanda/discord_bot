@@ -42,7 +42,7 @@ class ConfigManager():
 
     config: dict
 
-    version="1.3.3"
+    version="1.3.4"
 
     git: dict
 
