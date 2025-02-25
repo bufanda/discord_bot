@@ -209,9 +209,9 @@ class ScumLogDataManager:
             if player["state"] == "in":
                 state = True
                 loggedin_timestamp = mytime.get_timestamp(player['timestamp'])
-                cursor.execute(f"UPDATE player SET  \
+                cursor.execute(f"UPDATE player SET \
                                timestamp = {mytime.get_timestamp(player['timestamp'])}, \
-                               username = {player['username']}, \
+                               username = '{player['username']}', \
                                loggedin = {state}, \
                                coordinates_x = {player['coordinates']['x']}, \
                                coordinates_y = {player['coordinates']['y']}, \
@@ -233,7 +233,7 @@ class ScumLogDataManager:
                     server_lifetime_all = player_data[0][10]
                 cursor.execute(f"UPDATE player SET  \
                                timestamp = {mytime.get_timestamp(player['timestamp'])}, \
-                               username = {player['username']}, \
+                               username = '{player['username']}', \
                                loggedin = {state}, \
                                coordinates_x = {player['coordinates']['x']}, \
                                coordinates_y = {player['coordinates']['y']}, \
