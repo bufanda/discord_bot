@@ -335,29 +335,22 @@ class ScumLogDataManager:
         player_data = cursor.fetchall()
 
         if len(player_data) == 0:
-            ret_val = []
+            self.logging.info(f"No Player found with name {player_name}.")
         elif len(player_data) > 1:
             self.logging.info(f"Found more than one Player with name {player_name}.")
-            for p in player_data:
-                ret_val.append({
-                               "steamID": p[2],
-                               "name": p[3],
-                               "state": p[4],
-                               "login_timestamp" : p[8],
-                               "logout_timestamp" : p[9],
-                               "lifetime": p[10],
-                               "drone": p[11]
-                               })
         else:
             self.logging.info(f"One Player found with name {player_name}.")
-            ret_val.append({"steamID": player_data[0][2],
-                "name": player_data[0][3],
-                "state": player_data[0][4],
-                "login_timestamp" : player_data[0][8],
-                "logout_timestamp" : player_data[0][9],
-                "lifetime": player_data[0][10],
-                "drone": player_data[0][11]
-                })
+
+        for p in player_data:
+            ret_val.append({
+                            "steamID": p[2],
+                            "name": p[3],
+                            "state": p[4],
+                            "login_timestamp" : p[8],
+                            "logout_timestamp" : p[9],
+                            "lifetime": p[10],
+                            "drone": p[11]
+                            })
 
         return ret_val
 
@@ -372,30 +365,21 @@ class ScumLogDataManager:
         player_data = cursor.fetchall()
 
         if len(player_data) == 0:
-            ret_val = []
+            self.logging.info(f"No Player found with name {player_name}.")
         elif len(player_data) > 1:
             self.logging.info(f"Found more than one Player with name {player_name}.")
-            for p in player_data:
-                ret_val.append({
-                               "steamID": p[2],
-                               "username": p[3],
-                               "state": p[4],
-                               "login_timestamp" : p[8],
-                               "logout_timestamp" : p[9],
-                               "lifetime": p[10],
-                               "drone": p[11]
-                               })
         else:
             self.logging.info(f"One Player found with name {player_name}.")
-            ret_val.append({"steamID": player_data[0][2],
-                "name": player_data[0][3],
-                "state": player_data[0][4],
-                "login_timestamp" : player_data[0][8],
-                "logout_timestamp" : player_data[0][9],
-                "lifetime": player_data[0][10],
-                "drone": player_data[0][11]
-                })
-
+        for p in player_data:
+            ret_val.append({
+                            "steamID": p[2],
+                            "username": p[3],
+                            "state": p[4],
+                            "login_timestamp" : p[8],
+                            "logout_timestamp" : p[9],
+                            "lifetime": p[10],
+                            "drone": p[11]
+                            })
         return ret_val
 
     def get_active_bunkers(self, bunker: str = None) -> list:
