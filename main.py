@@ -1121,7 +1121,7 @@ async def on_command_error(ctx, error):
 
 async def _handle_schduled_restart()-> None:
     db = ScumLogDataManager(config.database_file)
-    channel = client.get_channel(int(config.log_feed_channel))
+    # channel = client.get_channel(int(config.log_feed_channel))
     now = datetime.now().strftime("%H:%M")
     schedule = config.get_restart_schedule()
     for restart in schedule:
@@ -1140,13 +1140,13 @@ async def _handle_schduled_restart()-> None:
                     message += " schedule."
                     logging.info(message)
                     msg = _("Player {player} is forcibly set as offline due to restart schedule").format(player=p["username"])
-                    await channel.send(message)
+                    await _send_debug_message(msg)
                     db.update_player(p)
         if restart != "":
-            restartMinus5Min = datetime.strptime(restart, "%H:%M") - timedelta(hours=0, minutes=5)
-            if restartMinus5Min.strftime("%H:%M") == now:
+            restart_minus5_min = datetime.strptime(restart, "%H:%M") - timedelta(hours=0, minutes=5)
+            if restart_minus5_min.strftime("%H:%M") == now:
                 logging.info("Scheduled Server restart in 5 Minutes!")
-                await channel.send(_("Scheduled Server restart in 5 Minutes!"))
+                await _send_debug_message(_("Scheduled Server restart in 5 Minutes!"))
 
 ## Start the Program
 config = ConfigManager()
