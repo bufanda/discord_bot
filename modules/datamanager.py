@@ -324,14 +324,17 @@ class ScumLogDataManager:
             cursor.execute(''.join(statement))
             self.db.commit()
 
-    def get_player_status(self, player_name = None) -> list:
+    def get_player_status(self, player_name = None, online_only = False) -> list:
         """get player data from database"""
         ret_val = []
         cursor = self.db.cursor()
+        statement = "SELECT * FROM player"
         if player_name:
-            cursor.execute(f"SELECT * FROM player WHERE username = '{player_name}'")
-        else:
-            cursor.execute("SELECT * FROM player")
+            statement += f" WHERE username = '{player_name}'"
+        elif online_only:
+            statement += " WHERE loggedin=1"
+
+        cursor.execute(statement)
         player_data = cursor.fetchall()
 
         if len(player_data) == 0:
@@ -344,7 +347,7 @@ class ScumLogDataManager:
         for p in player_data:
             ret_val.append({
                             "steamID": p[2],
-                            "name": p[3],
+                            "username": p[3],
                             "state": p[4],
                             "login_timestamp" : p[8],
                             "logout_timestamp" : p[9],
@@ -356,31 +359,32 @@ class ScumLogDataManager:
 
     def get_player_online_status(self, player_name = None) -> list:
         """get player data from database"""
-        ret_val = []
-        cursor = self.db.cursor()
-        if player_name:
-            cursor.execute(f"SELECT * FROM player WHERE username = '{player_name}'")
-        else:
-            cursor.execute("SELECT * FROM player WHERE loggedin=1")
-        player_data = cursor.fetchall()
+        # ret_val = []
+        # cursor = self.db.cursor()
+        # if player_name:
+        #     cursor.execute(f"SELECT * FROM player WHERE username = '{player_name}'")
+        # else:
+        #     cursor.execute("SELECT * FROM player WHERE loggedin=1")
+        # player_data = cursor.fetchall()
 
-        if len(player_data) == 0:
-            self.logging.info(f"No Player found with name {player_name}.")
-        elif len(player_data) > 1:
-            self.logging.info(f"Found more than one Player with name {player_name}.")
-        else:
-            self.logging.info(f"One Player found with name {player_name}.")
-        for p in player_data:
-            ret_val.append({
-                            "steamID": p[2],
-                            "username": p[3],
-                            "state": p[4],
-                            "login_timestamp" : p[8],
-                            "logout_timestamp" : p[9],
-                            "lifetime": p[10],
-                            "drone": p[11]
-                            })
-        return ret_val
+        # if len(player_data) == 0:
+        #     self.logging.info(f"No Player found with name {player_name}.")
+        # elif len(player_data) > 1:
+        #     self.logging.info(f"Found more than one Player with name {player_name}.")
+        # else:
+        #     self.logging.info(f"One Player found with name {player_name}.")
+        # for p in player_data:
+        #     ret_val.append({
+        #                     "steamID": p[2],
+        #                     "username": p[3],
+        #                     "state": p[4],
+        #                     "login_timestamp" : p[8],
+        #                     "logout_timestamp" : p[9],
+        #                     "lifetime": p[10],
+        #                     "drone": p[11]
+        #                     })
+        # return ret_val
+        return self.get_player_status(player_name, True)
 
     def get_active_bunkers(self, bunker: str = None) -> list:
         """Get all or for one specific bunker the active state"""
