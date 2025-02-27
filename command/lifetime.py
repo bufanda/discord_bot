@@ -35,7 +35,7 @@ class Lifetime(Command):
             msg_str = self._("Following players have a liftime on this server:\n")
             for p in player_stat:
                 lifetime = mytime.convert_time(p["lifetime"])
-                msg_str += self._("{name} lives for {lifetime} on this server.\n").format(name=p['name'], lifetime=lifetime)
+                msg_str += self._("{name} lives for {lifetime} on this server.\n").format(name=p['username'], lifetime=lifetime)
         db.close()
 
         return msg_str
