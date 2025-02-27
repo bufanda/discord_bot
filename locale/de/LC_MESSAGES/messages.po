@@ -334,19 +334,19 @@ msgstr "Derzeit sind keine Spieler online!"
 
 #: command/players.py:38
 msgid "Player {player} was removed successfully from database."
-msgstr ""
+msgstr "Spieler {player} wurde erfolgreich aus der Datanbank gelöscht."
 
 #: command/players.py:40
 msgid "Player {player} couldn't be removed from database. Do they exist?"
-msgstr ""
+msgstr "Spieler {player} konnte nicht gelöscht werden!"
 
 #: command/players.py:51
 msgid "Lifetime for player {player} was set to {lifetime}"
-msgstr "Spieler {player} treibt hier schon seit {lifetime} sein Unwesen!"
+msgstr "Spieler {player} Lebenszeit wurde auf {lifetime} gesetzt!"
 
 #: command/players.py:54
 msgid "Lifetime for player {player} couldn't be updated. Do they exist?"
-msgstr ""
+msgstr "Lebenszeit für Spieler {player} konnte nicht neu gesetzt werden!"
 
 #~ msgid "{user} is connected to the following guild:\n"
 #~ msgstr "{user} ist mit folgendem Discord-Server verbunden:\n"
