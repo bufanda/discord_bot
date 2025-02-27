@@ -218,8 +218,9 @@ async def _log_bot_usage(username: str, command: str, args: list) -> None:
 
 async def _send_debug_message(message):
     """Function will send debug messages"""
-    channel = client.get_channel(int(config.debug_channel))
-    await channel.send(message)
+    if None is not config.debug_channel:
+        channel = client.get_channel(int(config.debug_channel))
+        await channel.send(message)
 
 async def _send_usage_message(mesg: str) -> None:
     if config.config['publish_bot_usage']:
