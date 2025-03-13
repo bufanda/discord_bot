@@ -30,7 +30,7 @@ ENV VCS_REF=${VCS_REF}
 RUN apk add --update --no-cache gettext runuser && \
     mkdir -p /app/locale
 
-COPY requirements.txt main.py /app/
+COPY requirements.txt main.py discord_client.py /app/
 COPY modules/ /app/modules
 COPY command/ /app/command
 COPY docker/entrypoint.sh /entrypoint.sh
