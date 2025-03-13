@@ -12,6 +12,8 @@ import sys
 import random
 import traceback
 import gettext
+import threading
+import time
 
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -1157,4 +1159,29 @@ translate = gettext.translation('messages', localedir, fallback=True, languages=
 translate.install()
 _ = translate.gettext
 
-client.run(config.token)
+
+def run_client():
+    client.run(config.token)
+
+def thread() -> None:
+    while True:
+        time.sleep(5)
+        print("Thread 2 is alive!")
+
+
+t1 = threading.Thread(target=run_client, name="Discord Bot")
+t2 = threading.Thread(target=thread, name="Test")
+
+
+def main():
+    try:
+        t1.start()
+        t2.start()
+    finally:
+        t1.join()
+        t2.join()
+
+if __name__=='__main__':
+    main()
+
+
