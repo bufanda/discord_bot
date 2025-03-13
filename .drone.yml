@@ -36,6 +36,28 @@ steps:
     when:
       event:
         - push
+      branch:
+        - master
+  - name: build all none masters
+    image: plugins/docker
+    settings:
+      repo: registry.nbg.bufanda.de/scum/discord_bot
+      registry: registry.nbg.bufanda.de
+      tags:
+        - ${DRONE_BRANCH}
+      autotag: no
+      insecure: yes
+      build_args:
+        - VCS_REF=${DRONE_COMMIT}
+        - VCS_TAG=${DRONE_TAG}
+    when:
+      event:
+        - push
+      branch:
+        exclude:
+          - master
+        include:
+          - .*
   - name: build tag
     image: plugins/docker
     settings:
