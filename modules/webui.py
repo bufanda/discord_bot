@@ -15,7 +15,7 @@ import templates
 import templates.config
 import templates.world
 
-class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
+class MyHttpRequestHandler(http.server.BaseHTTPRequestHandler):
     """ class """
     def do_GET(self):
         # Sending an '200 OK' response
