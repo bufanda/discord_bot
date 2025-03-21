@@ -43,5 +43,6 @@ RUN python -m pip install --no-cache-dir -r requirements.txt && \
     adduser -H -u 12000 -S -s /bin/false scumbot
 
 ENV PYTHONPATH=/app
+EXPOSE 8000
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["python", "-u", "./main.py"]
