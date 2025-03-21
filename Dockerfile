@@ -33,6 +33,7 @@ RUN apk add --update --no-cache gettext runuser && \
 COPY requirements.txt main.py /app/
 COPY modules/ /app/modules
 COPY command/ /app/command
+COPY templates/ /app/templates
 COPY docker/entrypoint.sh /entrypoint.sh
 COPY --from=build /app/locale/ /app/locale
 

@@ -40,6 +40,7 @@ class ConfigManager():
     vcs_ref: str
     vcs_tag: str
 
+    environment_variables: dict
     config: dict
 
     version="1.3.5"
@@ -190,6 +191,31 @@ class ConfigManager():
 
         if not self.vcs_tag or self.version != self.vcs_tag:
             self.version = self.version + "+" + self.vcs_ref[:8]
+
+        self.environment_variables = {
+            "GUILD_TOKEN": self.token,
+            "DISCORD_GUILD": self.guild,
+            "SFTP_HOST": self.sftp_server,
+            "SFTP_PORT": self.sftp_port,
+            "SFTP_USERNAME": self.sftp_user,
+            "SFTP_PASSWORD": self.sftp_password,
+            "DEBUG_CHANNEL": self.debug_channel,
+            "SCUM_LOG_FEED_CHANNEL": self.log_feed_channel,
+            "SCUM_LOG_CHAT_GLOBAL_CHANNEL": self.log_chat_global_channel,
+            "SCUM_LOG_CHAT_ADMIN_CHANNEL": self.log_chat_admin_channel,
+            "SCUM_LOG_CHAT_TEAM_CHANNEL": self.log_chat_team_channel,
+            "SCUM_LOG_CHAT_LOCAL_CHANNEL": self.log_chat_local_channel,
+            "SCUM_LOG_BOT_ADMIN_CHANNEL": self.log_bot_admin_channel,
+            "LOG_DIRECTORY": self.log_directory,
+            "DATABASE_FILE": self.database_file,
+            "LOG_CHECK_INTERVAL": self.log_check_interval,
+            "BOT_HELP_COMMAND": self.help_command,
+            "EXPERIMENTAL_ENABLE": self.experimental,
+            "RESTART_SCHEDULE": self.env_restart_schedule,
+            "VCS_REF": self.vcs_ref,
+            "VCS_TAG": self.vcs_tag,
+            "BOT_LANGUAGE": self.language
+        }
 
         self._load_config(self.database_file)
 
