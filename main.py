@@ -8,37 +8,13 @@
 """
 # pylint: disable=global-statement, too-many-branches, too-many-lines, import-error
 import os
-import sys
-import random
-import traceback
-import gettext
 import threading
-import time
+import socketserver
 
-from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
-
-import discord
-from discord.ext import commands
-from discord.ext import tasks
 from dotenv import load_dotenv
 
 import discord_client
-
-# pylint: disable=wrong-import-position
-# sys.path.append('./')
-from modules.datamanager import ScumLogDataManager
-from modules.logparser import LoginParser, KillParser, BunkerParser, FamepointParser, \
-    AdminParser, ChatParser
-from modules.sftpconnector import ScumSFTPConnector
-from modules.output import Output
-from modules.configmanager import ConfigManager
-from modules.mytime import mytime
-from command.scumconfig import ServerConfig
-from command.online import Online
-from command.lifetime import Lifetime
-from command.players import PlayerMangement
-# pylint: enable=wrong-import-position
+from modules.webui import MyHttpRequestHandler
 
 load_dotenv()
 LOG_CHECK_INTERVAL = os.getenv("LOG_CHECK_INTERVAL")
@@ -60,20 +36,31 @@ WEAPON_LOOKUP = {
 MAX_MESSAGE_LENGTH = 1000
 
 def run_client():
+    """ run client """
     # client.run(config.token)
     discord_client.run_client()
 
-def thread() -> None:
-    while True:
-        time.sleep(5)
-        print("Thread 2 is alive!")
+def web_thread() -> None:
+    """ threads """
+    # Create an object of the above class
+    handler_object = MyHttpRequestHandler
+
+    port = 8000
+    my_server = socketserver.TCPServer(("", port), handler_object)
+
+    # Star the server
+    my_server.serve_forever()
+    # while True:
+    #     time.sleep(5)
+    #     print("Thread 2 is alive!")
 
 
 t1 = threading.Thread(target=run_client, name="Discord Bot")
-t2 = threading.Thread(target=thread, name="Test")
+t2 = threading.Thread(target=web_thread, name="Web UI")
 
 
 def main():
+    """ main """
     try:
         t1.start()
         t2.start()

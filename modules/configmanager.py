@@ -194,6 +194,7 @@ class ConfigManager():
         self._load_config(self.database_file)
 
     def reload_config(self) -> None:
+        """ reload config from database """
         self._load_config(self.database_file)
 
     def get_restart_schedule(self) -> list:
