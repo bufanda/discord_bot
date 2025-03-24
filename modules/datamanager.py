@@ -7,6 +7,7 @@
 # pylint: disable=line-too-long
 import os
 import sqlite3
+import re
 from datetime import datetime
 from modules.output import Output
 from modules.mytime import MyTime
@@ -636,7 +637,7 @@ class ScumLogDataManager:
         result = self.raw(query)
         if len(result) == 0:
             query = "INSERT INTO messages (hash, timestamp, message, facility) "
-            query += f"VALUES ('{_hash}', {timestamp}, '{message}', '{facility}' )"
+            query += f"VALUES ('{_hash}', {timestamp}, '{re.escape(message)}', '{facility}' )"
             result = self.raw(query)
 
     def discard_raw_messages(self, age: int) -> None:
