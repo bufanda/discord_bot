@@ -144,6 +144,17 @@ class ScumLogDataManager:
         cursor.execute(statement)
         self.db.commit()
 
+    def _escape_string(self, pattern: str) -> str:
+        """ escape a given string to make it sqlite safe """
+        if "'" in pattern:
+            pattern = re.sub(pattern, "\'", "'")
+        if '"' in pattern:
+            pattern = re.sub(pattern, '\"', '"')
+        if "\\" in pattern:
+            pattern = re.sub(pattern, '\\\\', '\\')
+
+        return pattern
+
     def store_message_send(self, message_hash):
         """store send message in database"""
         cursor = self.db.cursor()
