@@ -644,12 +644,7 @@ class ScumLogDataManager:
 
     def update_raw_message(self, message: str, _hash: str, timestamp: int, facility: str = 'None') -> None:
         """" save raw messages in db """
-        if "'" in message:
-            message = re.sub(message, "\'", "'")
-        if '"' in message:
-            message = re.sub(message, '\"', '"')
-        if "\\" in message:
-            message = re.sub(message, '\\\\', '\\')
+        message = self._escape_string(message)
         query = f"SELECT hash FROM messages WHERE hash='{_hash}'"
         result = self.raw(query)
         if len(result) == 0:
@@ -662,14 +657,20 @@ class ScumLogDataManager:
         self.logging.info(f"Deleteing messages older than {age}.")
         self._discard_old_values("messages", age)
 
-    def get_raw_messages(self, min_timestamp: int = 0, max_timestamp: int = 0) -> list:
+    def get_raw_messages(self, min_timestamp: int = 0, max_timestamp: int = 0, facility: str = 'all') -> list:
         """ get raw messages in a range of time """
         if min_timestamp == 0 and max_timestamp == 0:
             query = "SELECT * FROM messages"
+            extend = " WHERE"
         elif min_timestamp == 0:
             query = f"SELECT * FROM messages WHERE timestamp < {max_timestamp}"
+            extend = " AND"
         else:
             query = f"SELECT * FROM messages WHERE timestamp >= {min_timestamp} AND timestamp < {max_timestamp}"
+            extend = " AND"
+
+        if facility != 'all':
+            query += extend + f" facility = '{facility}'"
 
         result = self.raw(query)
         retvalue = []
