@@ -9,7 +9,7 @@
 
 
 from modules.datamanager import ScumLogDataManager
-from modules.mytime import mytime
+from modules.mytime import MyTime
 from command.base import Command
 
 
@@ -25,7 +25,7 @@ class Lifetime(Command):
             self.logging.info(f"Get server lifetime for player {player}")
             player_stat = db.get_player_status(player)
             if len(player_stat) > 0:
-                lifetime = mytime.convert_time(player_stat[0]["lifetime"])
+                lifetime = MyTime.convert_time(player_stat[0]["lifetime"])
                 msg_str = self._("Player {player} lives on server for {lifetime}.").format(player=player, lifetime=lifetime)
             else:
                 msg_str = self._("Player {player} has no life on this server.").format(player=player)
@@ -34,7 +34,7 @@ class Lifetime(Command):
             player_stat = db.get_player_status()
             msg_str = self._("Following players have a liftime on this server:\n")
             for p in player_stat:
-                lifetime = mytime.convert_time(p["lifetime"])
+                lifetime = MyTime.convert_time(p["lifetime"])
                 msg_str += self._("{name} lives for {lifetime} on this server.\n").format(name=p['username'], lifetime=lifetime)
         db.close()
 
