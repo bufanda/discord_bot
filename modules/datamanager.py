@@ -633,11 +633,17 @@ class ScumLogDataManager:
 
     def update_raw_message(self, message: str, _hash: str, timestamp: int, facility: str = 'None') -> None:
         """" save raw messages in db """
+        if "'" in message:
+            message = re.sub(message, "\'", "'")
+        if '"' in message:
+            message = re.sub(message, '\"', '"')
+        if "\\" in message:
+            message = re.sub(message, '\\\\', '\\')
         query = f"SELECT hash FROM messages WHERE hash='{_hash}'"
         result = self.raw(query)
         if len(result) == 0:
             query = "INSERT INTO messages (hash, timestamp, message, facility) "
-            query += f"VALUES ('{_hash}', {timestamp}, '{re.escape(message)}', '{facility}' )"
+            query += f"VALUES ('{_hash}', {timestamp}, '{message}', '{facility}' )"
             result = self.raw(query)
 
     def discard_raw_messages(self, age: int) -> None:
