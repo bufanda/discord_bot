@@ -639,12 +639,10 @@ class ScumLogDataManager:
             query += f"VALUES ('{_hash}', {timestamp}, '{message} )"
             result = self.raw(query)
 
-    def cleanup_raw_messages(self, timestamp: int) -> None:
+    def discard_raw_messages(self, age: int) -> None:
         """ cleanup old messages """
-        query = f"DELETE FROM messages WHERE timestamp<{timestamp}"
-        result = self.raw(query)
-        self.logging.info(f"Deleteing messages older than {timestamp}.")
-        self.logging.debug(f"Result of deleting messages {result}")
+        self.logging.info(f"Deleteing messages older than {age}.")
+        self._discard_old_values("messages", age)
 
     def get_raw_messages(self, min_timestamp: int = 0, max_timestamp: int = 0) -> list:
         """ get raw messages in a range of time """
