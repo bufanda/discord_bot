@@ -98,7 +98,7 @@ class ScumLogDataManager:
 
         cursor.execute("CREATE TABLE IF NOT EXISTS message_send (hash TEXT PRIMARY KEY, timestamp REAL)")
 
-        cursor.execute("CREATE TABLE IF NOT EXISTS messages (hash TEXT PRIMARY KEY, timestamp REAL, message TEXT)")
+        cursor.execute("CREATE TABLE IF NOT EXISTS messages (hash TEXT PRIMARY KEY, timestamp REAL, message TEXT, facility TEXT)")
 
         cursor.execute("CREATE TABLE IF NOT EXISTS log_hashes (timestamp REAL, hash TEXT PRIMARY KEY, file TEXT)")
 
@@ -630,13 +630,13 @@ class ScumLogDataManager:
 
         return retval
 
-    def update_raw_message(self, message: str, _hash: str, timestamp: int) -> None:
+    def update_raw_message(self, message: str, _hash: str, timestamp: int, facility: str = 'None') -> None:
         """" save raw messages in db """
         query = f"SELECT hash FROM messages WHERE hash='{_hash}'"
         result = self.raw(query)
         if len(result) == 0:
-            query = "INSERT INTO messages (hash, timestamp, message) "
-            query += f"VALUES ('{_hash}', {timestamp}, '{message} )"
+            query = "INSERT INTO messages (hash, timestamp, message, facility) "
+            query += f"VALUES ('{_hash}', {timestamp}, '{message}', '{facility}' )"
             result = self.raw(query)
 
     def discard_raw_messages(self, age: int) -> None:
@@ -656,7 +656,8 @@ class ScumLogDataManager:
         result = self.raw(query)
         retvalue = []
         for value in result:
-            retvalue.append({'hash': value[0], 'timestampt': value[1], 'message': value[2]})
+            retvalue.append({'hash': value[0], 'timestampt': value[1],
+                             'message': value[2], 'facility': value[3]})
 
         return retvalue
 
@@ -666,7 +667,8 @@ class ScumLogDataManager:
         result = self.raw(query)
         retvalue = []
         for value in result:
-            retvalue.append({'hash': value[0], 'timestampt': value[1], 'message': value[2]})
+            retvalue.append({'hash': value[0], 'timestampt': value[1],
+                             'message': value[2], 'facility': value[3]})
 
         return retvalue
 

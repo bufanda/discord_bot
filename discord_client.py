@@ -265,6 +265,9 @@ async def handle_login(msgs, file, dbconnection):
                     if not msg['drone'] and player_data[0]['drone']:
                         msg['drone'] = True
                     dbconnection.store_message_send(msg["hash"])
+                    dbconnection.update_raw_message(mm, msg["hash"],
+                                                    MyTime.get_timestamp(msg['timestamp']),
+                                                    'login')
                     dbconnection.update_player(msg)
                     # pylint: enable=line-too-long
                     logging.info(log_msg)
@@ -530,6 +533,7 @@ async def log_parser_loop():
         db.discard_old_logfiles(30*86400)
         db.discard_aged_messages(30*86400)
         db.discard_old_admin_audtis(60*86400)
+        db.discard_raw_messages(60*86400)
 
     await _handle_schduled_restart()
     db.close()
