@@ -9,9 +9,9 @@ import os
 import sqlite3
 from datetime import datetime
 from modules.output import Output
-from modules.mytime import mytime
+from modules.mytime import MyTime
 
-SCHEMA_VERSION = 109
+SCHEMA_VERSION = 110
 
 class ScumLogDataManager:
     """Manage Database access for bot"""
@@ -98,6 +98,8 @@ class ScumLogDataManager:
 
         cursor.execute("CREATE TABLE IF NOT EXISTS message_send (hash TEXT PRIMARY KEY, timestamp REAL)")
 
+        cursor.execute("CREATE TABLE IF NOT EXISTS messages (hash TEXT PRIMARY KEY, timestamp REAL, message TEXT)")
+
         cursor.execute("CREATE TABLE IF NOT EXISTS log_hashes (timestamp REAL, hash TEXT PRIMARY KEY, file TEXT)")
 
         cursor.execute("CREATE TABLE IF NOT EXISTS config (config_key TEXT PRIMARY KEY, config_parameter TEXT)")
@@ -134,9 +136,9 @@ class ScumLogDataManager:
         cursor.execute(statement)
         self.db.commit()
 
-    def _discard_values_by_id(self, table: str, id: int):
-        self.logging.info(f"Discarding values from Table {table} with {id}.")
-        statement = f"DELETE FROM {table} where id = {id}"
+    def _discard_values_by_id(self, table: str, _id: int):
+        self.logging.info(f"Discarding values from Table {table} with {_id}.")
+        statement = f"DELETE FROM {table} where id = {_id}"
         cursor = self.db.cursor()
         cursor.execute(statement)
         self.db.commit()
@@ -167,6 +169,7 @@ class ScumLogDataManager:
             return True
 
     def update_player_lifetime(self, player: str, lifetime: int) -> bool:
+        """ update a players lifetime """
         retval = False
         statement = f"UPDATE player SET server_lifetime = {lifetime} where username ='{player}'"
         cursor = self.db.cursor()
@@ -175,8 +178,8 @@ class ScumLogDataManager:
         p  = self.get_player_status(player)
         if p is not None and len(p) > 0:
             if p[0]["lifetime"] == lifetime:
-               retval = True
-        
+                retval = True
+
         return retval
 
     def update_player(self, player):
@@ -191,16 +194,16 @@ class ScumLogDataManager:
             self.logging.warning("No User with steamID in Database")
             if player["state"] == "in":
                 state = True
-                loggedin_timestamp = mytime.get_timestamp(player['timestamp'])
+                loggedin_timestamp = MyTime.get_timestamp(player['timestamp'])
                 loggedout_timestamp = 0
             else:
                 state = False
                 loggedin_timestamp = 0
-                loggedout_timestamp = mytime.get_timestamp(player['timestamp'])
+                loggedout_timestamp = MyTime.get_timestamp(player['timestamp'])
 
             cursor.execute(f"INSERT INTO player (timestamp, steamid, username, loggedin, coordinates_x, \
                            coordinates_y, coordinates_z, login_timestamp, logout_timestamp, server_lifetime, drone) \
-                           VALUES ({mytime.get_timestamp(player['timestamp'])}, {player['steamID']}, '{player['username']}', \
+                           VALUES ({MyTime.get_timestamp(player['timestamp'])}, {player['steamID']}, '{player['username']}', \
                            {state}, {player['coordinates']['x']}, {player['coordinates']['y']}, {player['coordinates']['z']}, \
                            {loggedin_timestamp}, {loggedout_timestamp}, 0, {player['drone']})")
             self.db.commit()
@@ -208,9 +211,9 @@ class ScumLogDataManager:
         else:
             if player["state"] == "in":
                 state = True
-                loggedin_timestamp = mytime.get_timestamp(player['timestamp'])
+                loggedin_timestamp = MyTime.get_timestamp(player['timestamp'])
                 cursor.execute(f"UPDATE player SET \
-                               timestamp = {mytime.get_timestamp(player['timestamp'])}, \
+                               timestamp = {MyTime.get_timestamp(player['timestamp'])}, \
                                username = '{player['username']}', \
                                loggedin = {state}, \
                                coordinates_x = {player['coordinates']['x']}, \
@@ -225,14 +228,14 @@ class ScumLogDataManager:
                 login_ts = player_data[0][8]
                 was_drone = player['drone']
                 player['drone'] = False
-                loggedout_timestamp = mytime.get_timestamp(player['timestamp'])
+                loggedout_timestamp = MyTime.get_timestamp(player['timestamp'])
                 if login_ts > 0 and login_ts < loggedout_timestamp and not was_drone:
                     server_lifetime = loggedout_timestamp - login_ts
                     server_lifetime_all = server_lifetime + player_data[0][10]
                 else:
                     server_lifetime_all = player_data[0][10]
                 cursor.execute(f"UPDATE player SET  \
-                               timestamp = {mytime.get_timestamp(player['timestamp'])}, \
+                               timestamp = {MyTime.get_timestamp(player['timestamp'])}, \
                                username = '{player['username']}', \
                                loggedin = {state}, \
                                coordinates_x = {player['coordinates']['x']}, \
@@ -256,60 +259,60 @@ class ScumLogDataManager:
             if len(bunker["coordinates"]) != 0 and len(bunker["next"]) == 0 and bunker["active"]:
                 statement = "INSERT INTO bunkers (name, timestamp, active, since, next,"
                 statement += "coordinates_x, coordinates_y, coordinates_z) VALUES "
-                statement += f"('{bunker['name']}', {mytime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
-                statement += f"mytime.get_time_delta({bunker['since']['h']}:{bunker['since']['m']}:{bunker['since']['s']}),"
+                statement += f"('{bunker['name']}', {MyTime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
+                statement += f"MyTime.get_time_delta({bunker['since']['h']}:{bunker['since']['m']}:{bunker['since']['s']}),"
                 statement += "0,"
                 statement += f"{bunker['coordinates']['x']},{bunker['coordinates']['y']},{bunker['coordinates']['z']})"
             elif len(bunker["next"]) != 0 and not bunker["active"]:
                 statement = "INSERT INTO bunkers (name, timestamp, active, since, next,"
                 statement += "coordinates_x, coordinates_y, coordinates_z) VALUES "
-                statement += f"('{bunker['name']}', {mytime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
-                statement += f"{mytime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
-                statement += f"{mytime.get_time_delta(bunker['next']['h']+':'+bunker['next']['m']+':'+bunker['next']['s'])},"
+                statement += f"('{bunker['name']}', {MyTime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
+                statement += f"{MyTime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
+                statement += f"{MyTime.get_time_delta(bunker['next']['h']+':'+bunker['next']['m']+':'+bunker['next']['s'])},"
                 statement += f"{bunker['coordinates']['x']},{bunker['coordinates']['y']},{bunker['coordinates']['z']})"
             elif len(bunker["next"]) == 0 and len(bunker["coordinates"]) == 0 and bunker["active"]:
                 statement = "INSERT INTO bunkers (name, timestamp, active, since, next,"
                 statement += "coordinates_x, coordinates_y, coordinates_z) VALUES "
-                statement += f"('{bunker['name']}', {mytime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
-                statement += f"{mytime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
+                statement += f"('{bunker['name']}', {MyTime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
+                statement += f"{MyTime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
                 statement += "0, 0, 0, 0)"
 
             elif len(bunker["next"]) == 0 and len(bunker["since"]) == 0 and not bunker["active"]:
                 statement = "INSERT INTO bunkers (name, timestamp, active, since, next,"
                 statement += "coordinates_x, coordinates_y, coordinates_z) VALUES "
-                statement += f"('{bunker['name']}', {mytime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
+                statement += f"('{bunker['name']}', {MyTime.get_timestamp(bunker['timestamp'])}, {bunker['active']},"
                 statement += "0, 0, 0, 0, 0)"
 
         elif len(bunker_data) == 1:
             self.logging.info(f"Bunker {bunker['name']} in Database")
             if len(bunker["coordinates"]) > 0 and len(bunker["next"]) == 0 and bunker["active"]: # Active
                 statement = "UPDATE bunkers SET "
-                statement += f"timestamp = {mytime.get_timestamp(bunker['timestamp'])},"
+                statement += f"timestamp = {MyTime.get_timestamp(bunker['timestamp'])},"
                 statement += f"active = {bunker['active']},"
-                statement += f"since = {mytime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
+                statement += f"since = {MyTime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
                 statement += f"coordinates_x = {bunker['coordinates']['x']},"
                 statement += f"coordinates_y = {bunker['coordinates']['y']},"
                 statement += f"coordinates_z = {bunker['coordinates']['z']} "
                 statement += f"WHERE name = '{bunker['name']}'"
             elif len(bunker["next"]) != 0 and not bunker["active"]: # Locked
                 statement = "UPDATE bunkers SET "
-                statement += f"timestamp = {mytime.get_timestamp(bunker['timestamp'])},"
+                statement += f"timestamp = {MyTime.get_timestamp(bunker['timestamp'])},"
                 statement += f"active = {bunker['active']},"
-                statement += f"since = {mytime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
-                statement += f"next = {mytime.get_time_delta(bunker['next']['h']+':'+bunker['next']['m']+':'+bunker['next']['s'])},"
+                statement += f"since = {MyTime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])},"
+                statement += f"next = {MyTime.get_time_delta(bunker['next']['h']+':'+bunker['next']['m']+':'+bunker['next']['s'])},"
                 statement += f"coordinates_x = {bunker['coordinates']['x']},"
                 statement += f"coordinates_y = {bunker['coordinates']['y']},"
                 statement += f"coordinates_z = {bunker['coordinates']['z']} "
                 statement += f"WHERE name = '{bunker['name']}'"
             elif len(bunker["next"]) == 0 and len(bunker["coordinates"]) == 0 and bunker["active"]: # Activated
                 statement = "UPDATE bunkers SET "
-                statement += f"timestamp = {mytime.get_timestamp(bunker['timestamp'])},"
+                statement += f"timestamp = {MyTime.get_timestamp(bunker['timestamp'])},"
                 statement += f"active = {bunker['active']},"
-                statement += f"since = {mytime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])} "
+                statement += f"since = {MyTime.get_time_delta(bunker['since']['h']+':'+bunker['since']['m']+':'+bunker['since']['s'])} "
                 statement += f"WHERE name = '{bunker['name']}'"
             elif len(bunker["next"]) == 0 and len(bunker["since"]) == 0 and not bunker["active"]: # Deactivated
                 statement = "UPDATE bunkers SET "
-                statement += f"timestamp = {mytime.get_timestamp(bunker['timestamp'])},"
+                statement += f"timestamp = {MyTime.get_timestamp(bunker['timestamp'])},"
                 statement += f"active = {bunker['active']},"
                 statement += "since = 0,"
                 statement += "next = 0,"
@@ -530,7 +533,7 @@ class ScumLogDataManager:
     def update_admin_audit(self, audit_data: dict) -> None:
         """store data in table admin_audit"""
         audit_data.update({'action': audit_data['action'].replace("'", "")})
-        audit_timestamp = mytime.get_timestamp(audit_data["time"])
+        audit_timestamp = MyTime.get_timestamp(audit_data["time"])
         query = "INSERT INTO admin_audit "
         query += "(timestamp, steamid, name, type, action) "
         query += f"VALUES ({audit_timestamp}, {audit_data['steamid']}, "
@@ -626,6 +629,22 @@ class ScumLogDataManager:
                 })
 
         return retval
+
+    def update_raw_message(self, message: str, _hash: str, timestamp: int) -> None:
+        """" save raw messages in db """
+        query = f"SELECT hash FROM messages WHERE hash='{_hash}'"
+        result = self.raw(query)
+        if len(result) == 0:
+            query = "INSERT INTO messages (hash, timestamp, message) "
+            query += f"VALUES ('{_hash}', {timestamp}, '{message} )"
+            result = self.raw(query)
+
+    def cleanup_raw_messages(self, timestamp: int) -> None:
+        """ cleanup old messages """
+        query = f"DELETE FROM messages WHERE timestamp<{timestamp}"
+        result = self.raw(query)
+        self.logging.info(f"Deleteing messages older than {timestamp}.")
+        self.logging.debug(f"Result of deleting messages {result}")
 
     def close(self) -> None:
         """close database connection"""
