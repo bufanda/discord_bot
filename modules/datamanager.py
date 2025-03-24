@@ -646,6 +646,32 @@ class ScumLogDataManager:
         self.logging.info(f"Deleteing messages older than {timestamp}.")
         self.logging.debug(f"Result of deleting messages {result}")
 
+    def get_raw_messages(self, min_timestamp: int = 0, max_timestamp: int = 0) -> list:
+        """ get raw messages in a range of time """
+        if min_timestamp == 0 and max_timestamp == 0:
+            query = "SELECT * FROM messages"
+        elif min_timestamp == 0:
+            query = f"SELECT * FROM messages WHERE timestamp < {max_timestamp}"
+        else:
+            query = f"SELECT * FROM messages WHERE timestamp >= {min_timestamp} AND timestamp < {max_timestamp}"
+
+        result = self.raw(query)
+        retvalue = []
+        for value in result:
+            retvalue.append({'hash': value[0], 'timestampt': value[1], 'message': value[2]})
+
+        return retvalue
+
+    def get_raw_messages_by_hash(self, _hash: str) -> list:
+        """ get raw messages in a range of time """
+        query = f"SELECT * FROM messages WHERE hash='{_hash}"
+        result = self.raw(query)
+        retvalue = []
+        for value in result:
+            retvalue.append({'hash': value[0], 'timestampt': value[1], 'message': value[2]})
+
+        return retvalue
+
     def close(self) -> None:
         """close database connection"""
         self.db.commit()
