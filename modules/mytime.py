@@ -8,8 +8,10 @@
 
 from datetime import datetime, timedelta
 
-class mytime():
+class MyTime:
     """my very own time class"""
+
+    # pylint: disable=no-self-argument
 
     def convert_time(in_sec: int) -> str:
         """convert time in seconds to a human readable format"""
@@ -33,11 +35,14 @@ class mytime():
         """get a date for an age in seconds"""
         return datetime.today() - timedelta(days=in_sec)
 
-    def get_timestamp(string) -> int:
+    def get_timestamp(_string) -> int:
         """get the unix timestamp for a time in server format"""
-        return datetime.strptime(string, "%Y.%m.%d-%H.%M.%S").timestamp()
+        return datetime.strptime(_string, "%Y.%m.%d-%H.%M.%S").timestamp()
 
-    def get_time_delta(string) -> int:
-        s = string.split(sep=":")
+    def get_time_delta(_string: str) -> int:
+        """ get time delta from a string """
+        s = str.split(_string, sep=":")
         retval = int(s[0])*3600 + int(s[1])*60 + int(s[2])
         return retval
+
+    # pylint: enable=no-self-argument

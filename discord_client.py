@@ -12,8 +12,6 @@ import sys
 import random
 import traceback
 import gettext
-import threading
-import time
 
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -31,7 +29,7 @@ from modules.logparser import LoginParser, KillParser, BunkerParser, FamepointPa
 from modules.sftpconnector import ScumSFTPConnector
 from modules.output import Output
 from modules.configmanager import ConfigManager
-from modules.mytime import mytime
+from modules.mytime import MyTime
 from command.scumconfig import ServerConfig
 from command.online import Online
 from command.lifetime import Lifetime
@@ -254,7 +252,7 @@ async def handle_login(msgs, file, dbconnection):
                         msg_str += f",{msg['coordinates']['y']},3)"
 
                         if config.config["publish_login"] and \
-                            (datetime.now().timestamp() - mytime.get_timestamp(msg['timestamp']) < 600):
+                            (datetime.now().timestamp() - MyTime.get_timestamp(msg['timestamp']) < 600):
                             await channel.send(msg_str)
                     if msg['drone'] or player_data[0]['drone']:
                     # pylint: disable=line-too-long
@@ -338,7 +336,7 @@ async def handle_bunkers(msgs, file, dbconnection):
                         else:
                             msg_str += _("Bunker coordinates unkown, ")
                             msg_str += _("it wasnt't discovered previously.")
-                        age = datetime.now().timestamp() - mytime.get_timestamp(msg['timestamp'])
+                        age = datetime.now().timestamp() - MyTime.get_timestamp(msg['timestamp'])
                         if config.config["publish_bunkers"] and age < 600:
                             await channel.send(msg_str)
                     dbconnection.update_bunker_status(msg)
@@ -673,10 +671,10 @@ async def handle_command_audit(ctx, args):
     elif args[0] == "age":
         if "d" in args[1]:
             _days = int(args[1].split("d")[0])
-            age = mytime.get_date_for_age(_days)
+            age = MyTime.get_date_for_age(_days)
         elif "m" in args[1]:
             _months = int(args[1].split("m")[0])
-            age = mytime.get_date_for_age(_months * 30)
+            age = MyTime.get_date_for_age(_months * 30)
         else:
             age = 0
 
