@@ -12,7 +12,7 @@ from datetime import datetime
 from modules.output import Output
 from modules.mytime import MyTime
 
-SCHEMA_VERSION = 110
+SCHEMA_VERSION = 111
 
 class ScumLogDataManager:
     """Manage Database access for bot"""
@@ -83,6 +83,18 @@ class ScumLogDataManager:
             cursor.execute(add_column)
             self.db.commit()
 
+        check_column = "SELECT COUNT(*) AS CNTREC FROM "
+        check_column += "pragma_table_info('messages') WHERE name='facility'"
+        cursor = self.db.cursor()
+        cursor.execute(check_column)
+        result = cursor.fetchone()
+        if result[0] == 0:
+        # update table
+            add_column = "ALTER TABLE messages "
+            add_column += "ADD facility TEXT DEFAULT 'none'"
+            cursor.execute(add_column)
+            self.db.commit()
+
     def _init_schema(self):
         cursor = self.db.cursor()
         ## Table does not exists so we create out tables
@@ -147,11 +159,11 @@ class ScumLogDataManager:
     def _escape_string(self, pattern: str) -> str:
         """ escape a given string to make it sqlite safe """
         if "'" in pattern:
-            pattern = re.sub(pattern, "\'", "'")
+            pattern = pattern.replace("'", "")
         if '"' in pattern:
-            pattern = re.sub(pattern, '\"', '"')
+            pattern = pattern.replace('"', '\\"')
         if "\\" in pattern:
-            pattern = re.sub(pattern, '\\\\', '\\')
+            pattern = pattern.replace('\\', '\\\\')
 
         return pattern
 
@@ -649,7 +661,7 @@ class ScumLogDataManager:
         result = self.raw(query)
         if len(result) == 0:
             query = "INSERT INTO messages (hash, timestamp, message, facility) "
-            query += f"VALUES ('{_hash}', {timestamp}, '{message}', '{facility}' )"
+            query += f"VALUES ('{_hash}', {timestamp}, '{message}', '{facility}')"
             result = self.raw(query)
 
     def discard_raw_messages(self, age: int) -> None:
