@@ -167,5 +167,8 @@ logs/
 *.bak
 
 # custom
-*cookies*
 docker_test/
+
+##Selenium cookies
+*cookies*
+*cookie*
