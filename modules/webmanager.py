@@ -106,3 +106,50 @@ def webmanager_get_game_status(bot_username: str, bot_password: str) -> str:
     finally:
         driver.close()
         return retvalue
+
+def webmanager_get_reset_button(bot_username: str, bot_password: str) -> str:
+    retvalue = "unkown"
+    chromeOptions = webdriver.ChromeOptions()
+    chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+    chromeOptions.add_argument("--no-sandbox")
+    chromeOptions.add_argument("--headless")
+    chromeOptions.add_argument("--disable-setuid-sandbox")
+
+    chromeOptions.add_argument("--remote-debugging-port=9222")  # this
+
+    chromeOptions.add_argument("--disable-dev-shm-using")
+    chromeOptions.add_argument("--disable-extensions")
+    chromeOptions.add_argument("--disable-gpu")
+    chromeOptions.add_argument("--start-maximized")
+    chromeOptions.add_argument("--disable-infobars")
+    chromeOptions.add_argument(r"--user-data-dir=.\cookies\\test")
+
+    driver = webdriver.Chrome(options=chromeOptions)
+    try:
+        driver.get("https://gamepanel.pingperfect.com/Login")
+        assert "Pingperfect - Login" in driver.title
+        username = driver.find_element(By.NAME, 'UserName')
+        username.clear()
+        username.send_keys(bot_username)
+        password = driver.find_element(By.NAME, 'Password')
+        password.clear()
+        password.send_keys(bot_password)
+        password.send_keys(Keys.RETURN)
+
+        if "Home" in driver.page_source:
+            print(f"Logged in to {driver.title}")
+            servicebuttons = driver.find_element(By.CLASS_NAME,"orange-button")
+            if "Restart" in servicebuttons.text:
+                print("Restart Button found")
+            #logout = driver.find_element(By.ID, "page_logout")
+            #logout.send_keys(Keys.RETURN)
+    except AssertionError as e:
+        if isinstance(e, AssertionError):
+            print("Something went wrong while trying to login")
+            traceback.print_tb(e.__traceback__)
+    except Exception as e:
+        print(f"Unknown Exception Occured: {e}")
+        traceback.print_tb(e.__traceback__)
+    finally:
+        driver.close()
+        return retvalue
