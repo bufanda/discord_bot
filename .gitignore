@@ -165,3 +165,6 @@ logs/
 *.sqlite3
 *.sqlite3-journal
 *.bak
+
+##Selenium cookies
+*cookie*
