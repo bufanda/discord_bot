@@ -1118,7 +1118,8 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
 @client.command(name='webtest')
 async def roll(ctx):
     """Yeah, rolling a dice"""
-    web.webmanager_test2(config.sftp_user, config.sftp_password)
+    res = web.webmanager_get_game_status(config.sftp_user, config.sftp_password)
+    await _reply(ctx, f"Server Status {res}")
 
 @client.event
 async def on_command_error(ctx, error):
