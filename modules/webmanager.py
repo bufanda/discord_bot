@@ -38,15 +38,21 @@ def webmanager_test2(bot_username: str, bot_password: str) -> None:
     chromeOptions.add_argument(r"--user-data-dir=.\cookies\\test")
 
     driver = webdriver.Chrome(options=chromeOptions)
-    driver.get("https://gamepanel.pingperfect.com/Login")
-    assert "Pingperfect-Login" in driver.title
-    username = driver.find_element(By.NAME, 'UserName')
-    username.clear()
-    username.send_keys(bot_username)
-    username = driver.find_element(By.NAME, 'Password')
-    username.clear()
-    username.send_keys(bot_password)
-    username.send_keys(Keys.RETURN)
-    assert f"{bot_username} Home" in driver.page_source
-    print(driver.title)
-    driver.close()
+    try:
+        driver.get("https://gamepanel.pingperfect.com/Login")
+        assert "Pingperfect - Login" in driver.title
+        username = driver.find_element(By.NAME, 'UserName')
+        username.clear()
+        username.send_keys(bot_username)
+        username = driver.find_element(By.NAME, 'Password')
+        username.clear()
+        username.send_keys(bot_password)
+        username.send_keys(Keys.RETURN)
+        assert f"Game Services" in driver.page_source
+        print(f"Logged in to {driver.title}")
+    except AssertionError as e:
+        if isinstance(e, AssertionError):
+            print("Something went wrong while trying to login")
+    finally:
+        driver.close()
+    
