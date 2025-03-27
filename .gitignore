@@ -165,3 +165,7 @@ logs/
 *.sqlite3
 *.sqlite3-journal
 *.bak
+
+# custom
+*cookies*
+docker_test/
