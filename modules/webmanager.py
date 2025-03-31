@@ -122,9 +122,10 @@ def webmanager_get_reset_button(bot_username: str, bot_password: str) -> str:
     chromeOptions.add_argument("--disable-gpu")
     chromeOptions.add_argument("--start-maximized")
     chromeOptions.add_argument("--disable-infobars")
-    chromeOptions.add_argument(r"--user-data-dir=.\cookies\\test")
+    #chromeOptions.add_argument("--user-data-dir=/home/scumbot/.cache")
 
-    driver = webdriver.Chrome(options=chromeOptions)
+    #driver = webdriver.Chrome(options=chromeOptions)
+    driver = webdriver.Remote(command_executor='http://127.0.0.1:4444/wd/hub', options=chromeOptions)
     try:
         driver.get("https://gamepanel.pingperfect.com/Login")
         assert "Pingperfect - Login" in driver.title

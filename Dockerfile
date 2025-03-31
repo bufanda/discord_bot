@@ -28,7 +28,6 @@ ENV VCS_TAG=${VCS_TAG}
 ENV VCS_REF=${VCS_REF}
 
 RUN apk add --update --no-cache gettext runuser git \
-        chromium chromium-chromedriver && \
     mkdir -p /app/locale
 
 COPY requirements.txt main.py discord_client.py /app/
