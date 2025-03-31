@@ -28,6 +28,8 @@ ENV VCS_TAG=${VCS_TAG}
 ENV VCS_REF=${VCS_REF}
 
 RUN apk add --update --no-cache gettext runuser \
+        gcompat glib nss libxcb libgcc \
+        dbus dbus-launch-helper \
         chromium chromium-chromedriver && \
     mkdir -p /app/locale
 
