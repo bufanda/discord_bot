@@ -12,6 +12,7 @@ tzlocal = "*"
 setuptools = "*"
 babel = "*"
 python-gitlab = "*"
+py-gitea = {file= "git+https://github.com/Langenfeld/py-gitea.git"}
 
 [dev-packages]
 babel = "*"
