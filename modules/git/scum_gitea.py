@@ -7,7 +7,7 @@
 import gitea
 
 class ScumGitea():
-    """ TBD """
+    """ Class to connect to a gitea instance """
     repository_url: str
     repo: str
     owner: str
@@ -18,7 +18,7 @@ class ScumGitea():
 
     def __init__(self, url: str, private_token: str,
                  branch: str = None):
-        """ TBD """
+        """ Initialize object """
         self.private_token = private_token
         _url = url.split("/")
         self.repository_url = url
@@ -37,17 +37,16 @@ class ScumGitea():
         result = False
         file_content = None
         try:
-            session = gitea.Gitea(gitea_url=self.repository_url,
-                                  token_text=self.private_token, verify=False)
-
-            file_content = session.requests_get(f"/repos/{self.owner}/{self.repo}/media/{filename}")
+            session = gitea.Gitea(gitea_url=self.base_url,
+                                  token_text=self.private_token)
+            _endpoint = f"/repos/{self.owner}/{self.repo}/media/{filename}"
+            file_content = session.requests_get_raw(endpoint=_endpoint)
         except gitea.NotFoundException as e:
-            print("Error:", e)
+            print("Error:", e.with_traceback)
         finally:
             if file_content:
-                result = file_content.content
+                result = file_content
         # pylint: enable=broad-exception-caught
-
         return result
 
     def clean_up(self):

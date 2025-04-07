@@ -4,14 +4,14 @@
     @CLicense: MIT
     @Description: Get files from git via HTTPS
 """
-import git.scum_gitea as gitea
-import git.scum_gitlab as gitlab
-import git.scum_http_request as generic
+import modules.git.scum_gitea as gitea
+import modules.git.scum_gitlab as gitlab
+import modules.git.scum_http_request as generic
 
-from configmanager import ConfigManager as configmanager
+from modules.configmanager import ConfigManager as configmanager
 
 class ScumGitConnector():
-    """ TBD """
+    """ Class to manage git connections """
     configuration: configmanager
     connector: object
 
