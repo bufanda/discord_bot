@@ -209,7 +209,8 @@ async def _log_bot_usage(username: str, command: str, args: list) -> None:
         arguments = ""
         for arg in args:
             arguments += f"{arg} "
-        message = f"User {username} used command {command} with arguments '{arguments}' to interact with bot."
+        message = f"User {username} used command {command}"
+        message += f" with arguments '{arguments}' to interact with bot."
 
     logging.info(message)
 
@@ -1057,7 +1058,7 @@ async def player_offline(ctx, player: str = None):
 
 @client.command(name="copy_server_config")
 async def copy_server_config(ctx, filename: str = None):
-
+    """ Copy a config file from a git server to scum server """
     if not _check_user_bot_role(ctx.author.name, "admin") and not \
         _check_guild_roles(_get_guild_member_roles(ctx.author.name), config.user_role):
         await ctx.reply(_("You do not have permission to invoke this command."))
@@ -1065,7 +1066,7 @@ async def copy_server_config(ctx, filename: str = None):
 
     command = ServerConfig()
     content = command.get_config_file(filename)
-    if content != None:
+    if content is not None:
         command.copy_file_to_server(content)
         await _reply(ctx, _("File copied to Scum server!"))
     else:
@@ -1163,4 +1164,5 @@ _ = translate.gettext
 
 
 def run_client():
+    """ run the client """
     client.run(config.token)

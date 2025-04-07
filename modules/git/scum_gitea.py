@@ -4,46 +4,51 @@
     @CLicense: MIT
     @Description: Get files from git via HTTPS
 """
-import shutil
-import tempfile
 import gitea
 
-class ScumGitHttp():
+class ScumGitea():
     """ TBD """
     repository_url: str
-    repository_password: str
-    repository_username: str
+    repo: str
+    owner: str
     repository_file: str
     private_token: str
-    temporary_file: tempfile._TemporaryFileWrapper
-    branch_name: str = None
-    project_name: str = None
+    base_url: str
+    branch_name: str = "master"
 
-    def __init__(self, url: str, username: str, password: str,
-                 branch: str = None, project: str = None):
+    def __init__(self, url: str, private_token: str,
+                 branch: str = None):
         """ TBD """
-        self.repository_password = password
-        self.repository_username = username
+        self.private_token = private_token
+        _url = url.split("/")
         self.repository_url = url
-        self.temporary_file = tempfile.NamedTemporaryFile()
+        self.repo = _url[-1]
+        self.owner = _url[-2]
+        self.base_url = _url[0] + "//" + _url[-3]
+
         if branch:
             self.branch_name = branch
-        if project:
-            self.project_name = project
 
     def __del__(self):
         self.clean_up()
 
-    def get_file(self, filename) -> tempfile.NamedTemporaryFile:
+    def get_file(self, filename) -> object:
         """ get a file from git """
-        # self.repository_file = filename
-        # with requests.get(self.repository_url, stream=True, timeout=15) as r:
-        #     with open(self.temporary_file, 'wb') as f:
-        #         shutil.copyfileobj(r.raw, f)
+        result = False
+        file_content = None
+        try:
+            session = gitea.Gitea(gitea_url=self.repository_url,
+                                  token_text=self.private_token, verify=False)
 
-        # return self.temporary_file
-        return None
+            file_content = session.requests_get(f"/repos/{self.owner}/{self.repo}/media/{filename}")
+        except gitea.NotFoundException as e:
+            print("Error:", e)
+        finally:
+            if file_content:
+                result = file_content.content
+        # pylint: enable=broad-exception-caught
+
+        return result
 
     def clean_up(self):
         """ clean up memory """
-        del self.temporary_file

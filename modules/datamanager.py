@@ -7,7 +7,7 @@
 # pylint: disable=line-too-long
 import os
 import sqlite3
-import re
+# import re
 from datetime import datetime
 from modules.output import Output
 from modules.mytime import MyTime
