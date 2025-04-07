@@ -4,4 +4,4 @@ paramiko
 chardet
 tzlocal
 python-gitlab
-py-gitea =@ git+https://github.com/Langenfeld/py-gitea.git@master
+py-gitea @ git+https://github.com/Langenfeld/py-gitea.git@master
