@@ -140,7 +140,7 @@ class ConfigManager():
         self.git.update({"branch": os.getenv("SCUM_CONFIG_GIT_BRANCH")})
         self.git.update({"file": os.getenv("SCUM_CONFIG_GIT_FILE")})
         self.git.update({"config_destination": os.getenv("SCUM_CONFIG_GIT_DESTINATION")})
-        self.git.update({"protocol": os.getenv("SCUM_GIT_PROTOCOL_TYPE")})
+        self.git.update({"protocol": os.getenv("SCUM_CONFIG_GIT_PROTOCOL")})
 
         if self.experimental:
             if self.experimental == "1":
