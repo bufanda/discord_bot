@@ -47,13 +47,16 @@ EXPERIMENTAL_ENABLE = # Enable experimental and debug features (default: disable
 
 BOT_LANGUAGE = "en" # set languge bot should use for chat messages currently supported: en, de
 
-SCUM_CONFIG_GIT_PROJECT = # Project on git server (gitlab)
-SCUM_CONFIG_GIT_BRANCH = # Branch on git server (gitlab)
-SCUM_CONFIG_GIT_HOST = # Host on git server (gitlab)
+SCUM_CONFIG_GIT_PROJECT = # Project on git server (gitlab, gitea)
+SCUM_CONFIG_GIT_BRANCH = # Branch on git server (gitlab, gitea)
+SCUM_CONFIG_GIT_HOST = # Host on git server (gitlab).
+                       # For gitea full repository link (e.g. https://git.bufanda.de/bufanda/discord_bot)
+
 SCUM_CONFIG_GIT_FILE = # Full path filename on git server for default
                        # file to copy in case file isn't given with copy command (gitlab)
 
-SCUM_CONFIG_GIT_TOKEN = # Authorization Token git server (gitlab)
+SCUM_CONFIG_GIT_TOKEN = # Authorization Token git server (gitlab, gitea)
 SCUM_CONFIG_GIT_DESTINATION = # Default destination for config file on scum server (full path and filename)
+SCUM_CONFIG_GIT_PROTOCOL = # Protocol to speak with the git server. Valid values: gitlab, gitea, generic
 
 ```
