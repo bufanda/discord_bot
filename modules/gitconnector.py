@@ -21,7 +21,7 @@ class ScumGitConnector():
         if self.configuration.git["protocol"] == "gitlab":
             self.connector = gitlab.ScumGitlab(self.configuration.git["url"],
                                                self.configuration.git["private_token"])
-        elif self.configuration.git["protocol"] == "gittea":
+        elif self.configuration.git["protocol"] == "gitea":
             self.connector = gitea.ScumGitea(self.configuration.git["url"],
                                              self.configuration.git["private_token"])
         else:
