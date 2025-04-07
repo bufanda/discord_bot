@@ -4,9 +4,7 @@
     @CLicense: MIT
     @Description: Get files from git via HTTPS
 """
-import shutil
 import tempfile
-import requests
 import gitlab
 
 class ScumGitlab():
