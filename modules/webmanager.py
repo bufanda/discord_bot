@@ -9,6 +9,8 @@ import traceback
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from modules.configmanager import ConfigManager
 
@@ -46,6 +48,11 @@ class web_ping_perfect:
             password.clear()
             password.send_keys(bot_password)
             password.send_keys(Keys.RETURN)
+
+            # Wait for initialize, in seconds
+            wait = WebDriverWait(driver, 10)
+
+            servicetable = wait.until(EC.presence_of_element_located((By.ID, 'ServiceInformation')))
 
             if "Home" in driver.page_source:
                 print(f"Logged in to {driver.title}")
@@ -96,6 +103,11 @@ class web_ping_perfect:
             password.clear()
             password.send_keys(bot_password)
             password.send_keys(Keys.RETURN)
+
+            # Wait for initialize, in seconds
+            wait = WebDriverWait(driver, 10)
+
+            servicebuttons = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'orange-button')))
 
             if "Home" in driver.page_source:
                 print(f"Logged in to {driver.title}")
