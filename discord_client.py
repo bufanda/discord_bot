@@ -35,7 +35,7 @@ from command.online import Online
 from command.lifetime import Lifetime
 from command.players import PlayerMangement
 
-import modules.webmanager as web
+from modules.webmanager import web_ping_perfect
 # pylint: enable=wrong-import-position
 
 load_dotenv()
@@ -67,6 +67,7 @@ client = commands.Bot(command_prefix="!",intents=intents)
 lp: None
 
 logging = Output()
+web = web_ping_perfect()
 
 @client.event
 async def on_ready():
@@ -1126,7 +1127,6 @@ async def roll(ctx):
     """Yeah, rolling a dice"""
     res = web.webmanager_get_reset_button(config.sftp_user, config.sftp_password)
     await _reply(ctx, f"Reset Status {res}")
-
 
 @client.event
 async def on_command_error(ctx, error):

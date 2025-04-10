@@ -37,6 +37,9 @@ class ConfigManager():
     user_role: str
     language: str
 
+    scum_hoster: str = "ping-perfect"
+    selenium_host: str = "scum_bot_browser:4444"
+
     vcs_ref: str
     vcs_tag: str
 
@@ -118,6 +121,11 @@ class ConfigManager():
         self.vcs_tag = os.getenv("VCS_TAG")
 
         self.language = os.getenv("BOT_LANGUAGE")
+
+        if os.getenv("SCUM_HOSTING_SCHEMA"):
+            self.scum_hoster= os.getenv("SCUM_HOSTING_SCHEMA")
+        if os.getenv("SCUM_BOT_BROWSER_ADDRESS"):
+            self.selenium_host = os.getenv("SCUM_BOT_BROWSER_ADDRESS")
 
         if os.getenv("BOT_USER_ADMIN_ROLE") is not None:
             self.admin_role = os.getenv("BOT_USER_ADMIN_ROLE")
