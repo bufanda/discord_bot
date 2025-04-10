@@ -52,7 +52,8 @@ class web_ping_perfect:
             # Wait for initialize, in seconds
             wait = WebDriverWait(driver, 10)
 
-            servicetable = wait.until(EC.presence_of_element_located((By.ID, 'ServiceInformation')))
+            servicetable = wait.until(EC.title_is('Home'))
+            print(servicetable)
 
             if "Home" in driver.page_source:
                 print(f"Logged in to {driver.title}")
